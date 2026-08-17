@@ -11,53 +11,29 @@ async function loadManga() {
 
     try {
 
-        const response =
-            await fetch(DATA_URL);
+        const response = await fetch(DATA_URL);
 
         if (!response.ok) {
-
             throw new Error(
-                "Manga database could not be loaded."
+                `Failed to load manga data: ${response.status}`
             );
-
         }
 
+        mangaList = await response.json();
 
-        mangaList =
-            await response.json();
+        console.log("Manga database loaded:", mangaList);
 
+        displayLatestManga(mangaList);
 
-        console.log(
-            "Manga database loaded:",
-            mangaList
-        );
+        displayLibrary(mangaList);
 
-
-        displayLatestManga(
-            mangaList
-        );
-
-
-        displayLibrary(
-            mangaList
-        );
-
-
-        displayFeatured(
-            mangaList
-        );
-
+        displayFeatured(mangaList);
 
         setupSearch();
 
-
     } catch (error) {
 
-        console.error(
-            "Manga loading error:",
-            error
-        );
-
+        console.error("Manga loading error:", error);
 
         showLoadError();
 
@@ -67,18 +43,21 @@ async function loadManga() {
 
 
 /* ==========================================
-   LATEST MANGA
+   DISPLAY LATEST MANGA
 ========================================== */
 
 function displayLatestManga(manga) {
 
     const container =
-        document.getElementById(
-            "mangaGrid"
-        );
+        document.getElementById("mangaGrid");
+
+    const noResults =
+        document.getElementById("noResults");
 
 
     if (!container) {
+
+        console.error("mangaGrid element not found");
 
         return;
 
@@ -88,10 +67,62 @@ function displayLatestManga(manga) {
     container.innerHTML = "";
 
 
-    if (
-        !manga ||
-        manga.length === 0
-    ) {
+    if (!manga || manga.length === 0) {
+
+        container.innerHTML = `
+            <div class="loading">
+                No manga available.
+            </div>
+        `;
+
+        if (noResults) {
+            noResults.style.display = "block";
+        }
+
+        return;
+
+    }
+
+
+    if (noResults) {
+        noResults.style.display = "none";
+    }
+
+
+    manga.forEach(function(item) {
+
+        const card = createMangaCard(item);
+
+        container.appendChild(card);
+
+    });
+
+}
+
+
+/* ==========================================
+   DISPLAY LIBRARY
+========================================== */
+
+function displayLibrary(manga) {
+
+    const container =
+        document.getElementById("libraryGrid");
+
+
+    if (!container) {
+
+        console.error("libraryGrid element not found");
+
+        return;
+
+    }
+
+
+    container.innerHTML = "";
+
+
+    if (!manga || manga.length === 0) {
 
         container.innerHTML = `
             <div class="loading">
@@ -104,62 +135,13 @@ function displayLatestManga(manga) {
     }
 
 
-    manga.forEach(
-        mangaItem => {
+    manga.forEach(function(item) {
 
-            const card =
-                createMangaCard(
-                    mangaItem
-                );
+        const card = createMangaCard(item);
 
+        container.appendChild(card);
 
-            container.appendChild(
-                card
-            );
-
-        }
-    );
-
-}
-
-
-/* ==========================================
-   MANGA LIBRARY
-========================================== */
-
-function displayLibrary(manga) {
-
-    const container =
-        document.getElementById(
-            "libraryGrid"
-        );
-
-
-    if (!container) {
-
-        return;
-
-    }
-
-
-    container.innerHTML = "";
-
-
-    manga.forEach(
-        mangaItem => {
-
-            const card =
-                createMangaCard(
-                    mangaItem
-                );
-
-
-            container.appendChild(
-                card
-            );
-
-        }
-    );
+    });
 
 }
 
@@ -171,41 +153,37 @@ function displayLibrary(manga) {
 function createMangaCard(manga) {
 
     const card =
-        document.createElement(
-            "article"
-        );
+        document.createElement("article");
 
 
-    card.className =
-        "manga-card";
+    card.className = "manga-card";
 
 
-    const coverHTML =
-        manga.cover
-
-            ? `
-                <img
-                    src="${escapeHTML(
-                        manga.cover
-                    )}"
-                    alt="${escapeHTML(
-                        manga.title
-                    )}"
-                    loading="lazy"
-                >
-            `
-
-            : `
-                <div
-                    class="manga-cover-placeholder"
-                >
-                    No Cover
-                </div>
-            `;
+    let coverHTML;
 
 
-    let latestChapter =
-        "No chapters";
+    if (manga.cover) {
+
+        coverHTML = `
+            <img
+                src="${escapeHTML(manga.cover)}"
+                alt="${escapeHTML(manga.title)}"
+                loading="lazy"
+            >
+        `;
+
+    } else {
+
+        coverHTML = `
+            <div class="manga-cover-placeholder">
+                No Cover
+            </div>
+        `;
+
+    }
+
+
+    let latestChapter = "No chapters";
 
 
     if (
@@ -238,28 +216,19 @@ function createMangaCard(manga) {
         <div class="manga-info">
 
             <h3>
-                ${escapeHTML(
-                    manga.title
-                )}
+                ${escapeHTML(manga.title)}
             </h3>
 
 
             <p>
-
                 ${escapeHTML(
-                    manga.description ||
-                    "Manga"
+                    manga.description || "Manga"
                 )}
-
             </p>
 
 
             <span class="chapter">
-
-                ${escapeHTML(
-                    latestChapter
-                )}
-
+                ${escapeHTML(latestChapter)}
             </span>
 
         </div>
@@ -269,11 +238,9 @@ function createMangaCard(manga) {
 
     card.addEventListener(
         "click",
-        function () {
+        function() {
 
-            openManga(
-                manga.id
-            );
+            openManga(manga.id);
 
         }
     );
@@ -291,43 +258,47 @@ function createMangaCard(manga) {
 function displayFeatured(manga) {
 
     const container =
-        document.getElementById(
-            "featuredManga"
+        document.getElementById("featuredManga");
+
+
+    if (!container) {
+
+        console.error(
+            "featuredManga element not found"
         );
-
-
-    if (
-        !container ||
-        !manga ||
-        manga.length === 0
-    ) {
 
         return;
 
     }
 
 
-    const featured =
-        manga[0];
+    if (!manga || manga.length === 0) {
+
+        return;
+
+    }
 
 
-    const coverHTML =
-        featured.cover
+    const featured = manga[0];
 
-            ? `
-                <img
-                    src="${escapeHTML(
-                        featured.cover
-                    )}"
-                    alt="${escapeHTML(
-                        featured.title
-                    )}"
-                >
-            `
 
-            : `
-                Featured
-            `;
+    let coverHTML;
+
+
+    if (featured.cover) {
+
+        coverHTML = `
+            <img
+                src="${escapeHTML(featured.cover)}"
+                alt="${escapeHTML(featured.title)}"
+            >
+        `;
+
+    } else {
+
+        coverHTML = "Featured";
+
+    }
 
 
     container.innerHTML = `
@@ -347,27 +318,21 @@ function displayFeatured(manga) {
 
 
             <h3>
-
-                ${escapeHTML(
-                    featured.title
-                )}
-
+                ${escapeHTML(featured.title)}
             </h3>
 
 
             <p>
-
                 ${escapeHTML(
                     featured.description ||
                     "Read this manga online."
                 )}
-
             </p>
 
 
             <a
                 class="btn"
-                href="manga.html?id=${encodeURIComponent(
+                href="./manga.html?id=${encodeURIComponent(
                     featured.id
                 )}"
             >
@@ -388,12 +353,14 @@ function displayFeatured(manga) {
 function setupSearch() {
 
     const searchInput =
-        document.getElementById(
-            "searchInput"
-        );
+        document.getElementById("searchInput");
 
 
     if (!searchInput) {
+
+        console.error(
+            "searchInput element not found"
+        );
 
         return;
 
@@ -402,7 +369,7 @@ function setupSearch() {
 
     searchInput.addEventListener(
         "input",
-        function () {
+        function() {
 
             const query =
                 this.value
@@ -412,13 +379,9 @@ function setupSearch() {
 
             if (!query) {
 
-                displayLatestManga(
-                    mangaList
-                );
+                displayLatestManga(mangaList);
 
-                displayLibrary(
-                    mangaList
-                );
+                displayLibrary(mangaList);
 
                 return;
 
@@ -426,71 +389,42 @@ function setupSearch() {
 
 
             const results =
-                mangaList.filter(
-                    manga => {
+                mangaList.filter(function(manga) {
 
-                        const title =
-                            String(
-                                manga.title ||
-                                ""
-                            )
-                            .toLowerCase();
+                    const title =
+                        String(
+                            manga.title || ""
+                        ).toLowerCase();
 
 
-                        const japaneseTitle =
-                            String(
-                                manga.japaneseTitle ||
-                                ""
-                            )
-                            .toLowerCase();
+                    const japaneseTitle =
+                        String(
+                            manga.japaneseTitle || ""
+                        ).toLowerCase();
 
 
-                        const description =
-                            String(
-                                manga.description ||
-                                ""
-                            )
-                            .toLowerCase();
+                    const description =
+                        String(
+                            manga.description || ""
+                        ).toLowerCase();
 
 
-                        return (
+                    return (
+                        title.includes(query) ||
+                        japaneseTitle.includes(query) ||
+                        description.includes(query)
+                    );
 
-                            title.includes(
-                                query
-                            )
-
-                            ||
-
-                            japaneseTitle.includes(
-                                query
-                            )
-
-                            ||
-
-                            description.includes(
-                                query
-                            )
-
-                        );
-
-                    }
-                );
+                });
 
 
-            displayLatestManga(
-                results
-            );
+            displayLatestManga(results);
 
-
-            displayLibrary(
-                results
-            );
+            displayLibrary(results);
 
 
             const noResults =
-                document.getElementById(
-                    "noResults"
-                );
+                document.getElementById("noResults");
 
 
             if (noResults) {
@@ -509,27 +443,33 @@ function setupSearch() {
 
 
 /* ==========================================
+   OPEN MANGA
+========================================== */
+
+function openManga(id) {
+
+    window.location.href =
+        `./manga.html?id=${encodeURIComponent(id)}`;
+
+}
+
+
+/* ==========================================
    ERROR
 ========================================== */
 
 function showLoadError() {
 
     const latest =
-        document.getElementById(
-            "mangaGrid"
-        );
+        document.getElementById("mangaGrid");
 
 
     const library =
-        document.getElementById(
-            "libraryGrid"
-        );
+        document.getElementById("libraryGrid");
 
 
     const error =
-        document.getElementById(
-            "loadError"
-        );
+        document.getElementById("loadError");
 
 
     if (latest) {
@@ -548,8 +488,7 @@ function showLoadError() {
 
     if (error) {
 
-        error.style.display =
-            "block";
+        error.style.display = "block";
 
     }
 
@@ -557,57 +496,28 @@ function showLoadError() {
 
 
 /* ==========================================
-   OPEN MANGA
-========================================== */
-
-function openManga(id) {
-
-    window.location.href =
-        `manga.html?id=${encodeURIComponent(
-            id
-        )}`;
-
-}
-
-
-/* ==========================================
-   SECURITY
+   HTML ESCAPE
 ========================================== */
 
 function escapeHTML(value) {
 
     return String(value)
 
-        .replace(
-            /&/g,
-            "&amp;"
-        )
+        .replace(/&/g, "&amp;")
 
-        .replace(
-            /</g,
-            "&lt;"
-        )
+        .replace(/</g, "&lt;")
 
-        .replace(
-            />/g,
-            "&gt;"
-        )
+        .replace(/>/g, "&gt;")
 
-        .replace(
-            /"/g,
-            "&quot;"
-        )
+        .replace(/"/g, "&quot;")
 
-        .replace(
-            /'/g,
-            "&#039;"
-        );
+        .replace(/'/g, "&#039;");
 
 }
 
 
 /* ==========================================
-   START APPLICATION
+   START
 ========================================== */
 
 document.addEventListener(
