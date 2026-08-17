@@ -17,7 +17,6 @@
 
     <title>Chapter - MangaJPRaw</title>
 
-
     <style>
 
         * {
@@ -26,9 +25,7 @@
             box-sizing: border-box;
         }
 
-
         :root {
-
             --background: #080b12;
             --surface: #111827;
             --surface-2: #151e2e;
@@ -39,12 +36,13 @@
 
             --accent: #ff4d6d;
             --accent-hover: #ff365a;
-
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
 
         body {
-
             font-family:
                 Arial,
                 Helvetica,
@@ -58,29 +56,24 @@
 
             min-height:
                 100vh;
-
         }
-
 
         a {
-
             color: inherit;
-
             text-decoration: none;
-
         }
 
+        button {
+            font-family: inherit;
+        }
 
         /* =========================
            HEADER
         ========================= */
 
         header {
-
             position: sticky;
-
             top: 0;
-
             z-index: 1000;
 
             background:
@@ -91,117 +84,67 @@
 
             border-bottom:
                 1px solid var(--border);
-
         }
-
 
         .navbar {
+            max-width: 1100px;
+            margin: auto;
 
-            max-width:
-                1100px;
+            padding: 16px 20px;
 
-            margin:
-                auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
 
-            padding:
-                16px 20px;
-
-            display:
-                flex;
-
-            align-items:
-                center;
-
-            justify-content:
-                space-between;
-
-            gap:
-                20px;
-
+            gap: 20px;
         }
-
 
         .logo {
-
-            font-size:
-                24px;
-
-            font-weight:
-                800;
-
+            font-size: 24px;
+            font-weight: 800;
         }
-
 
         .logo span {
-
-            color:
-                var(--accent);
-
+            color: var(--accent);
         }
-
 
         .chapter-title {
-
-            color:
-                var(--muted);
-
-            font-size:
-                14px;
-
-            text-align:
-                right;
-
+            color: var(--muted);
+            font-size: 14px;
+            text-align: right;
         }
 
-
         /* =========================
-           TOP CONTROLS
+           READER CONTAINER
         ========================= */
 
         .reader-container {
-
-            max-width:
-                1000px;
-
-            margin:
-                auto;
+            max-width: 1000px;
+            margin: auto;
 
             padding:
                 25px 15px 60px;
-
         }
 
+        /* =========================
+           NAVIGATION
+        ========================= */
 
-        .top-controls {
+        .navigation {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
 
-            display:
-                flex;
+            gap: 10px;
 
-            align-items:
-                center;
-
-            justify-content:
-                space-between;
-
-            gap:
-                10px;
-
-            margin-bottom:
-                20px;
-
+            margin-bottom: 25px;
         }
-
 
         .control-button {
+            display: inline-flex;
 
-            display:
-                inline-flex;
-
-            align-items:
-                center;
-
-            justify-content:
-                center;
+            align-items: center;
+            justify-content: center;
 
             background:
                 var(--surface);
@@ -226,89 +169,52 @@
 
             transition:
                 0.2s;
-
         }
 
-
         .control-button:hover {
-
             background:
                 var(--surface-2);
 
             border-color:
                 var(--accent);
-
         }
-
 
         .control-button.disabled {
-
-            opacity:
-                0.4;
-
-            pointer-events:
-                none;
-
+            opacity: 0.4;
+            pointer-events: none;
         }
-
 
         /* =========================
            CHAPTER INFO
         ========================= */
 
         .chapter-info {
-
-            text-align:
-                center;
+            text-align: center;
 
             padding:
-                20px;
-
-            margin-bottom:
-                25px;
-
+                15px 10px 25px;
         }
-
 
         .chapter-info h1 {
-
-            font-size:
-                30px;
-
-            margin-bottom:
-                8px;
-
+            font-size: 30px;
+            margin-bottom: 8px;
         }
-
 
         .chapter-info p {
-
-            color:
-                var(--muted);
-
-            font-size:
-                14px;
-
+            color: var(--muted);
+            font-size: 14px;
         }
-
 
         /* =========================
            READER
         ========================= */
 
         .reader {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
 
-            display:
-                flex;
-
-            flex-direction:
-                column;
-
-            align-items:
-                center;
-
-            gap:
-                5px;
+            gap: 4px;
 
             background:
                 #000;
@@ -317,89 +223,56 @@
                 1px solid var(--border);
 
             padding:
-                5px;
-
+                4px;
         }
-
 
         .page {
+            display: block;
 
-            display:
-                block;
+            width: 100%;
+            max-width: 900px;
 
-            width:
-                100%;
+            height: auto;
 
-            max-width:
-                900px;
+            margin: 0 auto;
 
-            height:
-                auto;
+            background: #111;
 
-            margin:
-                0 auto;
-
-            background:
-                #111;
-
+            user-select: none;
         }
-
 
         .page-number {
+            width: 100%;
 
-            width:
-                100%;
+            text-align: center;
 
-            text-align:
-                center;
+            padding: 8px;
 
-            padding:
-                10px;
+            color: var(--muted);
 
-            color:
-                var(--muted);
+            font-size: 12px;
 
-            font-size:
-                12px;
-
-            background:
-                #0b0b0b;
-
+            background: #0b0b0b;
         }
 
+        .page-error {
+            width: 100%;
 
-        /* =========================
-           BOTTOM CONTROLS
-        ========================= */
+            padding: 30px 15px;
 
-        .bottom-controls {
+            text-align: center;
 
-            display:
-                flex;
+            color: var(--muted);
 
-            align-items:
-                center;
-
-            justify-content:
-                space-between;
-
-            gap:
-                10px;
-
-            margin-top:
-                25px;
-
+            background: #111;
         }
-
 
         /* =========================
            LOADING
         ========================= */
 
         .loading {
-
-            text-align:
-                center;
+            text-align: center;
 
             padding:
                 100px 20px;
@@ -407,16 +280,12 @@
             color:
                 var(--muted);
 
+            width: 100%;
         }
 
-
         .loading-spinner {
-
-            width:
-                40px;
-
-            height:
-                40px;
+            width: 40px;
+            height: 40px;
 
             margin:
                 0 auto 20px;
@@ -432,63 +301,55 @@
 
             animation:
                 spin 0.8s linear infinite;
-
         }
-
 
         @keyframes spin {
 
             to {
-
                 transform:
                     rotate(360deg);
-
             }
 
         }
 
+        /* =========================
+           BOTTOM NAVIGATION
+        ========================= */
+
+        .bottom-navigation {
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 10px;
+
+            margin-top: 25px;
+        }
 
         /* =========================
            ERROR
         ========================= */
 
         .error {
-
-            text-align:
-                center;
+            text-align: center;
 
             padding:
                 100px 20px;
-
         }
-
 
         .error h1 {
-
-            font-size:
-                32px;
-
-            margin-bottom:
-                15px;
-
+            font-size: 32px;
+            margin-bottom: 15px;
         }
-
 
         .error p {
-
-            color:
-                var(--muted);
-
-            margin-bottom:
-                25px;
-
+            color: var(--muted);
+            margin-bottom: 25px;
         }
 
-
         .home-button {
-
-            display:
-                inline-block;
+            display: inline-block;
 
             background:
                 var(--accent);
@@ -501,16 +362,18 @@
 
             font-weight:
                 bold;
-
         }
 
+        .home-button:hover {
+            background:
+                var(--accent-hover);
+        }
 
         /* =========================
            FOOTER
         ========================= */
 
         footer {
-
             border-top:
                 1px solid var(--border);
 
@@ -528,17 +391,11 @@
 
             font-size:
                 13px;
-
         }
-
 
         footer strong {
-
-            color:
-                white;
-
+            color: white;
         }
-
 
         /* =========================
            MOBILE
@@ -547,81 +404,55 @@
         @media (max-width: 600px) {
 
             .navbar {
-
                 padding:
                     13px 15px;
-
             }
-
 
             .logo {
-
                 font-size:
                     20px;
-
             }
-
 
             .chapter-title {
-
                 font-size:
                     12px;
-
             }
-
 
             .reader-container {
-
                 padding:
                     15px 5px 40px;
-
             }
-
 
             .chapter-info {
-
                 padding:
-                    15px 5px;
-
+                    15px 5px 25px;
             }
-
 
             .chapter-info h1 {
-
                 font-size:
                     24px;
-
             }
 
-
-            .top-controls,
-            .bottom-controls {
-
+            .navigation,
+            .bottom-navigation {
                 padding:
                     0 5px;
-
             }
 
-
             .control-button {
-
                 padding:
                     9px 11px;
 
                 font-size:
                     12px;
-
             }
 
-
             .reader {
-
                 border-left:
                     none;
 
                 border-right:
                     none;
-
             }
 
         }
@@ -646,19 +477,14 @@
                 href="./index.html"
                 class="logo"
             >
-
                 Manga<span>JPRaw</span>
-
             </a>
-
 
             <div
                 class="chapter-title"
                 id="headerChapter"
             >
-
                 Loading...
-
             </div>
 
         </nav>
@@ -667,7 +493,7 @@
 
 
     <!-- =========================
-         MAIN READER
+         MAIN
     ========================= -->
 
     <main
@@ -678,15 +504,13 @@
 
         <!-- TOP NAVIGATION -->
 
-        <div class="top-controls">
+        <div class="navigation">
 
             <a
                 href="./index.html"
                 class="control-button"
             >
-
                 ← Home
-
             </a>
 
 
@@ -694,9 +518,7 @@
                 class="control-button"
                 id="backToManga"
             >
-
-                Manga
-
+                Chapters
             </button>
 
         </div>
@@ -707,22 +529,17 @@
         <section class="chapter-info">
 
             <h1 id="chapterHeading">
-
                 Loading...
-
             </h1>
 
-
             <p id="chapterSubheading">
-
                 Loading chapter...
-
             </p>
 
         </section>
 
 
-        <!-- MANGA PAGES -->
+        <!-- READER -->
 
         <section
             class="reader"
@@ -744,15 +561,13 @@
 
         <!-- BOTTOM NAVIGATION -->
 
-        <div class="bottom-controls">
+        <div class="bottom-navigation">
 
             <button
                 class="control-button"
                 id="previousChapter"
             >
-
                 ← Previous
-
             </button>
 
 
@@ -760,9 +575,7 @@
                 class="control-button"
                 id="backToMangaBottom"
             >
-
                 Chapters
-
             </button>
 
 
@@ -770,9 +583,7 @@
                 class="control-button"
                 id="nextChapter"
             >
-
                 Next →
-
             </button>
 
         </div>
@@ -787,16 +598,12 @@
     <footer>
 
         <p>
-
             © 2026
             <strong>MangaJPRaw</strong>
-
         </p>
 
         <p>
-
             English Manga Reading Platform
-
         </p>
 
     </footer>
@@ -804,19 +611,16 @@
 
     <script>
 
-        const DATA_URL =
-            "./data/manga.json";
+        const DATA_URL = "./data/manga.json";
 
 
         let currentManga = null;
-
         let currentChapter = null;
-
         let chapters = [];
 
 
         /* =========================
-           GET URL PARAMETERS
+           URL PARAMETERS
         ========================= */
 
         function getParameters() {
@@ -825,7 +629,6 @@
                 new URLSearchParams(
                     window.location.search
                 );
-
 
             return {
 
@@ -841,7 +644,85 @@
 
 
         /* =========================
-           LOAD DATA
+           RESOLVE IMAGE URL
+        ========================= */
+
+        function resolvePageUrl(page) {
+
+            if (!page) {
+                return "";
+            }
+
+
+            page = String(page).trim();
+
+
+            /*
+             * External image
+             */
+
+            if (
+                page.startsWith("http://") ||
+                page.startsWith("https://")
+            ) {
+
+                return page;
+
+            }
+
+
+            /*
+             * Root-relative path
+             *
+             * /images/one-piece/1187/001.jpg
+             */
+
+            if (page.startsWith("/")) {
+
+                return "." + page;
+
+            }
+
+
+            /*
+             * Data-relative path
+             *
+             * ../images/one-piece/1187/001.jpg
+             */
+
+            if (page.startsWith("../")) {
+
+                return page.substring(3);
+
+            }
+
+
+            /*
+             * Current-directory path
+             *
+             * ./images/...
+             */
+
+            if (page.startsWith("./")) {
+
+                return page.substring(2);
+
+            }
+
+
+            /*
+             * Plain path
+             *
+             * images/...
+             */
+
+            return page;
+
+        }
+
+
+        /* =========================
+           LOAD CHAPTER
         ========================= */
 
         async function loadChapter() {
@@ -868,7 +749,10 @@
 
                 const response =
                     await fetch(
-                        DATA_URL
+                        DATA_URL,
+                        {
+                            cache: "no-store"
+                        }
                     );
 
 
@@ -888,8 +772,8 @@
                 currentManga =
                     mangaList.find(
                         manga =>
-                            manga.id ===
-                            params.mangaId
+                            String(manga.id) ===
+                            String(params.mangaId)
                     );
 
 
@@ -905,7 +789,11 @@
 
 
                 chapters =
-                    currentManga.chapters || [];
+                    Array.isArray(
+                        currentManga.chapters
+                    )
+                        ? currentManga.chapters
+                        : [];
 
 
                 currentChapter =
@@ -932,25 +820,24 @@
 
 
                 console.log(
-                    "Manga:",
+                    "Manga loaded:",
                     currentManga
                 );
 
 
                 console.log(
-                    "Chapter:",
+                    "Chapter loaded:",
                     currentChapter
                 );
 
 
                 displayChapter();
 
-
                 setupNavigation();
 
 
                 document.title =
-                    `${currentManga.title} - Chapter ${currentChapter.number} - MangaJPRaw`;
+                    `${currentManga.title} - ${getChapterTitle()} - MangaJPRaw`;
 
 
             } catch (error) {
@@ -971,14 +858,27 @@
 
 
         /* =========================
+           CHAPTER TITLE
+        ========================= */
+
+        function getChapterTitle() {
+
+            return (
+                currentChapter.title ||
+                `Chapter ${currentChapter.number}`
+            );
+
+        }
+
+
+        /* =========================
            DISPLAY CHAPTER
         ========================= */
 
         function displayChapter() {
 
             const title =
-                currentChapter.title ||
-                `Chapter ${currentChapter.number}`;
+                getChapterTitle();
 
 
             document.getElementById(
@@ -1006,13 +906,14 @@
 
 
             const pages =
-                currentChapter.pages || [];
+                Array.isArray(
+                    currentChapter.pages
+                )
+                    ? currentChapter.pages
+                    : [];
 
 
-            if (
-                !pages ||
-                pages.length === 0
-            ) {
+            if (pages.length === 0) {
 
                 reader.innerHTML = `
 
@@ -1047,12 +948,17 @@
 
 
                     image.src =
-                        page;
+                        resolvePageUrl(page);
 
 
                     image.alt =
                         `${currentManga.title} - ${title} - Page ${index + 1}`;
 
+
+                    /*
+                     * First page loads immediately.
+                     * Remaining pages load lazily.
+                     */
 
                     image.loading =
                         index === 0
@@ -1060,7 +966,12 @@
                             : "lazy";
 
 
-                    image.onerror =
+                    image.decoding =
+                        "async";
+
+
+                    image.addEventListener(
+                        "error",
                         function() {
 
                             console.error(
@@ -1069,10 +980,28 @@
                             );
 
 
-                            image.style.display =
-                                "none";
+                            const error =
+                                document.createElement(
+                                    "div"
+                                );
 
-                        };
+
+                            error.className =
+                                "page-error";
+
+
+                            error.innerHTML = `
+                                Page ${index + 1}
+                                could not be loaded.
+                            `;
+
+
+                            image.replaceWith(
+                                error
+                            );
+
+                        }
+                    );
 
 
                     reader.appendChild(
@@ -1161,6 +1090,11 @@
 
             if (previous) {
 
+                previousButton.classList.remove(
+                    "disabled"
+                );
+
+
                 previousButton.onclick =
                     function() {
 
@@ -1180,6 +1114,11 @@
 
 
             if (next) {
+
+                nextButton.classList.remove(
+                    "disabled"
+                );
+
 
                 nextButton.onclick =
                     function() {
@@ -1246,7 +1185,7 @@
 
 
         /* =========================
-           ERROR
+           ERROR PAGE
         ========================= */
 
         function showError(message) {
@@ -1335,7 +1274,6 @@
         );
 
     </script>
-
 
 </body>
 
