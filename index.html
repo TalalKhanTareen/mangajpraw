@@ -1,337 +1,702 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="MangaJPRaw - Read English manga online."
+    >
 
     <title>MangaJPRaw - Read Manga Online</title>
 
-    <meta name="description"
-          content="Read your favorite manga online at MangaJPRaw. Discover latest chapters, popular manga and more.">
 
     <style>
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #080b12;
-            color: #ffffff;
-            line-height: 1.6;
+
+        :root {
+
+            --background: #080b12;
+            --surface: #111827;
+            --surface-2: #151e2e;
+            --border: #263247;
+
+            --text: #ffffff;
+            --muted: #9aa7bb;
+
+            --accent: #ff4d6d;
+            --accent-hover: #ff365a;
+
         }
 
-        a {
-            color: inherit;
-            text-decoration: none;
+
+        body {
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: var(--background);
+
+            color: var(--text);
+
+            min-height: 100vh;
+
         }
+
+
+        a {
+
+            color: inherit;
+
+            text-decoration: none;
+
+        }
+
+
+        button,
+        input {
+
+            font-family: inherit;
+
+        }
+
 
         /* =========================
            HEADER
         ========================= */
 
         header {
-            background: #111827;
-            border-bottom: 1px solid #263247;
+
             position: sticky;
+
             top: 0;
+
             z-index: 1000;
+
+            background:
+                rgba(17, 24, 39, 0.95);
+
+            backdrop-filter: blur(10px);
+
+            border-bottom:
+                1px solid var(--border);
+
         }
+
 
         .navbar {
+
             max-width: 1200px;
+
             margin: auto;
-            padding: 18px 25px;
+
+            padding:
+                18px 25px;
+
             display: flex;
+
             align-items: center;
+
             justify-content: space-between;
+
         }
+
 
         .logo {
+
             font-size: 28px;
+
             font-weight: 800;
-            letter-spacing: -1px;
+
         }
+
 
         .logo span {
-            color: #ff4d6d;
+
+            color: var(--accent);
+
         }
+
 
         .nav-links {
+
             display: flex;
+
             gap: 30px;
-            align-items: center;
+
         }
+
 
         .nav-links a {
-            font-size: 16px;
+
             color: #dbe2f0;
+
+            font-size: 15px;
+
             transition: 0.2s;
+
         }
 
+
         .nav-links a:hover {
-            color: #ff4d6d;
+
+            color: var(--accent);
+
         }
+
 
         /* =========================
            HERO
         ========================= */
 
         .hero {
-            min-height: 480px;
+
+            min-height: 450px;
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
+
             text-align: center;
-            padding: 70px 20px;
+
+            padding: 60px 20px;
+
             background:
-                radial-gradient(circle at top left, #1e293b, transparent 45%),
-                radial-gradient(circle at bottom right, #321827, transparent 45%),
-                #080b12;
+
+                radial-gradient(
+                    circle at top left,
+                    #1e293b,
+                    transparent 45%
+                ),
+
+                radial-gradient(
+                    circle at bottom right,
+                    #321827,
+                    transparent 45%
+                ),
+
+                var(--background);
+
         }
+
 
         .hero-content {
+
             width: 100%;
+
             max-width: 850px;
+
         }
+
 
         .hero h1 {
-            font-size: clamp(42px, 7vw, 76px);
+
+            font-size:
+                clamp(42px, 7vw, 75px);
+
             line-height: 1.05;
+
             margin-bottom: 20px;
+
         }
+
 
         .hero h1 span {
-            color: #ff4d6d;
+
+            color: var(--accent);
+
         }
+
 
         .hero p {
-            color: #aeb8ca;
-            font-size: 20px;
-            margin-bottom: 35px;
+
+            color: var(--muted);
+
+            font-size: 19px;
+
+            margin-bottom: 32px;
+
         }
 
-        /* SEARCH */
+
+        /* =========================
+           SEARCH
+        ========================= */
 
         .search-container {
-            position: relative;
+
             max-width: 700px;
+
             margin: auto;
+
         }
 
+
         .search-container input {
+
             width: 100%;
-            padding: 20px 25px;
+
+            padding:
+                18px 22px;
+
             border: none;
+
             outline: none;
-            border-radius: 12px;
-            font-size: 17px;
-            background: #ffffff;
+
+            border-radius: 10px;
+
+            font-size: 16px;
+
+            background: white;
+
             color: #111827;
-            box-shadow: 0 10px 35px rgba(0,0,0,0.35);
+
         }
+
 
         /* =========================
            MAIN
         ========================= */
 
         main {
+
             max-width: 1200px;
+
             margin: auto;
-            padding: 60px 25px;
+
+            padding:
+                55px 25px;
+
         }
+
 
         .section {
-            margin-bottom: 70px;
+
+            margin-bottom: 65px;
+
         }
+
 
         .section-header {
+
             display: flex;
+
             align-items: center;
+
             justify-content: space-between;
+
             margin-bottom: 25px;
+
         }
+
 
         .section-header h2 {
-            font-size: 30px;
+
+            font-size: 29px;
+
         }
 
+
         .section-header a {
-            color: #ff4d6d;
-            font-size: 15px;
+
+            color: var(--accent);
+
+            font-size: 14px;
+
         }
+
 
         /* =========================
            FEATURED
         ========================= */
 
         .featured {
-            background: linear-gradient(
-                135deg,
-                #151d2e,
-                #0f1420
-            );
 
-            border: 1px solid #263247;
-            border-radius: 18px;
-            padding: 35px;
             display: grid;
-            grid-template-columns: 220px 1fr;
+
+            grid-template-columns:
+                220px 1fr;
+
             gap: 35px;
-            overflow: hidden;
+
+            padding: 30px;
+
+            border-radius: 16px;
+
+            border:
+                1px solid var(--border);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--surface-2),
+                    #0e141f
+                );
+
         }
+
 
         .featured-cover {
+
             height: 300px;
-            border-radius: 12px;
-            background: linear-gradient(
-                135deg,
-                #ff4d6d,
-                #7c3aed
-            );
+
+            border-radius: 10px;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff4d6d,
+                    #7c3aed
+                );
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
-            font-size: 28px;
+
             font-weight: bold;
+
+            font-size: 22px;
+
         }
+
+
+        .featured-cover img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+        }
+
 
         .featured-info {
+
             display: flex;
+
             flex-direction: column;
+
             justify-content: center;
+
         }
 
-        .featured-info .tag {
-            display: inline-block;
+
+        .tag {
+
             width: fit-content;
-            background: #ff4d6d;
-            padding: 6px 12px;
+
+            background: var(--accent);
+
+            padding:
+                5px 11px;
+
             border-radius: 20px;
-            font-size: 13px;
-            margin-bottom: 15px;
+
+            font-size: 12px;
+
+            margin-bottom: 14px;
+
         }
+
 
         .featured-info h3 {
-            font-size: 35px;
-            margin-bottom: 15px;
+
+            font-size: 34px;
+
+            margin-bottom: 12px;
+
         }
+
 
         .featured-info p {
-            color: #aeb8ca;
+
+            color: var(--muted);
+
             max-width: 650px;
-            margin-bottom: 25px;
+
+            margin-bottom: 22px;
+
         }
+
 
         .btn {
-            display: inline-block;
+
             width: fit-content;
-            padding: 12px 22px;
-            border-radius: 8px;
-            background: #ff4d6d;
-            color: white;
+
+            background: var(--accent);
+
+            padding:
+                11px 20px;
+
+            border-radius: 7px;
+
             font-weight: bold;
+
             transition: 0.2s;
+
         }
 
+
         .btn:hover {
+
+            background: var(--accent-hover);
+
             transform: translateY(-2px);
-            background: #ff365a;
+
         }
+
 
         /* =========================
            MANGA GRID
         ========================= */
 
         .manga-grid {
+
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 22px;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 20px;
+
         }
+
 
         .manga-card {
-            background: #111827;
-            border: 1px solid #263247;
-            border-radius: 12px;
+
+            background: var(--surface);
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 11px;
+
             overflow: hidden;
+
+            cursor: pointer;
+
             transition: 0.25s;
+
         }
+
 
         .manga-card:hover {
-            transform: translateY(-6px);
-            border-color: #ff4d6d;
+
+            transform:
+                translateY(-5px);
+
+            border-color:
+                var(--accent);
+
         }
+
 
         .manga-cover {
-            height: 290px;
+
+            height: 285px;
+
             background:
-                linear-gradient(
-                    135deg,
-                    #273449,
-                    #111827
-                );
+                #1a2434;
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
-            color: #8e99ad;
-            font-size: 18px;
+
+            overflow: hidden;
+
         }
+
+
+        .manga-cover img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+        }
+
+
+        .manga-cover-placeholder {
+
+            color: #77849a;
+
+            text-align: center;
+
+            padding: 20px;
+
+        }
+
 
         .manga-info {
-            padding: 17px;
+
+            padding: 15px;
+
         }
+
 
         .manga-info h3 {
-            font-size: 18px;
-            margin-bottom: 7px;
+
+            font-size: 17px;
+
+            margin-bottom: 6px;
+
             white-space: nowrap;
+
             overflow: hidden;
+
             text-overflow: ellipsis;
+
         }
+
 
         .manga-info p {
-            color: #8995aa;
-            font-size: 14px;
+
+            color: var(--muted);
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+            height: 39px;
+
+            overflow: hidden;
+
         }
 
+
         .chapter {
-            margin-top: 12px;
+
             display: inline-block;
-            background: #1d2637;
-            color: #ff7188;
-            padding: 5px 9px;
+
+            margin-top: 10px;
+
+            padding:
+                5px 9px;
+
             border-radius: 5px;
+
+            background: #1d2637;
+
+            color: #ff7188;
+
             font-size: 12px;
+
         }
+
+
+        /* =========================
+           LOADING
+        ========================= */
+
+        .loading {
+
+            grid-column: 1 / -1;
+
+            text-align: center;
+
+            padding: 50px;
+
+            color: var(--muted);
+
+        }
+
 
         /* =========================
            NO RESULTS
         ========================= */
 
         #noResults {
+
             display: none;
+
             text-align: center;
+
             padding: 50px 20px;
-            color: #8995aa;
+
+            color: var(--muted);
+
         }
+
+
+        #noResults h3 {
+
+            color: white;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        /* =========================
+           ERROR
+        ========================= */
+
+        #loadError {
+
+            display: none;
+
+            text-align: center;
+
+            padding: 40px;
+
+            color: #ff7188;
+
+        }
+
 
         /* =========================
            FOOTER
         ========================= */
 
         footer {
-            background: #111827;
-            border-top: 1px solid #263247;
-            padding: 40px 20px;
+
+            border-top:
+                1px solid var(--border);
+
+            background:
+                var(--surface);
+
             text-align: center;
-            color: #8995aa;
+
+            padding: 40px 20px;
+
+            color: var(--muted);
+
         }
 
+
         footer strong {
+
             color: white;
+
         }
+
 
         /* =========================
            MOBILE
@@ -340,485 +705,246 @@
         @media (max-width: 900px) {
 
             .manga-grid {
-                grid-template-columns: repeat(3, 1fr);
+
+                grid-template-columns:
+                    repeat(3, 1fr);
+
             }
+
 
             .featured {
-                grid-template-columns: 170px 1fr;
+
+                grid-template-columns:
+                    170px 1fr;
+
             }
 
+
             .featured-cover {
+
                 height: 240px;
+
             }
+
         }
+
 
         @media (max-width: 650px) {
 
             .navbar {
-                padding: 15px;
+
+                padding:
+                    15px;
+
             }
+
 
             .logo {
+
                 font-size: 23px;
+
             }
+
 
             .nav-links {
-                gap: 15px;
+
+                gap: 14px;
+
             }
+
 
             .nav-links a {
-                font-size: 14px;
+
+                font-size: 13px;
+
             }
+
 
             .hero {
-                min-height: 430px;
-                padding: 50px 18px;
+
+                min-height: 400px;
+
+                padding:
+                    50px 18px;
+
             }
+
 
             .hero p {
-                font-size: 17px;
+
+                font-size: 16px;
+
             }
+
 
             main {
-                padding: 40px 15px;
+
+                padding:
+                    40px 15px;
+
             }
+
 
             .featured {
+
                 grid-template-columns: 1fr;
+
                 padding: 20px;
+
             }
+
 
             .featured-cover {
+
                 height: 300px;
+
             }
+
 
             .featured-info h3 {
+
                 font-size: 28px;
+
             }
+
 
             .manga-grid {
-                grid-template-columns: repeat(2, 1fr);
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
                 gap: 14px;
+
             }
+
 
             .manga-cover {
+
                 height: 230px;
+
             }
+
 
             .manga-info {
-                padding: 12px;
+
+                padding: 11px;
+
             }
 
+
             .manga-info h3 {
+
                 font-size: 15px;
+
             }
+
         }
+
 
         @media (max-width: 400px) {
 
             .nav-links {
-                gap: 10px;
+
+                gap: 9px;
+
             }
+
 
             .nav-links a {
+
                 font-size: 12px;
+
             }
 
-            .manga-grid {
-                grid-template-columns: 1fr 1fr;
-            }
 
             .manga-cover {
+
                 height: 200px;
+
             }
+
         }
+
     </style>
+
 </head>
+
 
 <body>
 
-<!-- =========================
-     HEADER
-========================= -->
 
-<header>
+    <!-- =========================
+         HEADER
+    ========================= -->
 
-    <nav class="navbar">
+    <header>
 
-        <a href="#" class="logo">
-            Manga<span>JPRaw</span>
-        </a>
+        <nav class="navbar">
 
-        <div class="nav-links">
-            <a href="#">Home</a>
-            <a href="#manga">Manga</a>
-            <a href="#latest">Latest</a>
-        </div>
-
-    </nav>
-
-</header>
-
-
-<!-- =========================
-     HERO
-========================= -->
-
-<section class="hero">
-
-    <div class="hero-content">
-
-        <h1>
-            Read <span>Manga</span> Online
-        </h1>
-
-        <p>
-            Discover your favorite manga and read the latest chapters online.
-        </p>
-
-        <div class="search-container">
-
-            <input
-                type="text"
-                id="searchInput"
-                placeholder="Search manga..."
-                autocomplete="off"
+            <a
+                href="./index.html"
+                class="logo"
             >
 
-        </div>
+                Manga<span>JPRaw</span>
 
-    </div>
-
-</section>
+            </a>
 
 
-<!-- =========================
-     MAIN CONTENT
-========================= -->
+            <div class="nav-links">
 
-<main>
+                <a href="./index.html">
+                    Home
+                </a>
 
+                <a href="#manga">
+                    Manga
+                </a>
 
-    <!-- FEATURED -->
-
-    <section class="section">
-
-        <div class="section-header">
-
-            <h2>Featured Manga</h2>
-
-        </div>
-
-        <div class="featured">
-
-            <div class="featured-cover">
-                FEATURED
-            </div>
-
-            <div class="featured-info">
-
-                <span class="tag">
-                    Featured
-                </span>
-
-                <h3>
-                    One Piece
-                </h3>
-
-                <p>
-                    Follow the adventures of Luffy and the Straw Hat Pirates
-                    as they search for the legendary One Piece.
-                </p>
-
-                <a href="#" class="btn">
-                    Read Manga
+                <a href="#latest">
+                    Latest
                 </a>
 
             </div>
 
-        </div>
+        </nav>
 
-    </section>
+    </header>
 
 
-    <!-- LATEST -->
+    <!-- =========================
+         HERO
+    ========================= -->
 
-    <section class="section" id="latest">
+    <section class="hero">
 
-        <div class="section-header">
+        <div class="hero-content">
 
-            <h2>
-                Latest Manga
-            </h2>
+            <h1>
 
-            <a href="#">
-                View All →
-            </a>
+                Read
+                <span>Manga</span>
+                Online
 
-        </div>
+            </h1>
 
-        <div class="manga-grid" id="mangaGrid">
 
+            <p>
 
-            <!-- MANGA 1 -->
+                Discover manga and read
+                the latest chapters online.
 
-            <div class="manga-card">
+            </p>
 
-                <div class="manga-cover">
-                    Cover
-                </div>
 
-                <div class="manga-info">
+            <div class="search-container">
 
-                    <h3>One Piece</h3>
-
-                    <p>Updated recently</p>
-
-                    <span class="chapter">
-                        Chapter 1187
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <!-- MANGA 2 -->
-
-            <div class="manga-card">
-
-                <div class="manga-cover">
-                    Cover
-                </div>
-
-                <div class="manga-info">
-
-                    <h3>Jujutsu Kaisen</h3>
-
-                    <p>Updated recently</p>
-
-                    <span class="chapter">
-                        Chapter 271
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <!-- MANGA 3 -->
-
-            <div class="manga-card">
-
-                <div class="manga-cover">
-                    Cover
-                </div>
-
-                <div class="manga-info">
-
-                    <h3>Hunter x Hunter</h3>
-
-                    <p>Updated recently</p>
-
-                    <span class="chapter">
-                        Chapter 412
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <!-- MANGA 4 -->
-
-            <div class="manga-card">
-
-                <div class="manga-cover">
-                    Cover
-                </div>
-
-                <div class="manga-info">
-
-                    <h3>My Hero Academia</h3>
-
-                    <p>Updated recently</p>
-
-                    <span class="chapter">
-                        Chapter 430
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <!-- MANGA 5 -->
-
-            <div class="manga-card">
-
-                <div class="manga-cover">
-                    Cover
-                </div>
-
-                <div class="manga-info">
-
-                    <h3>Chainsaw Man</h3>
-
-                    <p>Updated recently</p>
-
-                    <span class="chapter">
-                        Chapter 220
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <!-- MANGA 6 -->
-
-            <div class="manga-card">
-
-                <div class="manga-cover">
-                    Cover
-                </div>
-
-                <div class="manga-info">
-
-                    <h3>Bleach</h3>
-
-                    <p>Updated recently</p>
-
-                    <span class="chapter">
-                        Chapter 686
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <!-- MANGA 7 -->
-
-            <div class="manga-card">
-
-                <div class="manga-cover">
-                    Cover
-                </div>
-
-                <div class="manga-info">
-
-                    <h3>Black Clover</h3>
-
-                    <p>Updated recently</p>
-
-                    <span class="chapter">
-                        Chapter 374
-                    </span>
-
-                </div>
-
-            </div>
-
-
-            <!-- MANGA 8 -->
-
-            <div class="manga-card">
-
-                <div class="manga-cover">
-                    Cover
-                </div>
-
-                <div class="manga-info">
-
-                    <h3>Solo Leveling</h3>
-
-                    <p>Updated recently</p>
-
-                    <span class="chapter">
-                        Chapter 202
-                    </span>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div id="noResults">
-            <h3>No manga found</h3>
-            <p>Try searching for another manga.</p>
-        </div>
-
-    </section>
-
-
-    <!-- POPULAR -->
-
-    <section class="section" id="manga">
-
-        <div class="section-header">
-
-            <h2>
-                Popular Manga
-            </h2>
-
-        </div>
-
-        <div class="manga-grid">
-
-            <div class="manga-card">
-
-                <div class="manga-cover">
-                    Cover
-                </div>
-
-                <div class="manga-info">
-                    <h3>One Piece</h3>
-                    <p>Adventure</p>
-                </div>
-
-            </div>
-
-
-            <div class="manga-card">
-
-                <div class="manga-cover">
-                    Cover
-                </div>
-
-                <div class="manga-info">
-                    <h3>Naruto</h3>
-                    <p>Action</p>
-                </div>
-
-            </div>
-
-
-            <div class="manga-card">
-
-                <div class="manga-cover">
-                    Cover
-                </div>
-
-                <div class="manga-info">
-                    <h3>Dragon Ball</h3>
-                    <p>Action</p>
-                </div>
-
-            </div>
-
-
-            <div class="manga-card">
-
-                <div class="manga-cover">
-                    Cover
-                </div>
-
-                <div class="manga-info">
-                    <h3>Demon Slayer</h3>
-                    <p>Fantasy</p>
-                </div>
+                <input
+                    type="search"
+                    id="searchInput"
+                    placeholder="Search manga..."
+                    autocomplete="off"
+                >
 
             </div>
 
@@ -826,85 +952,189 @@
 
     </section>
 
-</main>
+
+    <!-- =========================
+         MAIN
+    ========================= -->
+
+    <main>
 
 
-<!-- =========================
-     FOOTER
-========================= -->
+        <!-- FEATURED -->
 
-<footer>
+        <section class="section">
 
-    <p>
-        © 2026 <strong>MangaJPRaw</strong>.
-        All rights reserved.
-    </p>
+            <div class="section-header">
 
-    <p>
-        Manga reading website.
-    </p>
+                <h2>
+                    Featured Manga
+                </h2>
 
-</footer>
+            </div>
 
 
-<!-- =========================
-     SEARCH JAVASCRIPT
-========================= -->
+            <div
+                class="featured"
+                id="featuredManga"
+            >
 
-<script>
+                <div class="featured-cover">
 
-    const searchInput = document.getElementById("searchInput");
+                    <div>
+                        Loading...
+                    </div>
 
-    const mangaCards = document.querySelectorAll(
-        "#mangaGrid .manga-card"
-    );
-
-    const noResults = document.getElementById("noResults");
-
-
-    searchInput.addEventListener("input", function () {
-
-        const searchText =
-            this.value.toLowerCase().trim();
-
-        let visibleCards = 0;
+                </div>
 
 
-        mangaCards.forEach(function (card) {
+                <div class="featured-info">
 
-            const title =
-                card.querySelector("h3")
-                    .textContent
-                    .toLowerCase();
-
-            if (title.includes(searchText)) {
-
-                card.style.display = "";
-
-                visibleCards++;
-
-            } else {
-
-                card.style.display = "none";
-
-            }
-
-        });
+                    <span class="tag">
+                        Featured
+                    </span>
 
 
-        if (visibleCards === 0 && searchText !== "") {
+                    <h3>
+                        Loading...
+                    </h3>
 
-            noResults.style.display = "block";
 
-        } else {
+                    <p>
+                        Loading manga information...
+                    </p>
 
-            noResults.style.display = "none";
+                </div>
 
-        }
+            </div>
 
-    });
+        </section>
 
-</script>
+
+        <!-- LATEST -->
+
+        <section
+            class="section"
+            id="latest"
+        >
+
+            <div class="section-header">
+
+                <h2>
+                    Latest Manga
+                </h2>
+
+                <a href="#manga">
+                    View All →
+                </a>
+
+            </div>
+
+
+            <div
+                class="manga-grid"
+                id="mangaGrid"
+            >
+
+                <div class="loading">
+
+                    Loading manga...
+
+                </div>
+
+            </div>
+
+
+            <div id="noResults">
+
+                <h3>
+                    No manga found
+                </h3>
+
+                <p>
+                    Try another search.
+                </p>
+
+            </div>
+
+
+            <div id="loadError">
+
+                Unable to load manga.
+
+            </div>
+
+        </section>
+
+
+        <!-- MANGA -->
+
+        <section
+            class="section"
+            id="manga"
+        >
+
+            <div class="section-header">
+
+                <h2>
+                    Manga Library
+                </h2>
+
+            </div>
+
+
+            <div
+                class="manga-grid"
+                id="libraryGrid"
+            >
+
+                <div class="loading">
+
+                    Loading manga...
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer>
+
+        <p>
+
+            © 2026
+            <strong>MangaJPRaw</strong>.
+
+            All rights reserved.
+
+        </p>
+
+
+        <p>
+
+            English Manga Reading Platform
+
+        </p>
+
+    </footer>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+
+    <script
+        src="./js/app.js"
+    ></script>
+
 
 </body>
+
 </html>
