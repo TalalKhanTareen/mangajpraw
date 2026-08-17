@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Read manga chapters online"
+    >
+
+    <title>Chapter - MangaJPRaw</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        :root {
+
+            --background: #080b12;
+            --surface: #111827;
+            --surface-2: #151e2e;
+            --border: #263247;
+
+            --text: #ffffff;
+            --muted: #9aa7bb;
+
+            --accent: #ff4d6d;
+            --accent-hover: #ff365a;
+
+        }
+
+
+        body {
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                var(--background);
+
+            color:
+                var(--text);
+
+            min-height:
+                100vh;
+
+        }
+
+
+        a {
+
+            color: inherit;
+
+            text-decoration: none;
+
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        header {
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+
+            background:
+                rgba(17, 24, 39, 0.96);
+
+            backdrop-filter:
+                blur(10px);
+
+            border-bottom:
+                1px solid var(--border);
+
+        }
+
+
+        .navbar {
+
+            max-width:
+                1100px;
+
+            margin:
+                auto;
+
+            padding:
+                16px 20px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            gap:
+                20px;
+
+        }
+
+
+        .logo {
+
+            font-size:
+                24px;
+
+            font-weight:
+                800;
+
+        }
+
+
+        .logo span {
+
+            color:
+                var(--accent);
+
+        }
+
+
+        .chapter-title {
+
+            color:
+                var(--muted);
+
+            font-size:
+                14px;
+
+            text-align:
+                right;
+
+        }
+
+
+        /* =========================
+           TOP CONTROLS
+        ========================= */
+
+        .reader-container {
+
+            max-width:
+                1000px;
+
+            margin:
+                auto;
+
+            padding:
+                25px 15px 60px;
+
+        }
+
+
+        .top-controls {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            gap:
+                10px;
+
+            margin-bottom:
+                20px;
+
+        }
+
+
+        .control-button {
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            background:
+                var(--surface);
+
+            border:
+                1px solid var(--border);
+
+            padding:
+                10px 16px;
+
+            border-radius:
+                7px;
+
+            color:
+                white;
+
+            font-size:
+                13px;
+
+            cursor:
+                pointer;
+
+            transition:
+                0.2s;
+
+        }
+
+
+        .control-button:hover {
+
+            background:
+                var(--surface-2);
+
+            border-color:
+                var(--accent);
+
+        }
+
+
+        .control-button.disabled {
+
+            opacity:
+                0.4;
+
+            pointer-events:
+                none;
+
+        }
+
+
+        /* =========================
+           CHAPTER INFO
+        ========================= */
+
+        .chapter-info {
+
+            text-align:
+                center;
+
+            padding:
+                20px;
+
+            margin-bottom:
+                25px;
+
+        }
+
+
+        .chapter-info h1 {
+
+            font-size:
+                30px;
+
+            margin-bottom:
+                8px;
+
+        }
+
+
+        .chapter-info p {
+
+            color:
+                var(--muted);
+
+            font-size:
+                14px;
+
+        }
+
+
+        /* =========================
+           READER
+        ========================= */
+
+        .reader {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            align-items:
+                center;
+
+            gap:
+                5px;
+
+            background:
+                #000;
+
+            border:
+                1px solid var(--border);
+
+            padding:
+                5px;
+
+        }
+
+
+        .page {
+
+            display:
+                block;
+
+            width:
+                100%;
+
+            max-width:
+                900px;
+
+            height:
+                auto;
+
+            margin:
+                0 auto;
+
+            background:
+                #111;
+
+        }
+
+
+        .page-number {
+
+            width:
+                100%;
+
+            text-align:
+                center;
+
+            padding:
+                10px;
+
+            color:
+                var(--muted);
+
+            font-size:
+                12px;
+
+            background:
+                #0b0b0b;
+
+        }
+
+
+        /* =========================
+           BOTTOM CONTROLS
+        ========================= */
+
+        .bottom-controls {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            gap:
+                10px;
+
+            margin-top:
+                25px;
+
+        }
+
+
+        /* =========================
+           LOADING
+        ========================= */
+
+        .loading {
+
+            text-align:
+                center;
+
+            padding:
+                100px 20px;
+
+            color:
+                var(--muted);
+
+        }
+
+
+        .loading-spinner {
+
+            width:
+                40px;
+
+            height:
+                40px;
+
+            margin:
+                0 auto 20px;
+
+            border:
+                4px solid var(--border);
+
+            border-top-color:
+                var(--accent);
+
+            border-radius:
+                50%;
+
+            animation:
+                spin 0.8s linear infinite;
+
+        }
+
+
+        @keyframes spin {
+
+            to {
+
+                transform:
+                    rotate(360deg);
+
+            }
+
+        }
+
+
+        /* =========================
+           ERROR
+        ========================= */
+
+        .error {
+
+            text-align:
+                center;
+
+            padding:
+                100px 20px;
+
+        }
+
+
+        .error h1 {
+
+            font-size:
+                32px;
+
+            margin-bottom:
+                15px;
+
+        }
+
+
+        .error p {
+
+            color:
+                var(--muted);
+
+            margin-bottom:
+                25px;
+
+        }
+
+
+        .home-button {
+
+            display:
+                inline-block;
+
+            background:
+                var(--accent);
+
+            padding:
+                11px 20px;
+
+            border-radius:
+                7px;
+
+            font-weight:
+                bold;
+
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+
+            border-top:
+                1px solid var(--border);
+
+            background:
+                var(--surface);
+
+            text-align:
+                center;
+
+            padding:
+                30px 20px;
+
+            color:
+                var(--muted);
+
+            font-size:
+                13px;
+
+        }
+
+
+        footer strong {
+
+            color:
+                white;
+
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .navbar {
+
+                padding:
+                    13px 15px;
+
+            }
+
+
+            .logo {
+
+                font-size:
+                    20px;
+
+            }
+
+
+            .chapter-title {
+
+                font-size:
+                    12px;
+
+            }
+
+
+            .reader-container {
+
+                padding:
+                    15px 5px 40px;
+
+            }
+
+
+            .chapter-info {
+
+                padding:
+                    15px 5px;
+
+            }
+
+
+            .chapter-info h1 {
+
+                font-size:
+                    24px;
+
+            }
+
+
+            .top-controls,
+            .bottom-controls {
+
+                padding:
+                    0 5px;
+
+            }
+
+
+            .control-button {
+
+                padding:
+                    9px 11px;
+
+                font-size:
+                    12px;
+
+            }
+
+
+            .reader {
+
+                border-left:
+                    none;
+
+                border-right:
+                    none;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <header>
+
+        <nav class="navbar">
+
+            <a
+                href="./index.html"
+                class="logo"
+            >
+
+                Manga<span>JPRaw</span>
+
+            </a>
+
+
+            <div
+                class="chapter-title"
+                id="headerChapter"
+            >
+
+                Loading...
+
+            </div>
+
+        </nav>
+
+    </header>
+
+
+    <!-- =========================
+         MAIN READER
+    ========================= -->
+
+    <main
+        class="reader-container"
+        id="mainContent"
+    >
+
+
+        <!-- TOP NAVIGATION -->
+
+        <div class="top-controls">
+
+            <a
+                href="./index.html"
+                class="control-button"
+            >
+
+                ← Home
+
+            </a>
+
+
+            <button
+                class="control-button"
+                id="backToManga"
+            >
+
+                Manga
+
+            </button>
+
+        </div>
+
+
+        <!-- CHAPTER INFORMATION -->
+
+        <section class="chapter-info">
+
+            <h1 id="chapterHeading">
+
+                Loading...
+
+            </h1>
+
+
+            <p id="chapterSubheading">
+
+                Loading chapter...
+
+            </p>
+
+        </section>
+
+
+        <!-- MANGA PAGES -->
+
+        <section
+            class="reader"
+            id="reader"
+        >
+
+            <div class="loading">
+
+                <div
+                    class="loading-spinner"
+                ></div>
+
+                Loading chapter...
+
+            </div>
+
+        </section>
+
+
+        <!-- BOTTOM NAVIGATION -->
+
+        <div class="bottom-controls">
+
+            <button
+                class="control-button"
+                id="previousChapter"
+            >
+
+                ← Previous
+
+            </button>
+
+
+            <button
+                class="control-button"
+                id="backToMangaBottom"
+            >
+
+                Chapters
+
+            </button>
+
+
+            <button
+                class="control-button"
+                id="nextChapter"
+            >
+
+                Next →
+
+            </button>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer>
+
+        <p>
+
+            © 2026
+            <strong>MangaJPRaw</strong>
+
+        </p>
+
+        <p>
+
+            English Manga Reading Platform
+
+        </p>
+
+    </footer>
+
+
+    <script>
+
+        const DATA_URL =
+            "./data/manga.json";
+
+
+        let currentManga = null;
+
+        let currentChapter = null;
+
+        let chapters = [];
+
+
+        /* =========================
+           GET URL PARAMETERS
+        ========================= */
+
+        function getParameters() {
+
+            const params =
+                new URLSearchParams(
+                    window.location.search
+                );
+
+
+            return {
+
+                mangaId:
+                    params.get("id"),
+
+                chapterNumber:
+                    params.get("chapter")
+
+            };
+
+        }
+
+
+        /* =========================
+           LOAD DATA
+        ========================= */
+
+        async function loadChapter() {
+
+            try {
+
+                const params =
+                    getParameters();
+
+
+                if (
+                    !params.mangaId ||
+                    !params.chapterNumber
+                ) {
+
+                    showError(
+                        "Manga or chapter was not specified."
+                    );
+
+                    return;
+
+                }
+
+
+                const response =
+                    await fetch(
+                        DATA_URL
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "Could not load manga database."
+                    );
+
+                }
+
+
+                const mangaList =
+                    await response.json();
+
+
+                currentManga =
+                    mangaList.find(
+                        manga =>
+                            manga.id ===
+                            params.mangaId
+                    );
+
+
+                if (!currentManga) {
+
+                    showError(
+                        "Manga not found."
+                    );
+
+                    return;
+
+                }
+
+
+                chapters =
+                    currentManga.chapters || [];
+
+
+                currentChapter =
+                    chapters.find(
+                        chapter =>
+                            String(
+                                chapter.number
+                            ) ===
+                            String(
+                                params.chapterNumber
+                            )
+                    );
+
+
+                if (!currentChapter) {
+
+                    showError(
+                        "Chapter not found."
+                    );
+
+                    return;
+
+                }
+
+
+                console.log(
+                    "Manga:",
+                    currentManga
+                );
+
+
+                console.log(
+                    "Chapter:",
+                    currentChapter
+                );
+
+
+                displayChapter();
+
+
+                setupNavigation();
+
+
+                document.title =
+                    `${currentManga.title} - Chapter ${currentChapter.number} - MangaJPRaw`;
+
+
+            } catch (error) {
+
+                console.error(
+                    "Reader error:",
+                    error
+                );
+
+
+                showError(
+                    "Unable to load this chapter."
+                );
+
+            }
+
+        }
+
+
+        /* =========================
+           DISPLAY CHAPTER
+        ========================= */
+
+        function displayChapter() {
+
+            const title =
+                currentChapter.title ||
+                `Chapter ${currentChapter.number}`;
+
+
+            document.getElementById(
+                "chapterHeading"
+            ).textContent =
+                title;
+
+
+            document.getElementById(
+                "chapterSubheading"
+            ).textContent =
+                currentManga.title;
+
+
+            document.getElementById(
+                "headerChapter"
+            ).textContent =
+                title;
+
+
+            const reader =
+                document.getElementById(
+                    "reader"
+                );
+
+
+            const pages =
+                currentChapter.pages || [];
+
+
+            if (
+                !pages ||
+                pages.length === 0
+            ) {
+
+                reader.innerHTML = `
+
+                    <div class="loading">
+
+                        No pages are available
+                        for this chapter yet.
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            reader.innerHTML = "";
+
+
+            pages.forEach(
+                function(page, index) {
+
+                    const image =
+                        document.createElement(
+                            "img"
+                        );
+
+
+                    image.className =
+                        "page";
+
+
+                    image.src =
+                        page;
+
+
+                    image.alt =
+                        `${currentManga.title} - ${title} - Page ${index + 1}`;
+
+
+                    image.loading =
+                        index === 0
+                            ? "eager"
+                            : "lazy";
+
+
+                    image.onerror =
+                        function() {
+
+                            console.error(
+                                "Failed to load page:",
+                                page
+                            );
+
+
+                            image.style.display =
+                                "none";
+
+                        };
+
+
+                    reader.appendChild(
+                        image
+                    );
+
+
+                    const pageNumber =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    pageNumber.className =
+                        "page-number";
+
+
+                    pageNumber.textContent =
+                        `Page ${index + 1} of ${pages.length}`;
+
+
+                    reader.appendChild(
+                        pageNumber
+                    );
+
+                }
+            );
+
+        }
+
+
+        /* =========================
+           NAVIGATION
+        ========================= */
+
+        function setupNavigation() {
+
+            const sorted =
+                [...chapters].sort(
+                    function(a, b) {
+
+                        return (
+                            Number(a.number) -
+                            Number(b.number)
+                        );
+
+                    }
+                );
+
+
+            const currentIndex =
+                sorted.findIndex(
+                    chapter =>
+                        String(
+                            chapter.number
+                        ) ===
+                        String(
+                            currentChapter.number
+                        )
+                );
+
+
+            const previous =
+                sorted[
+                    currentIndex - 1
+                ];
+
+
+            const next =
+                sorted[
+                    currentIndex + 1
+                ];
+
+
+            const previousButton =
+                document.getElementById(
+                    "previousChapter"
+                );
+
+
+            const nextButton =
+                document.getElementById(
+                    "nextChapter"
+                );
+
+
+            if (previous) {
+
+                previousButton.onclick =
+                    function() {
+
+                        goToChapter(
+                            previous.number
+                        );
+
+                    };
+
+            } else {
+
+                previousButton.classList.add(
+                    "disabled"
+                );
+
+            }
+
+
+            if (next) {
+
+                nextButton.onclick =
+                    function() {
+
+                        goToChapter(
+                            next.number
+                        );
+
+                    };
+
+            } else {
+
+                nextButton.classList.add(
+                    "disabled"
+                );
+
+            }
+
+
+            const mangaUrl =
+                `./manga.html?id=${encodeURIComponent(
+                    currentManga.id
+                )}`;
+
+
+            document.getElementById(
+                "backToManga"
+            ).onclick =
+                function() {
+
+                    window.location.href =
+                        mangaUrl;
+
+                };
+
+
+            document.getElementById(
+                "backToMangaBottom"
+            ).onclick =
+                function() {
+
+                    window.location.href =
+                        mangaUrl;
+
+                };
+
+        }
+
+
+        /* =========================
+           GO TO CHAPTER
+        ========================= */
+
+        function goToChapter(number) {
+
+            window.location.href =
+                `./chapter.html?id=${encodeURIComponent(
+                    currentManga.id
+                )}&chapter=${encodeURIComponent(
+                    number
+                )}`;
+
+        }
+
+
+        /* =========================
+           ERROR
+        ========================= */
+
+        function showError(message) {
+
+            const main =
+                document.getElementById(
+                    "mainContent"
+                );
+
+
+            main.innerHTML = `
+
+                <div class="error">
+
+                    <h1>
+                        Oops!
+                    </h1>
+
+
+                    <p>
+                        ${escapeHTML(
+                            message
+                        )}
+                    </p>
+
+
+                    <a
+                        href="./index.html"
+                        class="home-button"
+                    >
+
+                        Back to Home
+
+                    </a>
+
+                </div>
+
+            `;
+
+        }
+
+
+        /* =========================
+           ESCAPE HTML
+        ========================= */
+
+        function escapeHTML(value) {
+
+            return String(value)
+
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
+
+        }
+
+
+        /* =========================
+           START
+        ========================= */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            loadChapter
+        );
+
+    </script>
+
+
+</body>
+
+</html>
