@@ -3,20 +3,24 @@
         "id": "one-piece",
         "title": "One Piece",
         "japaneseTitle": "ワンピース",
-        "description": "Follow Monkey D. Luffy and the Straw Hat Pirates on their journey across the Grand Line.",
-        "cover": "https://placehold.co/400x600?text=One+Piece",
+        "description": "One Piece is a Japanese manga series.",
         "status": "Ongoing",
         "genres": [
             "Action",
             "Adventure",
             "Fantasy"
         ],
+        "cover": "",
         "chapters": [
             {
                 "number": 1187,
                 "title": "Chapter 1187",
                 "date": "2026-08-17",
-                "pages": []
+                "pages": [
+                    "../images/one-piece/1187/001.jpg",
+                    "../images/one-piece/1187/002.jpg",
+                    "../images/one-piece/1187/003.jpg"
+                ]
             }
         ]
     },
@@ -25,109 +29,68 @@
         "id": "hunter-x-hunter",
         "title": "Hunter x Hunter",
         "japaneseTitle": "HUNTER×HUNTER",
-        "description": "Gon Freecss begins his journey to become a Hunter and find his father.",
-        "cover": "https://placehold.co/400x600?text=Hunter+x+Hunter",
+        "description": "Hunter x Hunter is a Japanese manga series.",
         "status": "Ongoing",
         "genres": [
             "Action",
             "Adventure",
             "Fantasy"
         ],
-        "chapters": [
-            {
-                "number": 412,
-                "title": "Chapter 412",
-                "date": "2026-08-17",
-                "pages": []
-            }
-        ]
+        "cover": "",
+        "chapters": []
     },
 
     {
         "id": "ultimate-exorcist-kiyoshi",
         "title": "Ultimate Exorcist Kiyoshi",
         "japaneseTitle": "悪祓士のキヨシくん",
-        "description": "Kiyoshi uses his supernatural abilities to deal with dangerous spirits and demons.",
-        "cover": "https://placehold.co/400x600?text=Kiyoshi",
+        "description": "Ultimate Exorcist Kiyoshi manga.",
         "status": "Ongoing",
         "genres": [
             "Action",
             "Comedy",
-            "Supernatural"
-        ],
-        "chapters": [
-            {
-                "number": 99,
-                "title": "Chapter 99",
-                "date": "2026-08-17",
-                "pages": []
-            }
-        ]
-    },
-
-    {
-        "id": "jujutsu-kaisen",
-        "title": "Jujutsu Kaisen",
-        "japaneseTitle": "呪術廻戦",
-        "description": "Yuji Itadori enters the world of cursed spirits and jujutsu sorcerers.",
-        "cover": "https://placehold.co/400x600?text=Jujutsu+Kaisen",
-        "status": "Completed",
-        "genres": [
-            "Action",
-            "Supernatural",
-            "Dark Fantasy"
-        ],
-        "chapters": [
-            {
-                "number": 271,
-                "title": "Chapter 271",
-                "date": "2026-08-17",
-                "pages": []
-            }
-        ]
-    },
-
-    {
-        "id": "chainsaw-man",
-        "title": "Chainsaw Man",
-        "japaneseTitle": "チェンソーマン",
-        "description": "Denji's life changes after he becomes the Chainsaw Man.",
-        "cover": "https://placehold.co/400x600?text=Chainsaw+Man",
-        "status": "Ongoing",
-        "genres": [
-            "Action",
-            "Horror",
-            "Supernatural"
-        ],
-        "chapters": [
-            {
-                "number": 220,
-                "title": "Chapter 220",
-                "date": "2026-08-17",
-                "pages": []
-            }
-        ]
-    },
-
-    {
-        "id": "black-clover",
-        "title": "Black Clover",
-        "japaneseTitle": "ブラッククローバー",
-        "description": "Asta dreams of becoming the Wizard King despite being born without magic.",
-        "cover": "https://placehold.co/400x600?text=Black+Clover",
-        "status": "Ongoing",
-        "genres": [
-            "Action",
-            "Adventure",
             "Fantasy"
         ],
-        "chapters": [
-            {
-                "number": 374,
-                "title": "Chapter 374",
-                "date": "2026-08-17",
-                "pages": []
-            }
-        ]
+        "cover": "",
+        "chapters": []
+    },
+
+    {
+        "id": "manga-4",
+        "title": "Manga Title 4",
+        "japaneseTitle": "",
+        "description": "Manga description.",
+        "status": "Ongoing",
+        "genres": [
+            "Action"
+        ],
+        "cover": "",
+        "chapters": []
+    },
+
+    {
+        "id": "manga-5",
+        "title": "Manga Title 5",
+        "japaneseTitle": "",
+        "description": "Manga description.",
+        "status": "Ongoing",
+        "genres": [
+            "Action"
+        ],
+        "cover": "",
+        "chapters": []
+    },
+
+    {
+        "id": "manga-6",
+        "title": "Manga Title 6",
+        "japaneseTitle": "",
+        "description": "Manga description.",
+        "status": "Ongoing",
+        "genres": [
+            "Action"
+        ],
+        "cover": "",
+        "chapters": []
     }
 ]
