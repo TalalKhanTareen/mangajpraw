@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MangaJPRaw - English Manga</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #111827;
+            color: white;
+        }
+
+        header {
+            background: #1f2937;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+        }
+
+        nav a:hover {
+            color: #ef4444;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 100px 20px;
+            background: linear-gradient(
+                rgba(0, 0, 0, 0.6),
+                rgba(0, 0, 0, 0.8)
+            );
+        }
+
+        .hero h1 {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #d1d5db;
+            margin-bottom: 30px;
+        }
+
+        .search {
+            width: 90%;
+            max-width: 600px;
+            padding: 15px;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+        }
+
+        .section {
+            padding: 50px 40px;
+        }
+
+        .section h2 {
+            margin-bottom: 25px;
+        }
+
+        .manga-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 25px;
+        }
+
+        .manga-card {
+            background: #1f2937;
+            border-radius: 10px;
+            overflow: hidden;
+            padding-bottom: 15px;
+        }
+
+        .manga-cover {
+            height: 250px;
+            background: #374151;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9ca3af;
+        }
+
+        .manga-card h3 {
+            padding: 15px 15px 5px;
+        }
+
+        .manga-card p {
+            padding: 0 15px;
+            color: #9ca3af;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #1f2937;
+            color: #9ca3af;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 15px 20px;
+            }
+
+            nav a {
+                margin-left: 10px;
+            }
+
+            .hero h1 {
+                font-size: 35px;
+            }
+
+            .section {
+                padding: 35px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        MangaJPRaw
+    </div>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="#">Manga</a>
+        <a href="#">Latest</a>
+    </nav>
+
+</header>
+
+
+<section class="hero">
+
+    <h1>Read English Manga</h1>
+
+    <p>
+        Discover and read your favorite manga online.
+    </p>
+
+    <input
+        type="text"
+        class="search"
+        placeholder="Search manga..."
+    >
+
+</section>
+
+
+<section class="section">
+
+    <h2>Latest Manga</h2>
+
+    <div class="manga-grid">
+
+        <div class="manga-card">
+
+            <div class="manga-cover">
+                Cover
+            </div>
+
+            <h3>Example Manga</h3>
+
+            <p>Chapter 1</p>
+
+        </div>
+
+
+        <div class="manga-card">
+
+            <div class="manga-cover">
+                Cover
+            </div>
+
+            <h3>Another Manga</h3>
+
+            <p>Chapter 5</p>
+
+        </div>
+
+
+        <div class="manga-card">
+
+            <div class="manga-cover">
+                Cover
+            </div>
+
+            <h3>New Manga</h3>
+
+            <p>Chapter 10</p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer>
+
+    <p>© 2026 MangaJPRaw</p>
+
+</footer>
+
+</body>
+</html>
