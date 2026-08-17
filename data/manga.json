@@ -1,0 +1,44 @@
+[
+  {
+    "id": "one-piece",
+    "title": "One Piece",
+    "japaneseTitle": "ワンピース",
+    "description": "Read the latest One Piece manga chapters.",
+    "cover": "https://placehold.co/300x450?text=One+Piece",
+    "chapters": [
+      {
+        "number": 1187,
+        "title": "Chapter 1187",
+        "url": "#"
+      }
+    ]
+  },
+  {
+    "id": "hunter-x-hunter",
+    "title": "Hunter x Hunter",
+    "japaneseTitle": "HUNTER×HUNTER",
+    "description": "Read Hunter x Hunter manga chapters.",
+    "cover": "https://placehold.co/300x450?text=Hunter+x+Hunter",
+    "chapters": [
+      {
+        "number": 412,
+        "title": "Chapter 412",
+        "url": "#"
+      }
+    ]
+  },
+  {
+    "id": "ultimate-exorcist-kiyoshi",
+    "title": "Ultimate Exorcist Kiyoshi",
+    "japaneseTitle": "悪祓士のキヨシくん",
+    "description": "Read Ultimate Exorcist Kiyoshi manga chapters.",
+    "cover": "https://placehold.co/300x450?text=Kiyoshi",
+    "chapters": [
+      {
+        "number": 99,
+        "title": "Chapter 99",
+        "url": "#"
+      }
+    ]
+  }
+]
