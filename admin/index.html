@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>MangaJPRaw Admin</title>
+
+    <link
+        rel="stylesheet"
+        href="./style.css"
+    >
+
+</head>
+
+<body>
+
+    <div class="admin-container">
+
+        <div class="admin-card">
+
+            <h1>MangaJPRaw</h1>
+
+            <h2>Admin Panel</h2>
+
+            <p class="subtitle">
+                Authorized access only
+            </p>
+
+
+            <form id="loginForm">
+
+                <label for="token">
+                    Admin Token
+                </label>
+
+                <input
+                    type="password"
+                    id="token"
+                    placeholder="Enter admin token"
+                    required
+                >
+
+                <button
+                    type="submit"
+                >
+                    Login
+                </button>
+
+            </form>
+
+
+            <div
+                id="message"
+                class="message"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        /*
+         * Temporary Step 9 login.
+         *
+         * We will replace this with the
+         * proper GitHub authentication system
+         * in the next part.
+         */
+
+        const ADMIN_TOKEN =
+            "MANGAJPRAW_ADMIN_2026";
+
+
+        document
+            .getElementById("loginForm")
+            .addEventListener(
+                "submit",
+                function(event) {
+
+                    event.preventDefault();
+
+
+                    const enteredToken =
+                        document
+                            .getElementById("token")
+                            .value
+                            .trim();
+
+
+                    const message =
+                        document
+                            .getElementById("message");
+
+
+                    if (
+                        enteredToken ===
+                        ADMIN_TOKEN
+                    ) {
+
+                        sessionStorage.setItem(
+                            "mangajpraw_admin",
+                            "true"
+                        );
+
+
+                        window.location.href =
+                            "./dashboard.html";
+
+                    }
+
+                    else {
+
+                        message.textContent =
+                            "Invalid admin token.";
+
+                        message.className =
+                            "message error";
+
+                    }
+
+                }
+            );
+
+    </script>
+
+</body>
+
+</html>
