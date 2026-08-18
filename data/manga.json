@@ -1,38 +1,47 @@
 [
-    {
-        "id": "one-piece",
-        "title": "One Piece",
-        "japaneseTitle": "ワンピース",
-        "description": "One Piece follows Monkey D. Luffy and his crew on their journey across the Grand Line in search of the legendary One Piece.",
-        "status": "Ongoing",
-        "genres": [
-            "Action",
-            "Adventure",
-            "Fantasy",
-            "Shonen"
-        ],
-        "cover": "",
-        "chapters": [
-            {
-                "number": "1187",
-                "title": "Chapter 1187",
-                "pages": [
-                    "images/one-piece/1187/001.jpg"
-                ]
-            }
+  {
+    "id": "one-piece",
+    "title": "One Piece",
+    "japaneseTitle": "ワンピース",
+    "description": "One Piece follows Monkey D. Luffy and his crew on their journey across the Grand Line in search of the legendary One Piece.",
+    "status": "Ongoing",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Fantasy",
+      "Shonen"
+    ],
+    "cover": "",
+    "chapters": [
+      {
+        "number": "1187",
+        "title": "Chapter 1187",
+        "pages": [
+          "images/one-piece/1187/001.jpg"
         ]
-    },
-    {
-        "id": "test-manga",
-        "title": "Test Manga",
-        "japaneseTitle": "テスト漫画",
-        "description": "This is a test manga.",
-        "status": "Ongoing",
-        "genres": [
-            "Action",
-            "Adventure"
-        ],
-        "cover": "",
-        "chapters": []
-    }
+      }
+    ]
+  },
+  {
+    "id": "test-manga",
+    "title": "Test Manga",
+    "japaneseTitle": "テスト漫画",
+    "description": "This is a test manga.",
+    "status": "Ongoing",
+    "genres": [
+      "Action",
+      "Adventure"
+    ],
+    "cover": "",
+    "chapters": [
+      {
+        "id": "1",
+        "number": 1,
+        "title": "Chapter 1",
+        "description": "",
+        "releaseDate": "2026-08-18",
+        "pages": []
+      }
+    ]
+  }
 ]
