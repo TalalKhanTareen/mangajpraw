@@ -22,7 +22,6 @@
             }
         ]
     },
-
     {
         "id": "hunter-x-hunter",
         "title": "Hunter x Hunter",
@@ -37,7 +36,6 @@
         "cover": "",
         "chapters": []
     },
-
     {
         "id": "ultimate-exorcist-kiyoshi",
         "title": "Ultimate Exorcist Kiyoshi",
@@ -52,7 +50,6 @@
         "cover": "",
         "chapters": []
     },
-
     {
         "id": "manga-4",
         "title": "Manga Title 4",
@@ -65,7 +62,6 @@
         "cover": "",
         "chapters": []
     },
-
     {
         "id": "manga-5",
         "title": "Manga Title 5",
@@ -78,7 +74,6 @@
         "cover": "",
         "chapters": []
     },
-
     {
         "id": "manga-6",
         "title": "Manga Title 6",
@@ -87,6 +82,19 @@
         "status": "Ongoing",
         "genres": [
             "Action"
+        ],
+        "cover": "",
+        "chapters": []
+    },
+    {
+        "id": "test-manga",
+        "title": "Test Manga",
+        "japaneseTitle": "テスト漫画",
+        "description": "This is a test manga.",
+        "status": "Ongoing",
+        "genres": [
+            "Action",
+            "Adventure"
         ],
         "cover": "",
         "chapters": []
