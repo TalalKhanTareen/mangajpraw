@@ -382,16 +382,23 @@
        FEATURE PLACEHOLDER
     ========================================= */
 
-    function openFeature(
-        feature
-    ) {
+function openFeature(feature) {
 
-        alert(
-            feature +
-            " will be added in the next step."
-        );
+    if (feature === "add-manga") {
+
+        window.location.href =
+            "./add-manga.html";
+
+        return;
 
     }
+
+    alert(
+        feature +
+        " will be added in the next step."
+    );
+
+}
 
 
     /* =========================================
