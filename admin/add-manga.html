@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Add Manga - MangaJPRaw Admin</title>
+
+    <link
+        rel="stylesheet"
+        href="./style.css"
+    >
+
+    <style>
+
+        body {
+            min-height: 100vh;
+            display: block;
+        }
+
+        .page {
+            width: 100%;
+            max-width: 850px;
+            margin: auto;
+            padding: 30px 20px 60px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 15px;
+        }
+
+        .topbar a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .form-card {
+            background: #111827;
+            border: 1px solid #263247;
+            border-radius: 12px;
+            padding: 30px;
+        }
+
+        .form-card h1 {
+            text-align: left;
+            margin-bottom: 8px;
+        }
+
+        .description {
+            color: #9aa7bb;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 13px;
+            border-radius: 7px;
+            border: 1px solid #263247;
+            background: #080b12;
+            color: white;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: #ff4d6d;
+        }
+
+        .help {
+            color: #7f8da3;
+            font-size: 12px;
+            margin-top: 6px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .actions button,
+        .actions a {
+            flex: 1;
+            padding: 13px;
+            border-radius: 7px;
+            border: none;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .save {
+            background: #ff4d6d;
+            color: white;
+        }
+
+        .cancel {
+            background: #1f2937;
+            color: white;
+            border: 1px solid #374151 !important;
+        }
+
+        .message {
+            display: none;
+            padding: 14px;
+            border-radius: 7px;
+            margin-top: 20px;
+        }
+
+        .success {
+            display: block;
+            background: #12351f;
+            color: #6ee7a0;
+            border: 1px solid #1f6b3b;
+        }
+
+        .error {
+            display: block;
+            background: #3a151b;
+            color: #ff8c9b;
+            border: 1px solid #722331;
+        }
+
+        @media (max-width: 600px) {
+
+            .form-card {
+                padding: 20px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="page">
+
+
+    <!-- TOP BAR -->
+
+    <div class="topbar">
+
+        <a href="./dashboard.html">
+            ← Admin Dashboard
+        </a>
+
+        <button
+            id="logoutButton"
+            class="cancel"
+            style="padding: 9px 15px;"
+        >
+            Logout
+        </button>
+
+    </div>
+
+
+    <!-- FORM -->
+
+    <div class="form-card">
+
+        <h1>
+            Add New Manga
+        </h1>
+
+        <p class="description">
+            Enter the information for the new manga.
+        </p>
+
+
+        <form id="mangaForm">
+
+
+            <!-- MANGA ID -->
+
+            <div class="form-group">
+
+                <label for="mangaId">
+                    Manga ID *
+                </label>
+
+                <input
+                    type="text"
+                    id="mangaId"
+                    placeholder="e.g. one-piece"
+                    required
+                >
+
+                <div class="help">
+                    Use lowercase letters, numbers and hyphens.
+                    Example: one-piece
+                </div>
+
+            </div>
+
+
+            <!-- TITLE -->
+
+            <div class="form-group">
+
+                <label for="title">
+                    Manga Title *
+                </label>
+
+                <input
+                    type="text"
+                    id="title"
+                    placeholder="e.g. One Piece"
+                    required
+                >
+
+            </div>
+
+
+            <!-- JAPANESE TITLE -->
+
+            <div class="form-group">
+
+                <label for="japaneseTitle">
+                    Japanese Title
+                </label>
+
+                <input
+                    type="text"
+                    id="japaneseTitle"
+                    placeholder="e.g. ワンピース"
+                >
+
+            </div>
+
+
+            <!-- DESCRIPTION -->
+
+            <div class="form-group">
+
+                <label for="description">
+                    Description *
+                </label>
+
+                <textarea
+                    id="description"
+                    placeholder="Write a short description of the manga..."
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <!-- STATUS -->
+
+            <div class="form-group">
+
+                <label for="status">
+                    Status *
+                </label>
+
+                <select
+                    id="status"
+                    required
+                >
+
+                    <option value="">
+                        Select status
+                    </option>
+
+                    <option value="Ongoing">
+                        Ongoing
+                    </option>
+
+                    <option value="Completed">
+                        Completed
+                    </option>
+
+                    <option value="Hiatus">
+                        Hiatus
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- GENRES -->
+
+            <div class="form-group">
+
+                <label for="genres">
+                    Genres *
+                </label>
+
+                <input
+                    type="text"
+                    id="genres"
+                    placeholder="Action, Adventure, Fantasy"
+                    required
+                >
+
+                <div class="help">
+                    Separate genres with commas.
+                </div>
+
+            </div>
+
+
+            <!-- COVER -->
+
+            <div class="form-group">
+
+                <label for="cover">
+                    Cover Image Path
+                </label>
+
+                <input
+                    type="text"
+                    id="cover"
+                    placeholder="images/covers/one-piece.jpg"
+                >
+
+                <div class="help">
+                    We will add automatic cover uploading later.
+                </div>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="actions">
+
+                <a
+                    href="./dashboard.html"
+                    class="cancel"
+                >
+                    Cancel
+                </a>
+
+                <button
+                    type="submit"
+                    class="save"
+                >
+                    Validate Manga
+                </button>
+
+            </div>
+
+
+        </form>
+
+
+        <div
+            id="message"
+            class="message"
+        ></div>
+
+
+    </div>
+
+</div>
+
+
+<script>
+
+
+    /* =========================================
+       AUTH CHECK
+    ========================================= */
+
+    if (
+        sessionStorage.getItem(
+            "mangajpraw_admin"
+        ) !== "true"
+    ) {
+
+        window.location.href =
+            "./index.html";
+
+    }
+
+
+    /* =========================================
+       LOGOUT
+    ========================================= */
+
+    document
+        .getElementById("logoutButton")
+        .addEventListener(
+            "click",
+            function() {
+
+                sessionStorage.removeItem(
+                    "mangajpraw_admin"
+                );
+
+                window.location.href =
+                    "./index.html";
+
+            }
+        );
+
+
+    /* =========================================
+       FORM
+    ========================================= */
+
+    document
+        .getElementById("mangaForm")
+        .addEventListener(
+            "submit",
+            function(event) {
+
+                event.preventDefault();
+
+
+                const id =
+                    document
+                        .getElementById("mangaId")
+                        .value
+                        .trim();
+
+
+                const title =
+                    document
+                        .getElementById("title")
+                        .value
+                        .trim();
+
+
+                const japaneseTitle =
+                    document
+                        .getElementById("japaneseTitle")
+                        .value
+                        .trim();
+
+
+                const description =
+                    document
+                        .getElementById("description")
+                        .value
+                        .trim();
+
+
+                const status =
+                    document
+                        .getElementById("status")
+                        .value;
+
+
+                const genres =
+                    document
+                        .getElementById("genres")
+                        .value
+                        .trim();
+
+
+                const cover =
+                    document
+                        .getElementById("cover")
+                        .value
+                        .trim();
+
+
+                const message =
+                    document
+                        .getElementById("message");
+
+
+                /* =================================
+                   VALIDATE ID
+                ================================= */
+
+                if (
+                    !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(id)
+                ) {
+
+                    message.textContent =
+                        "Manga ID can only contain lowercase letters, numbers and hyphens.";
+
+                    message.className =
+                        "message error";
+
+                    return;
+
+                }
+
+
+                /* =================================
+                   BUILD MANGA OBJECT
+                ================================= */
+
+                const manga = {
+
+                    id: id,
+
+                    title: title,
+
+                    japaneseTitle:
+                        japaneseTitle,
+
+                    description:
+                        description,
+
+                    status:
+                        status,
+
+                    genres:
+                        genres
+                            .split(",")
+                            .map(
+                                function(genre) {
+
+                                    return genre.trim();
+
+                                }
+                            )
+                            .filter(
+                                function(genre) {
+
+                                    return genre.length > 0;
+
+                                }
+                            ),
+
+                    cover:
+                        cover,
+
+                    chapters: []
+
+                };
+
+
+                /* =================================
+                   SHOW RESULT
+                ================================= */
+
+                message.innerHTML = `
+
+                    <strong>
+                        Manga information is valid.
+                    </strong>
+
+                    <br><br>
+
+                    Manga ID:
+                    ${escapeHTML(manga.id)}
+
+                    <br>
+
+                    Title:
+                    ${escapeHTML(manga.title)}
+
+                    <br>
+
+                    Status:
+                    ${escapeHTML(manga.status)}
+
+                    <br><br>
+
+                    The GitHub saving system will be
+                    connected in the next step.
+
+                `;
+
+
+                message.className =
+                    "message success";
+
+
+                console.log(
+                    "Manga object:",
+                    manga
+                );
+
+            }
+        );
+
+
+    /* =========================================
+       ESCAPE HTML
+    ========================================= */
+
+    function escapeHTML(value) {
+
+        return String(value)
+
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+
+            .replace(
+                /</g,
+                "&lt;"
+            )
+
+            .replace(
+                />/g,
+                "&gt;"
+            )
+
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+
+    }
+
+</script>
+
+
+</body>
+
+</html>
