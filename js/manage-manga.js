@@ -1,20 +1,7 @@
 // ======================================================
 // MangaJPRaw - Manage Manga
-// Step 14A
 // ======================================================
 
-
-// ======================================================
-// CONFIG
-// ======================================================
-
-const MANGA_JSON =
-    "../data/manga.json";
-
-
-// ======================================================
-// ELEMENTS
-// ======================================================
 
 const mangaGrid =
     document.getElementById(
@@ -35,7 +22,7 @@ const message =
 
 
 // ======================================================
-// ADMIN CHECK
+// CHECK ADMIN LOGIN
 // ======================================================
 
 function checkAdmin() {
@@ -44,6 +31,7 @@ function checkAdmin() {
         sessionStorage.getItem(
             "mangajpraw_admin"
         );
+
 
     const token =
         sessionStorage.getItem(
@@ -81,7 +69,6 @@ function showMessage(
     message.textContent =
         text;
 
-
     message.className =
         "message show " +
         type;
@@ -97,14 +84,9 @@ async function loadManga() {
 
     try {
 
-        loading.style.display =
-            "block";
-
-
         const response =
             await fetch(
-                MANGA_JSON +
-                "?v=" +
+                "../data/manga.json?v=" +
                 Date.now()
             );
 
@@ -128,6 +110,10 @@ async function loadManga() {
         );
 
 
+        loading.style.display =
+            "none";
+
+
         displayManga(
             mangaList
         );
@@ -142,7 +128,7 @@ async function loadManga() {
 
 
         loading.textContent =
-            error.message;
+            "Failed to load manga.";
 
 
         showMessage(
@@ -162,10 +148,6 @@ async function loadManga() {
 function displayManga(
     mangaList
 ) {
-
-    loading.style.display =
-        "none";
-
 
     mangaGrid.innerHTML =
         "";
@@ -215,37 +197,53 @@ function displayManga(
                     : [];
 
 
+            const genreHTML =
+                genres
+                    .map(
+                        function(genre) {
+
+                            return `
+                                <span class="badge">
+                                    ${escapeHTML(
+                                        genre
+                                    )}
+                                </span>
+                            `;
+
+                        }
+                    )
+                    .join("");
+
+
             card.innerHTML = `
 
-                <h3>
+                <h2>
                     ${escapeHTML(
                         manga.title ||
                         "Untitled"
                     )}
-                </h3>
+                </h2>
 
                 <div class="manga-id">
-
                     ID:
                     ${escapeHTML(
                         manga.id ||
                         "-"
                     )}
-
                 </div>
 
                 <div class="manga-description">
 
                     ${escapeHTML(
                         manga.description ||
-                        "No description."
+                        "No description available."
                     )}
 
                 </div>
 
                 <div class="manga-info">
 
-                    <span class="badge status">
+                    <span class="badge">
 
                         Status:
                         ${escapeHTML(
@@ -255,7 +253,7 @@ function displayManga(
 
                     </span>
 
-                    <span class="badge chapter-count">
+                    <span class="badge">
 
                         Chapters:
                         ${chapters.length}
@@ -266,40 +264,38 @@ function displayManga(
 
                 <div class="manga-info">
 
-                    ${
-                        genres
-                            .map(
-                                genre =>
-                                    `<span class="badge">
-                                        ${escapeHTML(
-                                            genre
-                                        )}
-                                    </span>`
-                            )
-                            .join("")
-                    }
+                    ${genreHTML}
 
                 </div>
 
                 <div class="card-actions">
 
                     <button
+                        type="button"
                         class="edit-btn"
-                        onclick="editManga('${escapeAttribute(manga.id)}')"
+                        data-id="${escapeHTML(
+                            manga.id
+                        )}"
                     >
                         ✏️ Edit
                     </button>
 
                     <button
+                        type="button"
                         class="delete-btn"
-                        onclick="deleteManga('${escapeAttribute(manga.id)}')"
+                        data-id="${escapeHTML(
+                            manga.id
+                        )}"
                     >
                         🗑️ Delete
                     </button>
 
                     <button
+                        type="button"
                         class="view-btn"
-                        onclick="viewManga('${escapeAttribute(manga.id)}')"
+                        data-id="${escapeHTML(
+                            manga.id
+                        )}"
                     >
                         👁️ View
                     </button>
@@ -307,6 +303,60 @@ function displayManga(
                 </div>
 
             `;
+
+
+            // EDIT
+
+            card
+                .querySelector(
+                    ".edit-btn"
+                )
+                .addEventListener(
+                    "click",
+                    function() {
+
+                        editManga(
+                            manga.id
+                        );
+
+                    }
+                );
+
+
+            // DELETE
+
+            card
+                .querySelector(
+                    ".delete-btn"
+                )
+                .addEventListener(
+                    "click",
+                    function() {
+
+                        deleteManga(
+                            manga.id
+                        );
+
+                    }
+                );
+
+
+            // VIEW
+
+            card
+                .querySelector(
+                    ".view-btn"
+                )
+                .addEventListener(
+                    "click",
+                    function() {
+
+                        viewManga(
+                            manga.id
+                        );
+
+                    }
+                );
 
 
             mangaGrid.appendChild(
@@ -355,29 +405,6 @@ function escapeHTML(
 
 
 // ======================================================
-// ESCAPE ATTRIBUTE
-// ======================================================
-
-function escapeAttribute(
-    value
-) {
-
-    return String(
-        value
-    )
-        .replace(
-            /\\/g,
-            "\\\\"
-        )
-        .replace(
-            /'/g,
-            "\\'"
-        );
-
-}
-
-
-// ======================================================
 // EDIT
 // ======================================================
 
@@ -386,7 +413,7 @@ function editManga(
 ) {
 
     alert(
-        "Manga editing will be added in Step 14B.\n\nManga ID: " +
+        "Edit Manga will be implemented in the next part.\n\nManga ID: " +
         mangaId
     );
 
@@ -402,7 +429,7 @@ function deleteManga(
 ) {
 
     alert(
-        "Manga deletion will be added in Step 14B.\n\nManga ID: " +
+        "Delete Manga will be implemented in the next part.\n\nManga ID: " +
         mangaId
     );
 
