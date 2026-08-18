@@ -10,7 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Add Manga - MangaJPRaw Admin</title>
+    <title>Add Manga - MangaJPRaw</title>
 
     <link
         rel="stylesheet"
@@ -20,44 +20,54 @@
     <style>
 
         body {
-            min-height: 100vh;
             display: block;
         }
 
         .page {
-            width: 100%;
             max-width: 850px;
+
             margin: auto;
+
             padding: 30px 20px 60px;
         }
 
         .topbar {
             display: flex;
-            justify-content: space-between;
+
+            justify-content:
+                space-between;
+
             align-items: center;
+
             margin-bottom: 30px;
-            gap: 15px;
         }
 
         .topbar a {
             color: white;
+
             text-decoration: none;
         }
 
         .form-card {
             background: #111827;
-            border: 1px solid #263247;
+
+            border:
+                1px solid #263247;
+
             border-radius: 12px;
+
             padding: 30px;
         }
 
         .form-card h1 {
+            margin-top: 0;
+
             text-align: left;
-            margin-bottom: 8px;
         }
 
         .description {
             color: #9aa7bb;
+
             margin-bottom: 30px;
         }
 
@@ -67,87 +77,64 @@
 
         .form-group label {
             display: block;
+
             margin-bottom: 8px;
-            font-weight: bold;
         }
 
         .form-group input,
         .form-group textarea,
         .form-group select {
             width: 100%;
-            padding: 13px;
-            border-radius: 7px;
-            border: 1px solid #263247;
-            background: #080b12;
-            color: white;
-            outline: none;
-            font-size: 14px;
         }
 
-        .form-group textarea {
+        textarea {
             min-height: 130px;
-            resize: vertical;
-        }
 
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            border-color: #ff4d6d;
+            resize: vertical;
         }
 
         .help {
             color: #7f8da3;
+
             font-size: 12px;
+
             margin-top: 6px;
         }
 
         .actions {
             display: flex;
+
             gap: 12px;
+
             margin-top: 30px;
         }
 
         .actions button,
         .actions a {
             flex: 1;
-            padding: 13px;
-            border-radius: 7px;
-            border: none;
-            text-align: center;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .save {
-            background: #ff4d6d;
-            color: white;
         }
 
         .cancel {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
             background: #1f2937;
+
             color: white;
-            border: 1px solid #374151 !important;
-        }
 
-        .message {
-            display: none;
-            padding: 14px;
+            text-decoration: none;
+
             border-radius: 7px;
-            margin-top: 20px;
+
+            border:
+                1px solid #374151;
         }
 
-        .success {
-            display: block;
-            background: #12351f;
-            color: #6ee7a0;
-            border: 1px solid #1f6b3b;
-        }
-
-        .error {
-            display: block;
-            background: #3a151b;
-            color: #ff8c9b;
-            border: 1px solid #722331;
+        .cancel:hover {
+            background: #374151;
         }
 
         @media (max-width: 600px) {
@@ -173,26 +160,26 @@
 <div class="page">
 
 
-    <!-- TOP BAR -->
-
     <div class="topbar">
 
         <a href="./dashboard.html">
-            ← Admin Dashboard
+            ← Dashboard
         </a>
 
         <button
             id="logoutButton"
-            class="cancel"
-            style="padding: 9px 15px;"
+            style="
+                width:auto;
+                padding:10px 16px;
+                background:#1f2937;
+                border:1px solid #374151;
+            "
         >
             Logout
         </button>
 
     </div>
 
-
-    <!-- FORM -->
 
     <div class="form-card">
 
@@ -201,14 +188,12 @@
         </h1>
 
         <p class="description">
-            Enter the information for the new manga.
+            Enter the manga information below.
         </p>
 
 
         <form id="mangaForm">
 
-
-            <!-- MANGA ID -->
 
             <div class="form-group">
 
@@ -219,19 +204,17 @@
                 <input
                     type="text"
                     id="mangaId"
-                    placeholder="e.g. one-piece"
+                    placeholder="one-piece"
                     required
                 >
 
                 <div class="help">
-                    Use lowercase letters, numbers and hyphens.
-                    Example: one-piece
+                    Lowercase letters, numbers and
+                    hyphens only.
                 </div>
 
             </div>
 
-
-            <!-- TITLE -->
 
             <div class="form-group">
 
@@ -242,14 +225,12 @@
                 <input
                     type="text"
                     id="title"
-                    placeholder="e.g. One Piece"
+                    placeholder="One Piece"
                     required
                 >
 
             </div>
 
-
-            <!-- JAPANESE TITLE -->
 
             <div class="form-group">
 
@@ -260,13 +241,11 @@
                 <input
                     type="text"
                     id="japaneseTitle"
-                    placeholder="e.g. ワンピース"
+                    placeholder="ワンピース"
                 >
 
             </div>
 
-
-            <!-- DESCRIPTION -->
 
             <div class="form-group">
 
@@ -276,14 +255,12 @@
 
                 <textarea
                     id="description"
-                    placeholder="Write a short description of the manga..."
+                    placeholder="Manga description..."
                     required
                 ></textarea>
 
             </div>
 
-
-            <!-- STATUS -->
 
             <div class="form-group">
 
@@ -317,8 +294,6 @@
             </div>
 
 
-            <!-- GENRES -->
-
             <div class="form-group">
 
                 <label for="genres">
@@ -332,14 +307,8 @@
                     required
                 >
 
-                <div class="help">
-                    Separate genres with commas.
-                </div>
-
             </div>
 
-
-            <!-- COVER -->
 
             <div class="form-group">
 
@@ -350,17 +319,11 @@
                 <input
                     type="text"
                     id="cover"
-                    placeholder="images/covers/one-piece.jpg"
+                    placeholder="images/covers/example.jpg"
                 >
-
-                <div class="help">
-                    We will add automatic cover uploading later.
-                </div>
 
             </div>
 
-
-            <!-- ACTIONS -->
 
             <div class="actions">
 
@@ -373,9 +336,9 @@
 
                 <button
                     type="submit"
-                    class="save"
+                    id="saveButton"
                 >
-                    Validate Manga
+                    Save Manga
                 </button>
 
             </div>
@@ -397,15 +360,34 @@
 
 <script>
 
+    const OWNER =
+        "TalalKhanTareen";
 
-    /* =========================================
-       AUTH CHECK
-    ========================================= */
+    const REPOSITORY =
+        "mangajpraw";
 
-    if (
+    const WORKFLOW =
+        "admin-manga.yml";
+
+    const BRANCH =
+        "main";
+
+
+    const token =
+        sessionStorage.getItem(
+            "mangajpraw_token"
+        );
+
+
+    const loggedIn =
         sessionStorage.getItem(
             "mangajpraw_admin"
-        ) !== "true"
+        );
+
+
+    if (
+        loggedIn !== "true" ||
+        !token
     ) {
 
         window.location.href =
@@ -414,19 +396,13 @@
     }
 
 
-    /* =========================================
-       LOGOUT
-    ========================================= */
-
     document
         .getElementById("logoutButton")
         .addEventListener(
             "click",
             function() {
 
-                sessionStorage.removeItem(
-                    "mangajpraw_admin"
-                );
+                sessionStorage.clear();
 
                 window.location.href =
                     "./index.html";
@@ -435,24 +411,33 @@
         );
 
 
-    /* =========================================
-       FORM
-    ========================================= */
-
     document
         .getElementById("mangaForm")
         .addEventListener(
             "submit",
-            function(event) {
+            async function(event) {
 
                 event.preventDefault();
+
+
+                const message =
+                    document.getElementById(
+                        "message"
+                    );
+
+
+                const button =
+                    document.getElementById(
+                        "saveButton"
+                    );
 
 
                 const id =
                     document
                         .getElementById("mangaId")
                         .value
-                        .trim();
+                        .trim()
+                        .toLowerCase();
 
 
                 const title =
@@ -482,7 +467,7 @@
                         .value;
 
 
-                const genres =
+                const genresText =
                     document
                         .getElementById("genres")
                         .value
@@ -496,33 +481,46 @@
                         .trim();
 
 
-                const message =
-                    document
-                        .getElementById("message");
-
-
-                /* =================================
-                   VALIDATE ID
-                ================================= */
-
                 if (
                     !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(id)
                 ) {
 
-                    message.textContent =
-                        "Manga ID can only contain lowercase letters, numbers and hyphens.";
-
-                    message.className =
-                        "message error";
+                    showError(
+                        "Manga ID is invalid."
+                    );
 
                     return;
 
                 }
 
 
-                /* =================================
-                   BUILD MANGA OBJECT
-                ================================= */
+                const genres =
+                    genresText
+                        .split(",")
+                        .map(
+                            function(item) {
+                                return item.trim();
+                            }
+                        )
+                        .filter(
+                            function(item) {
+                                return item.length > 0;
+                            }
+                        );
+
+
+                if (
+                    genres.length === 0
+                ) {
+
+                    showError(
+                        "Enter at least one genre."
+                    );
+
+                    return;
+
+                }
+
 
                 const manga = {
 
@@ -540,22 +538,7 @@
                         status,
 
                     genres:
-                        genres
-                            .split(",")
-                            .map(
-                                function(genre) {
-
-                                    return genre.trim();
-
-                                }
-                            )
-                            .filter(
-                                function(genre) {
-
-                                    return genre.length > 0;
-
-                                }
-                            ),
+                        genres,
 
                     cover:
                         cover,
@@ -565,84 +548,178 @@
                 };
 
 
-                /* =================================
-                   SHOW RESULT
-                ================================= */
+                button.disabled =
+                    true;
 
-                message.innerHTML = `
+                button.textContent =
+                    "Saving...";
 
-                    <strong>
-                        Manga information is valid.
-                    </strong>
 
-                    <br><br>
-
-                    Manga ID:
-                    ${escapeHTML(manga.id)}
-
-                    <br>
-
-                    Title:
-                    ${escapeHTML(manga.title)}
-
-                    <br>
-
-                    Status:
-                    ${escapeHTML(manga.status)}
-
-                    <br><br>
-
-                    The GitHub saving system will be
-                    connected in the next step.
-
-                `;
-
+                message.textContent =
+                    "Starting GitHub workflow...";
 
                 message.className =
-                    "message success";
+                    "message";
 
 
-                console.log(
-                    "Manga object:",
-                    manga
-                );
+                try {
+
+                    const url =
+                        "https://api.github.com/repos/" +
+                        OWNER +
+                        "/" +
+                        REPOSITORY +
+                        "/actions/workflows/" +
+                        WORKFLOW +
+                        "/dispatches";
+
+
+                    const response =
+                        await fetch(
+                            url,
+                            {
+
+                                method:
+                                    "POST",
+
+                                headers: {
+
+                                    "Authorization":
+                                        "Bearer " +
+                                        token,
+
+                                    "Accept":
+                                        "application/vnd.github+json",
+
+                                    "Content-Type":
+                                        "application/json",
+
+                                    "X-GitHub-Api-Version":
+                                        "2022-11-28"
+
+                                },
+
+                                body:
+                                    JSON.stringify({
+
+                                        ref:
+                                            BRANCH,
+
+                                        inputs: {
+
+                                            action:
+                                                "add_manga",
+
+                                            manga_data:
+                                                JSON.stringify(
+                                                    manga
+                                                )
+
+                                        }
+
+                                    })
+
+                            }
+                        );
+
+
+                    if (
+                        response.status !== 204
+                    ) {
+
+                        let errorMessage =
+                            "GitHub rejected the request.";
+
+
+                        try {
+
+                            const error =
+                                await response.json();
+
+                            if (
+                                error.message
+                            ) {
+
+                                errorMessage +=
+                                    " " +
+                                    error.message;
+
+                            }
+
+                        }
+
+                        catch {
+
+                        }
+
+
+                        throw new Error(
+                            errorMessage
+                        );
+
+                    }
+
+
+                    message.innerHTML = `
+                        <strong>
+                            Manga submitted successfully.
+                        </strong>
+                        <br><br>
+                        GitHub Actions is now updating
+                        manga.json. Check the Actions tab
+                        for the workflow result.
+                    `;
+
+                    message.className =
+                        "message success";
+
+
+                    document
+                        .getElementById("mangaForm")
+                        .reset();
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        error
+                    );
+
+                    showError(
+                        error.message
+                    );
+
+                }
+
+                finally {
+
+                    button.disabled =
+                        false;
+
+                    button.textContent =
+                        "Save Manga";
+
+                }
 
             }
         );
 
 
-    /* =========================================
-       ESCAPE HTML
-    ========================================= */
+    function showError(
+        text
+    ) {
 
-    function escapeHTML(value) {
-
-        return String(value)
-
-            .replace(
-                /&/g,
-                "&amp;"
-            )
-
-            .replace(
-                /</g,
-                "&lt;"
-            )
-
-            .replace(
-                />/g,
-                "&gt;"
-            )
-
-            .replace(
-                /"/g,
-                "&quot;"
-            )
-
-            .replace(
-                /'/g,
-                "&#039;"
+        const message =
+            document.getElementById(
+                "message"
             );
+
+        message.textContent =
+            text;
+
+        message.className =
+            "message error";
 
     }
 
