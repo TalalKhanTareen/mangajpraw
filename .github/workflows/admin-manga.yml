@@ -4,15 +4,35 @@ on:
   workflow_dispatch:
     inputs:
       action:
-        description: "Action to perform"
+        description: "Admin action"
         required: true
         type: choice
         options:
-          - add_manga
+          - add-chapter
 
-      manga_data:
-        description: "Manga JSON data"
+      manga_id:
+        description: "Manga ID"
         required: true
+        type: string
+
+      chapter_number:
+        description: "Chapter number"
+        required: true
+        type: string
+
+      chapter_title:
+        description: "Chapter title"
+        required: false
+        type: string
+
+      chapter_description:
+        description: "Chapter description"
+        required: false
+        type: string
+
+      release_date:
+        description: "Release date"
+        required: false
         type: string
 
 permissions:
@@ -29,107 +49,160 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Configure Git
-        run: |
-          git config user.name "MangaJPRaw Admin"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
 
-      - name: Add Manga
-        if: ${{ inputs.action == 'add_manga' }}
+      - name: Add chapter
+        if: ${{ github.event.inputs.action == 'add-chapter' }}
         env:
-          MANGA_DATA: ${{ inputs.manga_data }}
+          MANGA_ID: ${{ github.event.inputs.manga_id }}
+          CHAPTER_NUMBER: ${{ github.event.inputs.chapter_number }}
+          CHAPTER_TITLE: ${{ github.event.inputs.chapter_title }}
+          CHAPTER_DESCRIPTION: ${{ github.event.inputs.chapter_description }}
+          RELEASE_DATE: ${{ github.event.inputs.release_date }}
         run: |
 
-          python3 <<'PY'
+          python <<'PY'
 
           import json
           import os
+          import sys
 
-          file_path = "data/manga.json"
+          FILE = "data/manga.json"
 
-          manga_data = os.environ["MANGA_DATA"]
+          manga_id = os.environ["MANGA_ID"]
+          chapter_number = os.environ["CHAPTER_NUMBER"]
+          chapter_title = os.environ.get("CHAPTER_TITLE", "").strip()
+          chapter_description = os.environ.get("CHAPTER_DESCRIPTION", "").strip()
+          release_date = os.environ.get("RELEASE_DATE", "").strip()
 
-          new_manga = json.loads(manga_data)
+          # ----------------------------------------
+          # LOAD DATA
+          # ----------------------------------------
 
-          if os.path.exists(file_path):
+          with open(FILE, "r", encoding="utf-8") as f:
+              data = json.load(f)
 
-              with open(
-                  file_path,
-                  "r",
-                  encoding="utf-8"
-              ) as file:
+          # ----------------------------------------
+          # FIND MANGA
+          # ----------------------------------------
 
-                  try:
-                      manga_list = json.load(file)
+          manga = None
 
-                  except json.JSONDecodeError:
-                      manga_list = []
+          for item in data:
+              if str(item.get("id")) == manga_id:
+                  manga = item
+                  break
 
-          else:
+          if manga is None:
+              print(f"Manga not found: {manga_id}")
+              sys.exit(1)
 
-              manga_list = []
+          # ----------------------------------------
+          # CREATE CHAPTER ARRAY
+          # ----------------------------------------
 
+          if "chapters" not in manga:
+              manga["chapters"] = []
 
-          if not isinstance(
-              manga_list,
-              list
-          ):
+          # ----------------------------------------
+          # CHECK DUPLICATE
+          # ----------------------------------------
 
-              manga_list = []
+          for chapter in manga["chapters"]:
 
+              if str(chapter.get("number")) == str(chapter_number):
 
-          manga_id = new_manga.get("id")
-
-
-          if not manga_id:
-
-              raise Exception(
-                  "Manga ID is required."
-              )
-
-
-          for manga in manga_list:
-
-              if manga.get("id") == manga_id:
-
-                  raise Exception(
-                      f"Manga '{manga_id}' already exists."
+                  print(
+                      f"Chapter {chapter_number} already exists."
                   )
 
+                  sys.exit(1)
 
-          manga_list.append(
-              new_manga
+          # ----------------------------------------
+          # CREATE CHAPTER
+          # ----------------------------------------
+
+          try:
+              number = float(chapter_number)
+
+              if number.is_integer():
+                  number = int(number)
+
+          except ValueError:
+
+              print("Invalid chapter number.")
+
+              sys.exit(1)
+
+          chapter = {
+
+              "id": str(chapter_number),
+
+              "number": number,
+
+              "title":
+                  chapter_title
+                  or f"Chapter {chapter_number}",
+
+              "description":
+                  chapter_description,
+
+              "releaseDate":
+                  release_date,
+
+              "pages": []
+
+          }
+
+          # ----------------------------------------
+          # ADD CHAPTER
+          # ----------------------------------------
+
+          manga["chapters"].append(chapter)
+
+          # ----------------------------------------
+          # SORT CHAPTERS
+          # ----------------------------------------
+
+          manga["chapters"].sort(
+              key=lambda x: float(x.get("number", 0))
           )
 
+          # ----------------------------------------
+          # SAVE JSON
+          # ----------------------------------------
 
-          with open(
-              file_path,
-              "w",
-              encoding="utf-8"
-          ) as file:
+          with open(FILE, "w", encoding="utf-8") as f:
 
               json.dump(
-                  manga_list,
-                  file,
+                  data,
+                  f,
                   ensure_ascii=False,
-                  indent=4
+                  indent=2
               )
 
-              file.write("\n")
+              f.write("\n")
+
+          print(
+              f"Chapter {chapter_number} added to {manga_id}"
+          )
 
           PY
-
 
       - name: Commit changes
         run: |
 
+          git config user.name "github-actions[bot]"
+
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
           git add data/manga.json
 
-          git diff --cached --quiet && \
-            echo "No changes to commit." && \
-            exit 0
-
-          git commit \
-            -m "Admin: add manga"
+          git diff --cached --quiet || \
+            git commit -m "Admin: add chapter"
 
           git push
