@@ -2,8 +2,6 @@
 // MangaJPRaw - Dynamic Chapter Reader
 // ======================================================
 
-const API_BASE = "../";
-
 const mangaId =
     new URLSearchParams(window.location.search).get("id");
 
@@ -33,8 +31,12 @@ const errorMessage =
 function showError(message) {
 
     if (loading) {
-        loading.style.display = "none";
+
+        loading.style.display =
+            "none";
+
     }
+
 
     if (errorMessage) {
 
@@ -44,24 +46,32 @@ function showError(message) {
         errorMessage.style.display =
             "block";
 
-    } else {
-
-        console.error(message);
-
     }
+
+
+    console.error(
+        message
+    );
 
 }
 
 
 // ======================================================
-// LOAD MANGA DATA
+// LOAD CHAPTER
 // ======================================================
 
 async function loadChapter() {
 
     try {
 
-        if (!mangaId || !chapterNumber) {
+        // ------------------------------------------
+        // VALIDATE URL
+        // ------------------------------------------
+
+        if (
+            !mangaId ||
+            !chapterNumber
+        ) {
 
             throw new Error(
                 "Manga or chapter was not specified."
@@ -70,10 +80,13 @@ async function loadChapter() {
         }
 
 
+        // ------------------------------------------
+        // LOAD MANGA JSON
+        // ------------------------------------------
+
         const response =
             await fetch(
-                API_BASE +
-                "data/manga.json?v=" +
+                "./data/manga.json?v=" +
                 Date.now()
             );
 
@@ -91,28 +104,46 @@ async function loadChapter() {
             await response.json();
 
 
+        // ------------------------------------------
+        // FIND MANGA
+        // ------------------------------------------
+
         const manga =
             mangaList.find(
                 item =>
-                    item.id === mangaId
+                    item.id ===
+                    mangaId
             );
 
 
         if (!manga) {
 
             throw new Error(
-                "Manga not found."
+                "Manga not found: " +
+                mangaId
             );
 
         }
 
 
+        // ------------------------------------------
+        // FIND CHAPTER
+        // ------------------------------------------
+
         const chapter =
-            manga.chapters?.find(
-                item =>
-                    Number(item.number) ===
-                    Number(chapterNumber)
-            );
+            Array.isArray(
+                manga.chapters
+            )
+                ? manga.chapters.find(
+                    item =>
+                        Number(
+                            item.number
+                        ) ===
+                        Number(
+                            chapterNumber
+                        )
+                )
+                : null;
 
 
         if (!chapter) {
@@ -120,15 +151,53 @@ async function loadChapter() {
             throw new Error(
                 "Chapter " +
                 chapterNumber +
-                " not found."
+                " was not found."
             );
 
         }
 
 
-        // ==================================================
+        // ------------------------------------------
+        // PAGE LIST
+        // ------------------------------------------
+
+        let pages =
+            Array.isArray(
+                chapter.pages
+            )
+                ? [...chapter.pages]
+                : [];
+
+
+        pages.sort(
+            function(a, b) {
+
+                return a.localeCompare(
+                    b,
+                    undefined,
+                    {
+                        numeric: true
+                    }
+                );
+
+            }
+        );
+
+
+        if (
+            pages.length === 0
+        ) {
+
+            throw new Error(
+                "No pages have been uploaded for this chapter."
+            );
+
+        }
+
+
+        // ------------------------------------------
         // UPDATE TITLE
-        // ==================================================
+        // ------------------------------------------
 
         document.title =
             manga.title +
@@ -154,57 +223,17 @@ async function loadChapter() {
         }
 
 
-        // ==================================================
-        // GET PAGES
-        // ==================================================
-
-        let pages =
-            Array.isArray(
-                chapter.pages
-            )
-                ? [...chapter.pages]
-                : [];
-
-
-        pages.sort(
-            (a, b) =>
-                a.localeCompare(
-                    b,
-                    undefined,
-                    {
-                        numeric: true
-                    }
-                )
-        );
-
-
-        if (
-            pages.length === 0
-        ) {
-
-            throw new Error(
-                "No pages have been uploaded for this chapter yet."
-            );
-
-        }
-
-
-        // ==================================================
-        // DISPLAY PAGES
-        // ==================================================
-
-        if (!chapterPages) {
-
-            throw new Error(
-                "Chapter page container was not found."
-            );
-
-        }
-
+        // ------------------------------------------
+        // CLEAR OLD PAGES
+        // ------------------------------------------
 
         chapterPages.innerHTML =
             "";
 
+
+        // ------------------------------------------
+        // CREATE IMAGES
+        // ------------------------------------------
 
         pages.forEach(
             function(page, index) {
@@ -233,9 +262,12 @@ async function loadChapter() {
                         : "lazy";
 
 
+                // ----------------------------------
+                // IMPORTANT PATH
+                // ----------------------------------
+
                 image.src =
-                    API_BASE +
-                    "images/" +
+                    "./images/" +
                     encodeURIComponent(
                         manga.id
                     ) +
@@ -255,9 +287,16 @@ async function loadChapter() {
                     function() {
 
                         console.error(
-                            "Could not load:",
+                            "Page " +
+                            (index + 1) +
+                            " could not be loaded:",
                             image.src
                         );
+
+                        image.alt =
+                            "Page " +
+                            (index + 1) +
+                            " could not be loaded.";
 
                     };
 
@@ -270,9 +309,9 @@ async function loadChapter() {
         );
 
 
-        // ==================================================
+        // ------------------------------------------
         // HIDE LOADING
-        // ==================================================
+        // ------------------------------------------
 
         if (loading) {
 
