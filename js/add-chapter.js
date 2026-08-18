@@ -1,30 +1,17 @@
-const mangaSelect =
-    document.getElementById("mangaSelect");
-
-const chapterForm =
-    document.getElementById("chapterForm");
-
-const message =
-    document.getElementById("message");
-
-const addChapterBtn =
-    document.getElementById("addChapterBtn");
+const mangaSelect = document.getElementById("mangaSelect");
+const chapterForm = document.getElementById("chapterForm");
+const message = document.getElementById("message");
+const addChapterBtn = document.getElementById("addChapterBtn");
 
 
-const GITHUB_OWNER =
-    "talalkhantareen";
+// ==========================================
+// GITHUB CONFIGURATION
+// ==========================================
 
-const GITHUB_REPO =
-    "mangajpraw";
-
-const GITHUB_BRANCH =
-    "main";
-
-const MANGA_FILE =
-    "data/manga.json";
-
-
-let mangaData = [];
+const GITHUB_OWNER = "talalkhantareen";
+const GITHUB_REPO = "mangajpraw";
+const GITHUB_BRANCH = "main";
+const MANGA_FILE = "data/manga.json";
 
 
 // ==========================================
@@ -34,23 +21,14 @@ let mangaData = [];
 function checkAdmin() {
 
     const loggedIn =
-        sessionStorage.getItem(
-            "mangajpraw_admin"
-        );
+        sessionStorage.getItem("mangajpraw_admin");
 
     const token =
-        sessionStorage.getItem(
-            "mangajpraw_token"
-        );
+        sessionStorage.getItem("mangajpraw_token");
 
+    if (loggedIn !== "true" || !token) {
 
-    if (
-        loggedIn !== "true" ||
-        !token
-    ) {
-
-        window.location.href =
-            "./index.html";
+        window.location.href = "./index.html";
 
         return false;
     }
@@ -60,25 +38,20 @@ function checkAdmin() {
 
 
 // ==========================================
-// GET TOKEN
+// GET GITHUB TOKEN
 // ==========================================
 
 function getToken() {
 
     const token =
-        sessionStorage.getItem(
-            "mangajpraw_token"
-        );
-
+        sessionStorage.getItem("mangajpraw_token");
 
     if (!token) {
 
         throw new Error(
             "Admin session expired. Please login again."
         );
-
     }
-
 
     return token;
 }
@@ -88,13 +61,9 @@ function getToken() {
 // SHOW MESSAGE
 // ==========================================
 
-function showMessage(
-    text,
-    type = ""
-) {
+function showMessage(text, type = "") {
 
-    message.textContent =
-        text;
+    message.textContent = text;
 
     message.className =
         "message " + type;
@@ -102,116 +71,86 @@ function showMessage(
 
 
 // ==========================================
-// LOAD MANGA
+// LOAD MANGA FROM WEBSITE
 // ==========================================
 
 async function loadManga() {
 
     try {
 
-        const response =
-            await fetch(
-                "../data/manga.json?t=" +
-                Date.now()
-            );
-
+        const response = await fetch(
+            "../data/manga.json?t=" + Date.now()
+        );
 
         if (!response.ok) {
 
             throw new Error(
-                "Could not load manga data."
+                "Could not load manga.json."
             );
-
         }
 
-
-        mangaData =
-            await response.json();
-
+        mangaData = await response.json();
 
         mangaSelect.innerHTML =
             '<option value="">Select manga</option>';
 
+        mangaData.forEach(manga => {
 
-        mangaData.forEach(
-            manga => {
+            const option =
+                document.createElement("option");
 
-                const option =
-                    document.createElement(
-                        "option"
-                    );
+            option.value = manga.id;
 
+            option.textContent =
+                manga.title;
 
-                option.value =
-                    manga.id;
+            mangaSelect.appendChild(option);
 
+        });
 
-                option.textContent =
-                    manga.title;
-
-
-                mangaSelect.appendChild(
-                    option
-                );
-
-            }
-        );
-
-    }
-
-    catch (error) {
+    } catch (error) {
 
         console.error(error);
 
-
         mangaSelect.innerHTML =
             '<option value="">Failed to load manga</option>';
-
 
         showMessage(
             error.message,
             "error"
         );
-
     }
-
 }
 
 
 // ==========================================
-// GET FILE FROM GITHUB
+// GET manga.json FROM GITHUB
 // ==========================================
 
 async function getMangaFile() {
 
-    const token =
-        getToken();
-
+    const token = getToken();
 
     const url =
         `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${MANGA_FILE}?ref=${GITHUB_BRANCH}`;
 
+    const response = await fetch(url, {
 
-    const response =
-        await fetch(
-            url,
-            {
+        method: "GET",
 
-                headers: {
+        headers: {
 
-                    "Authorization":
-                        "Bearer " + token,
+            "Authorization":
+                "Bearer " + token,
 
-                    "Accept":
-                        "application/vnd.github+json",
+            "Accept":
+                "application/vnd.github+json",
 
-                    "X-GitHub-Api-Version":
-                        "2022-11-28"
+            "X-GitHub-Api-Version":
+                "2022-11-28"
+        }
 
-                }
-
-            }
-        );
+    });
 
 
     if (!response.ok) {
@@ -222,70 +161,70 @@ async function getMangaFile() {
         ) {
 
             throw new Error(
-                "GitHub authorization failed. Please login again."
+                "GitHub authorization failed. Please login again with a token that has Contents: Read and write permission."
             );
-
         }
-
 
         throw new Error(
             "Could not access manga.json on GitHub."
         );
-
     }
 
 
     return await response.json();
-
 }
 
 
 // ==========================================
-// CONVERT UTF-8 TEXT TO BASE64
+// DECODE GITHUB BASE64
+// ==========================================
+
+function decodeBase64(base64) {
+
+    const binary =
+        atob(
+            base64.replace(/\n/g, "")
+        );
+
+    const bytes =
+        Uint8Array.from(
+            binary,
+            character =>
+                character.charCodeAt(0)
+        );
+
+    return new TextDecoder().decode(bytes);
+}
+
+
+// ==========================================
+// ENCODE UTF-8 TO BASE64
 // ==========================================
 
 function encodeBase64(text) {
 
     const bytes =
-        new TextEncoder().encode(
-            text
-        );
-
+        new TextEncoder().encode(text);
 
     let binary = "";
 
+    bytes.forEach(byte => {
 
-    bytes.forEach(
-        byte => {
+        binary += String.fromCharCode(byte);
 
-            binary +=
-                String.fromCharCode(
-                    byte
-                );
+    });
 
-        }
-    );
-
-
-    return btoa(
-        binary
-    );
-
+    return btoa(binary);
 }
 
 
 // ==========================================
-// UPDATE MANGA FILE
+// UPDATE manga.json ON GITHUB
 // ==========================================
 
-async function updateMangaFile(
-    data,
-    sha
-) {
+async function updateMangaFile(data, sha) {
 
-    const token =
-        getToken();
-
+    const token = getToken();
 
     const url =
         `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${MANGA_FILE}`;
@@ -300,54 +239,45 @@ async function updateMangaFile(
 
 
     const encoded =
-        encodeBase64(
-            json
-        );
+        encodeBase64(json);
 
 
     const response =
-        await fetch(
-            url,
-            {
+        await fetch(url, {
 
-                method:
-                    "PUT",
+            method: "PUT",
 
-                headers: {
+            headers: {
 
-                    "Authorization":
-                        "Bearer " + token,
+                "Authorization":
+                    "Bearer " + token,
 
-                    "Accept":
-                        "application/vnd.github+json",
+                "Accept":
+                    "application/vnd.github+json",
 
-                    "Content-Type":
-                        "application/json",
+                "Content-Type":
+                    "application/json",
 
-                    "X-GitHub-Api-Version":
-                        "2022-11-28"
+                "X-GitHub-Api-Version":
+                    "2022-11-28"
+            },
 
-                },
+            body: JSON.stringify({
 
-                body:
-                    JSON.stringify({
+                message:
+                    "Admin: Add chapter",
 
-                        message:
-                            "Admin: Add chapter",
+                content:
+                    encoded,
 
-                        content:
-                            encoded,
+                sha:
+                    sha,
 
-                        sha:
-                            sha,
+                branch:
+                    GITHUB_BRANCH
+            })
 
-                        branch:
-                            GITHUB_BRANCH
-
-                    })
-
-            }
-        );
+        });
 
 
     const result =
@@ -357,21 +287,18 @@ async function updateMangaFile(
     if (!response.ok) {
 
         console.error(
-            "GitHub error:",
+            "GitHub update error:",
             result
         );
-
 
         throw new Error(
             result.message ||
             "GitHub failed to update manga.json."
         );
-
     }
 
 
     return result;
-
 }
 
 
@@ -388,22 +315,20 @@ chapterForm.addEventListener(
 
         try {
 
-            addChapterBtn.disabled =
-                true;
-
+            addChapterBtn.disabled = true;
 
             addChapterBtn.textContent =
                 "Saving...";
 
 
             showMessage(
-                "Preparing chapter..."
+                "Reading manga.json from GitHub..."
             );
 
 
-            // ------------------------------
-            // FORM DATA
-            // ------------------------------
+            // ----------------------------------
+            // GET FORM VALUES
+            // ----------------------------------
 
             const mangaId =
                 mangaSelect.value;
@@ -411,49 +336,40 @@ chapterForm.addEventListener(
 
             const chapterNumber =
                 document
-                    .getElementById(
-                        "chapterNumber"
-                    )
+                    .getElementById("chapterNumber")
                     .value
                     .trim();
 
 
             const chapterTitle =
                 document
-                    .getElementById(
-                        "chapterTitle"
-                    )
+                    .getElementById("chapterTitle")
                     .value
                     .trim();
 
 
             const chapterDescription =
                 document
-                    .getElementById(
-                        "chapterDescription"
-                    )
+                    .getElementById("chapterDescription")
                     .value
                     .trim();
 
 
             const releaseDate =
                 document
-                    .getElementById(
-                        "releaseDate"
-                    )
+                    .getElementById("releaseDate")
                     .value;
 
 
-            // ------------------------------
+            // ----------------------------------
             // VALIDATION
-            // ------------------------------
+            // ----------------------------------
 
             if (!mangaId) {
 
                 throw new Error(
                     "Please select a manga."
                 );
-
             }
 
 
@@ -462,12 +378,53 @@ chapterForm.addEventListener(
                 throw new Error(
                     "Please enter a chapter number."
                 );
-
             }
 
 
+            const chapterNumberValue =
+                Number(chapterNumber);
+
+
+            if (
+                !Number.isFinite(
+                    chapterNumberValue
+                )
+            ) {
+
+                throw new Error(
+                    "Invalid chapter number."
+                );
+            }
+
+
+            // ----------------------------------
+            // GET LATEST FILE
+            // ----------------------------------
+
+            const file =
+                await getMangaFile();
+
+
+            // ----------------------------------
+            // DECODE FILE
+            // ----------------------------------
+
+            const decoded =
+                decodeBase64(
+                    file.content
+                );
+
+
+            const latestData =
+                JSON.parse(decoded);
+
+
+            // ----------------------------------
+            // FIND MANGA
+            // ----------------------------------
+
             const manga =
-                mangaData.find(
+                latestData.find(
                     item =>
                         item.id === mangaId
                 );
@@ -476,137 +433,50 @@ chapterForm.addEventListener(
             if (!manga) {
 
                 throw new Error(
-                    "Selected manga was not found."
+                    "Selected manga was not found in manga.json."
                 );
-
             }
 
 
-            // ------------------------------
-            // GET LATEST FILE
-            // ------------------------------
-
-            showMessage(
-                "Reading manga.json from GitHub..."
-            );
-
-
-            const file =
-                await getMangaFile();
-
-
-            // Decode GitHub content
-
-            const binary =
-                atob(
-                    file.content.replace(
-                        /\n/g,
-                        ""
-                    )
-                );
-
-
-            const bytes =
-                Uint8Array.from(
-                    binary,
-                    char =>
-                        char.charCodeAt(0)
-                );
-
-
-            const decoded =
-                new TextDecoder()
-                    .decode(bytes);
-
-
-            const latestData =
-                JSON.parse(
-                    decoded
-                );
-
-
-            // ------------------------------
-            // FIND MANGA
-            // ------------------------------
-
-            const latestManga =
-                latestData.find(
-                    item =>
-                        item.id === mangaId
-                );
-
-
-            if (!latestManga) {
-
-                throw new Error(
-                    "Manga does not exist in GitHub data."
-                );
-
-            }
-
-
-            // ------------------------------
+            // ----------------------------------
             // CREATE CHAPTER ARRAY
-            // ------------------------------
+            // ----------------------------------
 
             if (
                 !Array.isArray(
-                    latestManga.chapters
+                    manga.chapters
                 )
             ) {
 
-                latestManga.chapters = [];
-
+                manga.chapters = [];
             }
 
 
-            // ------------------------------
-            // DUPLICATE CHECK
-            // ------------------------------
+            // ----------------------------------
+            // CHECK DUPLICATE
+            // ----------------------------------
 
-            const exists =
-                latestManga.chapters.some(
+            const alreadyExists =
+                manga.chapters.some(
                     chapter =>
                         Number(
                             chapter.number
                         ) ===
-                        Number(
-                            chapterNumber
-                        )
+                        chapterNumberValue
                 );
 
 
-            if (exists) {
+            if (alreadyExists) {
 
                 throw new Error(
                     `Chapter ${chapterNumber} already exists.`
                 );
-
             }
 
 
-            // ------------------------------
-            // CREATE CHAPTER
-            // ------------------------------
-
-            let number =
-                Number(
-                    chapterNumber
-                );
-
-
-            if (
-                !Number.isFinite(
-                    number
-                )
-            ) {
-
-                throw new Error(
-                    "Invalid chapter number."
-                );
-
-            }
-
+            // ----------------------------------
+            // CREATE NEW CHAPTER
+            // ----------------------------------
 
             const newChapter = {
 
@@ -616,7 +486,7 @@ chapterForm.addEventListener(
                     ),
 
                 number:
-                    number,
+                    chapterNumberValue,
 
                 title:
                     chapterTitle ||
@@ -636,25 +506,29 @@ chapterForm.addEventListener(
             };
 
 
-            latestManga.chapters.push(
+            // ----------------------------------
+            // ADD CHAPTER
+            // ----------------------------------
+
+            manga.chapters.push(
                 newChapter
             );
 
 
-            // ------------------------------
+            // ----------------------------------
             // SORT CHAPTERS
-            // ------------------------------
+            // ----------------------------------
 
-            latestManga.chapters.sort(
+            manga.chapters.sort(
                 (a, b) =>
                     Number(a.number) -
                     Number(b.number)
             );
 
 
-            // ------------------------------
-            // SAVE
-            // ------------------------------
+            // ----------------------------------
+            // UPDATE GITHUB
+            // ----------------------------------
 
             showMessage(
                 "Committing chapter to GitHub..."
@@ -667,9 +541,9 @@ chapterForm.addEventListener(
             );
 
 
-            // ------------------------------
+            // ----------------------------------
             // SUCCESS
-            // ------------------------------
+            // ----------------------------------
 
             showMessage(
                 `Chapter ${chapterNumber} added successfully!`,
@@ -677,38 +551,34 @@ chapterForm.addEventListener(
             );
 
 
-            chapterForm.reset();
+            // Keep selected manga
 
-
-            mangaSelect.value =
+            const selectedManga =
                 mangaId;
 
 
-        }
+            chapterForm.reset();
 
-        catch (error) {
+            mangaSelect.value =
+                selectedManga;
 
-            console.error(
-                error
-            );
 
+        } catch (error) {
+
+            console.error(error);
 
             showMessage(
                 error.message,
                 "error"
             );
 
-        }
-
-        finally {
+        } finally {
 
             addChapterBtn.disabled =
                 false;
 
-
             addChapterBtn.textContent =
                 "Add Chapter";
-
         }
 
     }
