@@ -3,88 +3,24 @@
         "id": "one-piece",
         "title": "One Piece",
         "japaneseTitle": "ワンピース",
-        "description": "One Piece is a Japanese manga series.",
+        "description": "One Piece follows Monkey D. Luffy and his crew on their journey across the Grand Line in search of the legendary One Piece.",
         "status": "Ongoing",
         "genres": [
             "Action",
             "Adventure",
-            "Fantasy"
+            "Fantasy",
+            "Shonen"
         ],
         "cover": "",
         "chapters": [
             {
-                "number": 1187,
+                "number": "1187",
                 "title": "Chapter 1187",
-                "date": "2026-08-17",
                 "pages": [
-                    "/mangajpraw/images/one-piece/1187/001.jpg"
+                    "images/one-piece/1187/001.jpg"
                 ]
             }
         ]
-    },
-    {
-        "id": "hunter-x-hunter",
-        "title": "Hunter x Hunter",
-        "japaneseTitle": "HUNTER×HUNTER",
-        "description": "Hunter x Hunter is a Japanese manga series.",
-        "status": "Ongoing",
-        "genres": [
-            "Action",
-            "Adventure",
-            "Fantasy"
-        ],
-        "cover": "",
-        "chapters": []
-    },
-    {
-        "id": "ultimate-exorcist-kiyoshi",
-        "title": "Ultimate Exorcist Kiyoshi",
-        "japaneseTitle": "悪祓士のキヨシくん",
-        "description": "Ultimate Exorcist Kiyoshi manga.",
-        "status": "Ongoing",
-        "genres": [
-            "Action",
-            "Comedy",
-            "Fantasy"
-        ],
-        "cover": "",
-        "chapters": []
-    },
-    {
-        "id": "manga-4",
-        "title": "Manga Title 4",
-        "japaneseTitle": "",
-        "description": "Manga description.",
-        "status": "Ongoing",
-        "genres": [
-            "Action"
-        ],
-        "cover": "",
-        "chapters": []
-    },
-    {
-        "id": "manga-5",
-        "title": "Manga Title 5",
-        "japaneseTitle": "",
-        "description": "Manga description.",
-        "status": "Ongoing",
-        "genres": [
-            "Action"
-        ],
-        "cover": "",
-        "chapters": []
-    },
-    {
-        "id": "manga-6",
-        "title": "Manga Title 6",
-        "japaneseTitle": "",
-        "description": "Manga description.",
-        "status": "Ongoing",
-        "genres": [
-            "Action"
-        ],
-        "cover": "",
-        "chapters": []
     },
     {
         "id": "test-manga",
