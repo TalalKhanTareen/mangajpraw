@@ -1,11 +1,28 @@
 // ======================================================
-// MangaJPRaw - Upload Chapter Pages
-// Step 11B - GitHub Upload
+// MangaJPRaw - Smart Chapter Page Uploader
+// Step 13
 // ======================================================
 
 
 // ======================================================
-// ELEMENTS
+// GITHUB CONFIG
+// ======================================================
+
+const GITHUB_OWNER =
+    "talalkhantareen";
+
+const GITHUB_REPO =
+    "mangajpraw";
+
+const GITHUB_BRANCH =
+    "main";
+
+const MANGA_FILE =
+    "data/manga.json";
+
+
+// ======================================================
+// HTML ELEMENTS
 // ======================================================
 
 const mangaSelect =
@@ -31,23 +48,6 @@ const message =
 
 
 // ======================================================
-// GITHUB CONFIGURATION
-// ======================================================
-
-const GITHUB_OWNER =
-    "talalkhantareen";
-
-const GITHUB_REPO =
-    "mangajpraw";
-
-const GITHUB_BRANCH =
-    "main";
-
-const MANGA_FILE =
-    "data/manga.json";
-
-
-// ======================================================
 // DATA
 // ======================================================
 
@@ -55,7 +55,7 @@ let mangaData = [];
 
 
 // ======================================================
-// CHECK ADMIN LOGIN
+// ADMIN CHECK
 // ======================================================
 
 function checkAdmin() {
@@ -80,15 +80,17 @@ function checkAdmin() {
             "./index.html";
 
         return false;
+
     }
 
 
     return true;
+
 }
 
 
 // ======================================================
-// GET TOKEN
+// TOKEN
 // ======================================================
 
 function getToken() {
@@ -104,15 +106,17 @@ function getToken() {
         throw new Error(
             "Admin session expired. Please login again."
         );
+
     }
 
 
     return token;
+
 }
 
 
 // ======================================================
-// SHOW MESSAGE
+// MESSAGE
 // ======================================================
 
 function showMessage(
@@ -120,11 +124,19 @@ function showMessage(
     type = ""
 ) {
 
+    if (!message) {
+        return;
+    }
+
+
     message.textContent =
         text;
 
+
     message.className =
-        "message " + type;
+        "message " +
+        type;
+
 }
 
 
@@ -148,6 +160,7 @@ async function loadManga() {
             throw new Error(
                 "Could not load manga data."
             );
+
         }
 
 
@@ -160,7 +173,7 @@ async function loadManga() {
 
 
         mangaData.forEach(
-            manga => {
+            function(manga) {
 
                 const option =
                     document.createElement(
@@ -182,7 +195,6 @@ async function loadManga() {
 
             }
         );
-
 
     }
 
@@ -226,19 +238,27 @@ mangaSelect.addEventListener(
         if (!mangaId) {
 
             return;
+
         }
 
 
         const manga =
             mangaData.find(
-                item =>
-                    item.id === mangaId
+                function(item) {
+
+                    return (
+                        item.id ===
+                        mangaId
+                    );
+
+                }
             );
 
 
         if (!manga) {
 
             return;
+
         }
 
 
@@ -253,11 +273,12 @@ mangaSelect.addEventListener(
                 '<option value="">No chapters available</option>';
 
             return;
+
         }
 
 
         manga.chapters.forEach(
-            chapter => {
+            function(chapter) {
 
                 const option =
                     document.createElement(
@@ -314,14 +335,15 @@ function sortFiles(files) {
 
 
 // ======================================================
-// PREVIEW IMAGES
+// PREVIEW
 // ======================================================
 
 pageFiles.addEventListener(
     "change",
     function() {
 
-        preview.innerHTML = "";
+        preview.innerHTML =
+            "";
 
 
         let files =
@@ -376,13 +398,7 @@ pageFiles.addEventListener(
 
 
                         label.textContent =
-                            String(
-                                index + 1
-                            ).padStart(
-                                3,
-                                "0"
-                            ) +
-                            ".jpg";
+                            file.name;
 
 
                         wrapper.appendChild(
@@ -414,10 +430,12 @@ pageFiles.addEventListener(
 
 
 // ======================================================
-// CONVERT FILE TO BASE64
+// FILE TO BASE64
 // ======================================================
 
-function fileToBase64(file) {
+function fileToBase64(
+    file
+) {
 
     return new Promise(
         function(resolve, reject) {
@@ -470,7 +488,7 @@ function fileToBase64(file) {
 
 
 // ======================================================
-// GITHUB API REQUEST
+// GITHUB REQUEST
 // ======================================================
 
 async function githubRequest(
@@ -497,10 +515,7 @@ async function githubRequest(
     };
 
 
-    if (
-        options.body &&
-        !headers["Content-Type"]
-    ) {
+    if (options.body) {
 
         headers["Content-Type"] =
             "application/json";
@@ -513,10 +528,12 @@ async function githubRequest(
             url,
             {
                 ...options,
+
                 headers: {
                     ...headers,
                     ...(options.headers || {})
                 }
+
             }
         );
 
@@ -546,12 +563,6 @@ async function githubRequest(
 
     if (!response.ok) {
 
-        console.error(
-            "GitHub API error:",
-            data
-        );
-
-
         throw new Error(
             data?.message ||
             "GitHub API request failed."
@@ -561,6 +572,144 @@ async function githubRequest(
 
 
     return data;
+
+}
+
+
+// ======================================================
+// GET EXISTING CHAPTER PAGES
+// ======================================================
+
+async function getExistingPages(
+    mangaId,
+    chapterNumber
+) {
+
+    const path =
+        "images/" +
+        mangaId +
+        "/" +
+        chapterNumber;
+
+
+    const url =
+        "https://api.github.com/repos/" +
+        GITHUB_OWNER +
+        "/" +
+        GITHUB_REPO +
+        "/contents/" +
+        path +
+        "?ref=" +
+        GITHUB_BRANCH;
+
+
+    try {
+
+        const files =
+            await githubRequest(
+                url
+            );
+
+
+        if (
+            !Array.isArray(files)
+        ) {
+
+            return [];
+
+        }
+
+
+        return files
+            .filter(
+                function(file) {
+
+                    return (
+                        file.type ===
+                        "file" &&
+                        /\.(jpg|jpeg|png|webp)$/i
+                            .test(
+                                file.name
+                            )
+                    );
+
+                }
+            )
+            .map(
+                function(file) {
+
+                    return file.name;
+
+                }
+            );
+
+    }
+
+    catch (error) {
+
+        // Directory doesn't exist yet.
+
+        console.log(
+            "No existing page directory."
+        );
+
+
+        return [];
+
+    }
+
+}
+
+
+// ======================================================
+// FIND NEXT PAGE NUMBER
+// ======================================================
+
+function getNextPageNumber(
+    existingPages
+) {
+
+    let highest =
+        0;
+
+
+    existingPages.forEach(
+        function(filename) {
+
+            const match =
+                filename.match(
+                    /^(\d+)\./
+                );
+
+
+            if (!match) {
+
+                return;
+
+            }
+
+
+            const number =
+                parseInt(
+                    match[1],
+                    10
+                );
+
+
+            if (
+                number > highest
+            ) {
+
+                highest =
+                    number;
+
+            }
+
+        }
+    );
+
+
+    return highest + 1;
 
 }
 
@@ -604,47 +753,11 @@ async function uploadImage(
         path;
 
 
-    // ------------------------------------------
-    // CONVERT IMAGE
-    // ------------------------------------------
-
     const base64 =
         await fileToBase64(
             file
         );
 
-
-    // ------------------------------------------
-    // CHECK IF FILE EXISTS
-    // ------------------------------------------
-
-    let existingFile = null;
-
-
-    try {
-
-        existingFile =
-            await githubRequest(
-                url +
-                "?ref=" +
-                GITHUB_BRANCH
-            );
-
-    }
-
-    catch (error) {
-
-        // 404 is expected for a new page
-
-        existingFile =
-            null;
-
-    }
-
-
-    // ------------------------------------------
-    // CREATE / UPDATE FILE
-    // ------------------------------------------
 
     const body = {
 
@@ -659,17 +772,6 @@ async function uploadImage(
             GITHUB_BRANCH
 
     };
-
-
-    if (
-        existingFile &&
-        existingFile.sha
-    ) {
-
-        body.sha =
-            existingFile.sha;
-
-    }
 
 
     await githubRequest(
@@ -694,7 +796,7 @@ async function uploadImage(
 
 
 // ======================================================
-// GET LATEST MANGA.JSON
+// GET MANGA.JSON
 // ======================================================
 
 async function getMangaFile() {
@@ -772,19 +874,20 @@ function encodeBase64(
             );
 
 
-    let binary = "";
+    let binary =
+        "";
 
 
-    for (
-        const byte of bytes
-    ) {
+    bytes.forEach(
+        function(byte) {
 
-        binary +=
-            String.fromCharCode(
-                byte
-            );
+            binary +=
+                String.fromCharCode(
+                    byte
+                );
 
-    }
+        }
+    );
 
 
     return btoa(
@@ -809,10 +912,6 @@ async function updateMangaJson(
     );
 
 
-    // ------------------------------------------
-    // GET CURRENT FILE
-    // ------------------------------------------
-
     const file =
         await getMangaFile();
 
@@ -829,26 +928,16 @@ async function updateMangaJson(
         );
 
 
-    if (
-        !Array.isArray(data)
-    ) {
-
-        throw new Error(
-            "manga.json format is invalid."
-        );
-
-    }
-
-
-    // ------------------------------------------
-    // FIND MANGA
-    // ------------------------------------------
-
     const manga =
         data.find(
-            item =>
-                item.id ===
-                mangaId
+            function(item) {
+
+                return (
+                    item.id ===
+                    mangaId
+                );
+
+            }
         );
 
 
@@ -861,10 +950,6 @@ async function updateMangaJson(
     }
 
 
-    // ------------------------------------------
-    // FIND CHAPTER
-    // ------------------------------------------
-
     if (
         !Array.isArray(
             manga.chapters
@@ -872,7 +957,7 @@ async function updateMangaJson(
     ) {
 
         throw new Error(
-            "This manga has no chapters."
+            "Manga has no chapters."
         );
 
     }
@@ -880,13 +965,18 @@ async function updateMangaJson(
 
     const chapter =
         manga.chapters.find(
-            item =>
-                Number(
-                    item.number
-                ) ===
-                Number(
-                    chapterNumber
-                )
+            function(item) {
+
+                return (
+                    Number(
+                        item.number
+                    ) ===
+                    Number(
+                        chapterNumber
+                    )
+                );
+
+            }
         );
 
 
@@ -899,24 +989,17 @@ async function updateMangaJson(
     }
 
 
-    // ------------------------------------------
-    // CREATE PAGES ARRAY
-    // ------------------------------------------
-
     if (
         !Array.isArray(
             chapter.pages
         )
     ) {
 
-        chapter.pages = [];
+        chapter.pages =
+            [];
 
     }
 
-
-    // ------------------------------------------
-    // ADD PAGE NAMES
-    // ------------------------------------------
 
     pageNames.forEach(
         function(pageName) {
@@ -937,10 +1020,6 @@ async function updateMangaJson(
     );
 
 
-    // ------------------------------------------
-    // SORT PAGES
-    // ------------------------------------------
-
     chapter.pages.sort(
         function(a, b) {
 
@@ -955,10 +1034,6 @@ async function updateMangaJson(
         }
     );
 
-
-    // ------------------------------------------
-    // SAVE
-    // ------------------------------------------
 
     const json =
         JSON.stringify(
@@ -1027,10 +1102,6 @@ uploadForm.addEventListener(
 
         try {
 
-            // ------------------------------------------
-            // GET VALUES
-            // ------------------------------------------
-
             const mangaId =
                 mangaSelect.value;
 
@@ -1089,7 +1160,7 @@ uploadForm.addEventListener(
 
 
             // ------------------------------------------
-            // DISABLE
+            // DISABLE BUTTON
             // ------------------------------------------
 
             uploadBtn.disabled =
@@ -1097,15 +1168,49 @@ uploadForm.addEventListener(
 
 
             uploadBtn.textContent =
-                "Uploading...";
-
-
-            const uploadedPages = [];
+                "Checking existing pages...";
 
 
             // ------------------------------------------
-            // UPLOAD FILES
+            // GET EXISTING PAGES
             // ------------------------------------------
+
+            const existingPages =
+                await getExistingPages(
+                    mangaId,
+                    chapterNumber
+                );
+
+
+            console.log(
+                "Existing pages:",
+                existingPages
+            );
+
+
+            // ------------------------------------------
+            // FIND NEXT NUMBER
+            // ------------------------------------------
+
+            let nextNumber =
+                getNextPageNumber(
+                    existingPages
+                );
+
+
+            console.log(
+                "Next page:",
+                nextNumber
+            );
+
+
+            // ------------------------------------------
+            // UPLOAD
+            // ------------------------------------------
+
+            const uploadedPages =
+                [];
+
 
             for (
                 let i = 0;
@@ -1114,7 +1219,8 @@ uploadForm.addEventListener(
             ) {
 
                 const pageNumber =
-                    i + 1;
+                    nextNumber +
+                    i;
 
 
                 const filename =
@@ -1131,7 +1237,7 @@ uploadForm.addEventListener(
                     "Uploading " +
                     filename +
                     " (" +
-                    pageNumber +
+                    (i + 1) +
                     "/" +
                     files.length +
                     ")..."
@@ -1154,7 +1260,7 @@ uploadForm.addEventListener(
 
 
             // ------------------------------------------
-            // UPDATE MANGA.JSON
+            // UPDATE JSON
             // ------------------------------------------
 
             await updateMangaJson(
