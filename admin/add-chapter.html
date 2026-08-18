@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Chapter - Manga Admin</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #0f1117;
+            color: #ffffff;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            margin: 0 0 8px;
+            font-size: 30px;
+        }
+
+        .header p {
+            color: #9ca3af;
+            margin: 0;
+        }
+
+        .card {
+            background: #181c25;
+            border: 1px solid #2a303c;
+            border-radius: 12px;
+            padding: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #353b48;
+            border-radius: 8px;
+            background: #10131a;
+            color: white;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #6366f1;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .help {
+            display: block;
+            margin-top: 6px;
+            color: #8b93a1;
+            font-size: 13px;
+        }
+
+        button {
+            border: none;
+            border-radius: 8px;
+            padding: 13px 20px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .primary {
+            background: #6366f1;
+            color: white;
+            width: 100%;
+        }
+
+        .primary:hover {
+            background: #5558e8;
+        }
+
+        .primary:disabled {
+            background: #383b52;
+            cursor: not-allowed;
+        }
+
+        .back {
+            display: inline-block;
+            margin-bottom: 25px;
+            color: #9ca3af;
+            text-decoration: none;
+        }
+
+        .back:hover {
+            color: white;
+        }
+
+        #status {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        #status.success {
+            display: block;
+            background: #12351f;
+            border: 1px solid #1e6b3a;
+            color: #6ee7a0;
+        }
+
+        #status.error {
+            display: block;
+            background: #3a1717;
+            border: 1px solid #7f2929;
+            color: #ff8d8d;
+        }
+
+        .manga-info {
+            display: none;
+            margin-top: 10px;
+            padding: 12px;
+            background: #11151d;
+            border-radius: 8px;
+            color: #aeb5c2;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 20px auto;
+                padding: 15px;
+            }
+
+            .card {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <a href="index.html" class="back">← Back to Management</a>
+
+    <div class="header">
+        <h1>Add Chapter</h1>
+        <p>Add a new chapter to an existing manga.</p>
+    </div>
+
+    <div class="card">
+
+        <form id="chapterForm">
+
+            <div class="form-group">
+                <label for="mangaSelect">Manga</label>
+
+                <select id="mangaSelect" required>
+                    <option value="">Loading manga...</option>
+                </select>
+
+                <div id="mangaInfo" class="manga-info"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="chapterNumber">
+                    Chapter Number
+                </label>
+
+                <input
+                    type="number"
+                    id="chapterNumber"
+                    min="0"
+                    step="0.1"
+                    placeholder="Example: 1187"
+                    required
+                >
+
+                <span class="help">
+                    Enter the chapter number without "Chapter".
+                </span>
+            </div>
+
+            <div class="form-group">
+                <label for="chapterTitle">
+                    Chapter Title
+                </label>
+
+                <input
+                    type="text"
+                    id="chapterTitle"
+                    placeholder="Example: The New Adventure"
+                >
+
+                <span class="help">
+                    Optional.
+                </span>
+            </div>
+
+            <div class="form-group">
+                <label for="chapterDescription">
+                    Description
+                </label>
+
+                <textarea
+                    id="chapterDescription"
+                    placeholder="Enter a short chapter description..."
+                ></textarea>
+
+                <span class="help">
+                    Optional.
+                </span>
+            </div>
+
+            <div class="form-group">
+                <label for="releaseDate">
+                    Release Date
+                </label>
+
+                <input
+                    type="date"
+                    id="releaseDate"
+                >
+            </div>
+
+            <button
+                type="submit"
+                class="primary"
+                id="submitButton"
+            >
+                Add Chapter
+            </button>
+
+            <div id="status"></div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script src="../js/github-config.js"></script>
+<script src="../js/add-chapter.js"></script>
+
+</body>
+</html>
