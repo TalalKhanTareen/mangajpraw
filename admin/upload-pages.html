@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Upload Pages - MangaJPRaw Admin</title>
+
+    <link
+        rel="stylesheet"
+        href="./style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<div class="admin-container">
+
+    <div class="admin-card">
+
+        <h1>
+            Upload Chapter Pages
+        </h1>
+
+        <p class="subtitle">
+            Upload manga pages directly to GitHub
+        </p>
+
+
+        <form id="uploadForm">
+
+
+            <!-- MANGA -->
+
+            <label for="mangaSelect">
+                Select Manga
+            </label>
+
+            <select
+                id="mangaSelect"
+                required
+            >
+
+                <option value="">
+                    Loading manga...
+                </option>
+
+            </select>
+
+
+            <!-- CHAPTER -->
+
+            <label for="chapterSelect">
+                Select Chapter
+            </label>
+
+            <select
+                id="chapterSelect"
+                required
+                disabled
+            >
+
+                <option value="">
+                    Select manga first
+                </option>
+
+            </select>
+
+
+            <!-- FILES -->
+
+            <label for="pageFiles">
+                Chapter Images
+            </label>
+
+            <input
+                type="file"
+                id="pageFiles"
+                accept="image/jpeg,image/png,image/webp"
+                multiple
+                required
+            >
+
+
+            <p class="security-note">
+
+                Select all chapter pages at once.
+                Images will automatically be numbered
+                001, 002, 003...
+
+            </p>
+
+
+            <!-- PREVIEW -->
+
+            <div
+                id="preview"
+                class="upload-preview"
+            ></div>
+
+
+            <!-- UPLOAD -->
+
+            <button
+                type="submit"
+                id="uploadBtn"
+            >
+                Upload Pages
+            </button>
+
+
+            <!-- MESSAGE -->
+
+            <div
+                id="message"
+                class="message"
+            ></div>
+
+
+        </form>
+
+
+        <br>
+
+
+        <a href="./dashboard.html">
+            ← Back to Dashboard
+        </a>
+
+
+    </div>
+
+
+</div>
+
+
+<script
+    src="../js/upload-pages.js?v=1"
+></script>
+
+
+</body>
+
+</html>
