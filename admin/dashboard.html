@@ -17,215 +17,404 @@
         href="./style.css"
     >
 
+    <style>
+
+        .dashboard-container {
+
+            max-width: 1100px;
+
+            margin: 0 auto;
+
+            padding: 30px 20px;
+
+        }
+
+
+        .dashboard-header {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            gap: 20px;
+
+            margin-bottom: 35px;
+
+        }
+
+
+        .dashboard-header h1 {
+
+            margin: 0 0 8px;
+
+        }
+
+
+        .dashboard-header p {
+
+            margin: 0;
+
+            color: #777;
+
+        }
+
+
+        .logout-button {
+
+            border: none;
+
+            background: #dc2626;
+
+            color: white;
+
+            padding:
+                10px 16px;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+        }
+
+
+        .logout-button:hover {
+
+            opacity: 0.9;
+
+        }
+
+
+        .dashboard-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(
+                        250px,
+                        1fr
+                    )
+                );
+
+            gap: 20px;
+
+        }
+
+
+        .dashboard-card {
+
+            display: block;
+
+            padding: 25px;
+
+            background: #fff;
+
+            border: 1px solid #ddd;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            color: inherit;
+
+            box-shadow:
+                0 3px 10px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.06
+                );
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+
+        }
+
+
+        .dashboard-card:hover {
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 6px 18px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.12
+                );
+
+        }
+
+
+        .dashboard-icon {
+
+            font-size: 36px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .dashboard-card h2 {
+
+            margin:
+                0 0 10px;
+
+            font-size: 20px;
+
+        }
+
+
+        .dashboard-card p {
+
+            margin: 0;
+
+            color: #666;
+
+            line-height: 1.5;
+
+        }
+
+
+        @media (
+            max-width: 600px
+        ) {
+
+            .dashboard-header {
+
+                flex-direction:
+                    column;
+
+                align-items:
+                    flex-start;
+
+            }
+
+
+            .dashboard-container {
+
+                padding:
+                    20px 15px;
+
+            }
+
+        }
+
+    </style>
+
 </head>
 
 
 <body>
 
 
-<div class="admin-container">
-
-    <div class="admin-card dashboard-card">
+<div class="dashboard-container">
 
 
-        <!-- HEADER -->
+    <!-- =========================================
+         HEADER
+         ========================================== -->
 
-        <div class="dashboard-header">
+    <header class="dashboard-header">
 
-            <div>
+        <div>
 
-                <h1>
-                    MangaJPRaw Admin
-                </h1>
+            <h1>
+                MangaJPRaw Admin
+            </h1>
 
-                <p class="subtitle">
-                    Logged in as
-                    <strong id="adminUser">
-                        Admin
-                    </strong>
-                </p>
+            <p>
+                Logged in as
+                <strong id="adminUser">
+                    Admin
+                </strong>
+            </p>
 
+        </div>
+
+
+        <button
+            id="logoutButton"
+            class="logout-button"
+            type="button"
+        >
+            Logout
+        </button>
+
+    </header>
+
+
+    <!-- =========================================
+         DASHBOARD CARDS
+         ========================================== -->
+
+    <main class="dashboard-grid">
+
+
+        <!-- =====================================
+             ADD MANGA
+             ====================================== -->
+
+        <a
+            href="./add-manga.html"
+            class="dashboard-card"
+        >
+
+            <div class="dashboard-icon">
+                📚
             </div>
 
+            <h2>
+                Add Manga
+            </h2>
 
-            <button
-                type="button"
-                id="logoutBtn"
-                class="logout-button"
-            >
-                Logout
-            </button>
+            <p>
+                Add a new manga to the
+                MangaJPRaw library.
+            </p>
 
-        </div>
-
-
-        <!-- DASHBOARD -->
-
-        <div class="dashboard-grid">
+        </a>
 
 
-            <!-- ADD MANGA -->
+        <!-- =====================================
+             ADD CHAPTER
+             ====================================== -->
 
-            <a
-                href="./add-manga.html"
-                class="dashboard-item"
-            >
+        <a
+            href="./add-chapter.html"
+            class="dashboard-card"
+        >
 
-                <div class="dashboard-icon">
-                    📚
-                </div>
+            <div class="dashboard-icon">
+                📖
+            </div>
 
-                <h2>
-                    Add Manga
-                </h2>
+            <h2>
+                Add Chapter
+            </h2>
 
-                <p>
-                    Add a new manga to the MangaJPRaw library.
-                </p>
+            <p>
+                Add a new chapter to an
+                existing manga.
+            </p>
 
-                <span>
-                    Add Manga →
-                </span>
-
-            </a>
-
-
-            <!-- ADD CHAPTER -->
-
-            <a
-                href="./add-chapter.html?v=10"
-                class="dashboard-item"
-            >
-
-                <div class="dashboard-icon">
-                    📖
-                </div>
-
-                <h2>
-                    Add Chapter
-                </h2>
-
-                <p>
-                    Add a chapter to an existing manga.
-                </p>
-
-                <span>
-                    Add Chapter →
-                </span>
-
-            </a>
+        </a>
 
 
-            <!-- UPLOAD PAGES -->
+        <!-- =====================================
+             UPLOAD PAGES
+             ====================================== -->
 
-            <a
-                href="./upload-pages.html"
-                class="dashboard-item"
-            >
+        <a
+            href="./upload-pages.html"
+            class="dashboard-card"
+        >
 
-                <div class="dashboard-icon">
-                    🖼️
-                </div>
+            <div class="dashboard-icon">
+                🖼️
+            </div>
 
-                <h2>
-                    Upload Pages
-                </h2>
+            <h2>
+                Upload Pages
+            </h2>
 
-                <p>
-                    Upload and organize chapter images.
-                </p>
+            <p>
+                Upload and organize
+                chapter images.
+            </p>
 
-                <span>
-                    Upload Pages →
-                </span>
-
-            </a>
-
-
-            <!-- MANAGE MANGA -->
-
-            <a
-                href="./manage-manga.html"
-                class="dashboard-item"
-            >
-
-                <div class="dashboard-icon">
-                    🗂️
-                </div>
-
-                <h2>
-                    Manage Manga
-                </h2>
-
-                <p>
-                    Manage the manga library.
-                </p>
-
-                <span>
-                    Manage Manga →
-                </span>
-
-            </a>
+        </a>
 
 
-            <!-- MANAGE CHAPTERS -->
+        <!-- =====================================
+             MANAGE MANGA
+             ====================================== -->
 
-            <a
-                href="./manage-chapters.html"
-                class="dashboard-item"
-            >
+        <a
+            href="./manage-manga.html"
+            class="dashboard-card"
+        >
 
-                <div class="dashboard-icon">
-                    📑
-                </div>
+            <div class="dashboard-icon">
+                🗂️
+            </div>
 
-                <h2>
-                    Manage Chapters
-                </h2>
+            <h2>
+                Manage Manga
+            </h2>
 
-                <p>
-                    Manage existing chapters.
-                </p>
+            <p>
+                Manage the manga library,
+                edit manga information,
+                and remove manga.
+            </p>
 
-                <span>
-                    Manage Chapters →
-                </span>
-
-            </a>
-
-
-            <!-- WEBSITE -->
-
-            <a
-                href="../index.html"
-                class="dashboard-item"
-                target="_blank"
-                rel="noopener"
-            >
-
-                <div class="dashboard-icon">
-                    🌐
-                </div>
-
-                <h2>
-                    Website
-                </h2>
-
-                <p>
-                    Open the public MangaJPRaw website.
-                </p>
-
-                <span>
-                    Open Website →
-                </span>
-
-            </a>
+        </a>
 
 
-        </div>
+        <!-- =====================================
+             MANAGE CHAPTERS
+             ====================================== -->
+
+        <a
+            href="./manage-chapters.html"
+            class="dashboard-card"
+        >
+
+            <div class="dashboard-icon">
+                📑
+            </div>
+
+            <h2>
+                Manage Chapters
+            </h2>
+
+            <p>
+                Manage existing chapters
+                and chapter information.
+            </p>
+
+        </a>
 
 
-    </div>
+        <!-- =====================================
+             PUBLIC WEBSITE
+             ====================================== -->
+
+        <a
+            href="../index.html"
+            class="dashboard-card"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+
+            <div class="dashboard-icon">
+                🌐
+            </div>
+
+            <h2>
+                Website
+            </h2>
+
+            <p>
+                Open the public
+                MangaJPRaw website.
+            </p>
+
+        </a>
+
+
+    </main>
 
 
 </div>
@@ -233,60 +422,75 @@
 
 <script>
 
+    // =================================================
+    // ADMIN SESSION
+    // =================================================
 
-// ==========================================
-// CHECK LOGIN
-// ==========================================
-
-const admin =
-    sessionStorage.getItem(
-        "mangajpraw_admin"
-    );
-
-const token =
-    sessionStorage.getItem(
-        "mangajpraw_token"
-    );
+    const admin =
+        sessionStorage.getItem(
+            "mangajpraw_admin"
+        );
 
 
-if (
-    admin !== "true" ||
-    !token
-) {
-
-    window.location.href =
-        "./index.html";
-
-}
+    const token =
+        sessionStorage.getItem(
+            "mangajpraw_token"
+        );
 
 
-// ==========================================
-// SHOW USER
-// ==========================================
-
-const username =
-    sessionStorage.getItem(
-        "mangajpraw_user"
-    );
+    const username =
+        sessionStorage.getItem(
+            "mangajpraw_user"
+        );
 
 
-if (username) {
+    // =================================================
+    // CHECK LOGIN
+    // =================================================
 
-    document.getElementById(
-        "adminUser"
-    ).textContent =
-        username;
+    if (
+        admin !== "true" ||
+        !token
+    ) {
 
-}
+        window.location.href =
+            "./index.html";
+
+    }
 
 
-// ==========================================
-// LOGOUT
-// ==========================================
+    // =================================================
+    // SHOW USERNAME
+    // =================================================
 
-document
-    .getElementById("logoutBtn")
-    .addEventListener(
+    const adminUser =
+        document.getElementById(
+            "adminUser"
+        );
+
+
+    if (
+        adminUser &&
+        username
+    ) {
+
+        adminUser.textContent =
+            username;
+
+    }
+
+
+    // =================================================
+    // LOGOUT
+    // =================================================
+
+    const logoutButton =
+        document.getElementById(
+            "logoutButton"
+        );
+
+
+    logoutButton.addEventListener(
         "click",
         function() {
 
