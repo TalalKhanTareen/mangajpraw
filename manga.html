@@ -10,827 +10,182 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <meta
-        name="description"
-        content="Manga details and chapters"
-    >
-
     <title>Manga - MangaJPRaw</title>
-
 
     <style>
 
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
         }
 
-
-        :root {
-
-            --background: #080b12;
-            --surface: #111827;
-            --surface-2: #151e2e;
-            --border: #263247;
-
-            --text: #ffffff;
-            --muted: #9aa7bb;
-
-            --accent: #ff4d6d;
-            --accent-hover: #ff365a;
-
-        }
-
-
         body {
+            margin: 0;
+
+            background: #080b12;
+
+            color: white;
 
             font-family:
                 Arial,
                 Helvetica,
                 sans-serif;
-
-            background:
-                var(--background);
-
-            color:
-                var(--text);
-
-            min-height:
-                100vh;
-
         }
 
+        header {
+            background: #111827;
 
-        a {
+            border-bottom:
+                1px solid #263247;
+        }
 
-            color: inherit;
+        .header-inner {
+            max-width: 1100px;
+
+            margin: auto;
+
+            padding: 16px 20px;
+
+            display: flex;
+
+            justify-content: space-between;
+        }
+
+        header a {
+            color: white;
+
+            text-decoration: none;
+        }
+
+        .logo {
+            font-size: 24px;
+
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #ff4d6d;
+        }
+
+        .container {
+            max-width: 1000px;
+
+            margin: auto;
+
+            padding: 35px 20px 60px;
+        }
+
+        .back {
+            color: #cbd5e1;
+
+            text-decoration: none;
+        }
+
+        .back:hover {
+            color: #ff4d6d;
+        }
+
+        .manga-header {
+            margin-top: 30px;
+
+            background: #111827;
+
+            border:
+                1px solid #263247;
+
+            border-radius: 12px;
+
+            padding: 30px;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        .description {
+            color: #9aa7bb;
+
+            line-height: 1.7;
+        }
+
+        .meta {
+            display: flex;
+
+            gap: 10px;
+
+            flex-wrap: wrap;
+
+            margin-top: 15px;
+        }
+
+        .tag {
+            background: #1f2937;
+
+            padding: 6px 10px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+
+            color: #cbd5e1;
+        }
+
+        .chapters {
+            margin-top: 25px;
+        }
+
+        .chapter {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            background: #111827;
+
+            border:
+                1px solid #263247;
+
+            border-radius: 8px;
+
+            padding: 15px 18px;
+
+            margin-bottom: 10px;
+        }
+
+        .chapter a {
+            color: white;
 
             text-decoration: none;
 
+            font-weight: bold;
         }
 
-
-        /* =========================
-           HEADER
-        ========================= */
-
-        header {
-
-            position: sticky;
-
-            top: 0;
-
-            z-index: 1000;
-
-            background:
-                rgba(17, 24, 39, 0.95);
-
-            backdrop-filter:
-                blur(10px);
-
-            border-bottom:
-                1px solid var(--border);
-
+        .chapter a:hover {
+            color: #ff4d6d;
         }
 
+        .loading,
+        .error,
+        .empty {
+            text-align: center;
 
-        .navbar {
+            padding: 50px;
 
-            max-width:
-                1200px;
-
-            margin:
-                auto;
-
-            padding:
-                18px 25px;
-
-            display:
-                flex;
-
-            align-items:
-                center;
-
-            justify-content:
-                space-between;
-
+            color: #9aa7bb;
         }
-
-
-        .logo {
-
-            font-size:
-                28px;
-
-            font-weight:
-                800;
-
-        }
-
-
-        .logo span {
-
-            color:
-                var(--accent);
-
-        }
-
-
-        .nav-links {
-
-            display:
-                flex;
-
-            gap:
-                30px;
-
-        }
-
-
-        .nav-links a {
-
-            color:
-                #dbe2f0;
-
-            font-size:
-                15px;
-
-        }
-
-
-        .nav-links a:hover {
-
-            color:
-                var(--accent);
-
-        }
-
-
-        /* =========================
-           MAIN
-        ========================= */
-
-        main {
-
-            max-width:
-                1100px;
-
-            margin:
-                auto;
-
-            padding:
-                50px 25px 80px;
-
-        }
-
-
-        /* =========================
-           BACK BUTTON
-        ========================= */
-
-        .back-button {
-
-            display:
-                inline-block;
-
-            margin-bottom:
-                30px;
-
-            color:
-                var(--muted);
-
-            font-size:
-                14px;
-
-        }
-
-
-        .back-button:hover {
-
-            color:
-                var(--accent);
-
-        }
-
-
-        /* =========================
-           MANGA HEADER
-        ========================= */
-
-        .manga-header {
-
-            display:
-                grid;
-
-            grid-template-columns:
-                260px 1fr;
-
-            gap:
-                40px;
-
-            padding:
-                30px;
-
-            background:
-                var(--surface);
-
-            border:
-                1px solid var(--border);
-
-            border-radius:
-                15px;
-
-            margin-bottom:
-                40px;
-
-        }
-
-
-        .manga-cover {
-
-            width:
-                260px;
-
-            height:
-                370px;
-
-            border-radius:
-                10px;
-
-            overflow:
-                hidden;
-
-            background:
-                #1a2434;
-
-            display:
-                flex;
-
-            align-items:
-                center;
-
-            justify-content:
-                center;
-
-        }
-
-
-        .manga-cover img {
-
-            width:
-                100%;
-
-            height:
-                100%;
-
-            object-fit:
-                cover;
-
-        }
-
-
-        .cover-placeholder {
-
-            color:
-                var(--muted);
-
-            text-align:
-                center;
-
-        }
-
-
-        .manga-info {
-
-            display:
-                flex;
-
-            flex-direction:
-                column;
-
-            justify-content:
-                center;
-
-        }
-
-
-        .status {
-
-            display:
-                inline-block;
-
-            width:
-                fit-content;
-
-            padding:
-                6px 12px;
-
-            background:
-                var(--accent);
-
-            border-radius:
-                20px;
-
-            font-size:
-                12px;
-
-            font-weight:
-                bold;
-
-            margin-bottom:
-                15px;
-
-        }
-
-
-        .manga-info h1 {
-
-            font-size:
-                42px;
-
-            margin-bottom:
-                8px;
-
-        }
-
-
-        .japanese-title {
-
-            color:
-                var(--muted);
-
-            font-size:
-                18px;
-
-            margin-bottom:
-                22px;
-
-        }
-
-
-        .description {
-
-            color:
-                #c2cada;
-
-            line-height:
-                1.8;
-
-            max-width:
-                700px;
-
-            margin-bottom:
-                25px;
-
-        }
-
-
-        /* =========================
-           GENRES
-        ========================= */
-
-        .genres {
-
-            display:
-                flex;
-
-            flex-wrap:
-                wrap;
-
-            gap:
-                8px;
-
-        }
-
-
-        .genre {
-
-            padding:
-                6px 10px;
-
-            background:
-                var(--surface-2);
-
-            border:
-                1px solid var(--border);
-
-            border-radius:
-                5px;
-
-            color:
-                #cbd5e1;
-
-            font-size:
-                12px;
-
-        }
-
-
-        /* =========================
-           CHAPTER SECTION
-        ========================= */
-
-        .chapters-section {
-
-            background:
-                var(--surface);
-
-            border:
-                1px solid var(--border);
-
-            border-radius:
-                15px;
-
-            overflow:
-                hidden;
-
-        }
-
-
-        .chapters-header {
-
-            padding:
-                25px 30px;
-
-            border-bottom:
-                1px solid var(--border);
-
-            display:
-                flex;
-
-            align-items:
-                center;
-
-            justify-content:
-                space-between;
-
-        }
-
-
-        .chapters-header h2 {
-
-            font-size:
-                25px;
-
-        }
-
-
-        .chapter-count {
-
-            color:
-                var(--muted);
-
-            font-size:
-                13px;
-
-        }
-
-
-        /* =========================
-           CHAPTER LIST
-        ========================= */
-
-        .chapter-list {
-
-            display:
-                flex;
-
-            flex-direction:
-                column;
-
-        }
-
-
-        .chapter-item {
-
-            display:
-                flex;
-
-            align-items:
-                center;
-
-            justify-content:
-                space-between;
-
-            gap:
-                20px;
-
-            padding:
-                18px 30px;
-
-            border-bottom:
-                1px solid var(--border);
-
-            transition:
-                0.2s;
-
-        }
-
-
-        .chapter-item:last-child {
-
-            border-bottom:
-                none;
-
-        }
-
-
-        .chapter-item:hover {
-
-            background:
-                var(--surface-2);
-
-        }
-
-
-        .chapter-details h3 {
-
-            font-size:
-                16px;
-
-            margin-bottom:
-                6px;
-
-        }
-
-
-        .chapter-date {
-
-            color:
-                var(--muted);
-
-            font-size:
-                12px;
-
-        }
-
-
-        .read-button {
-
-            flex-shrink:
-                0;
-
-            background:
-                var(--accent);
-
-            padding:
-                9px 17px;
-
-            border-radius:
-                6px;
-
-            font-size:
-                13px;
-
-            font-weight:
-                bold;
-
-            transition:
-                0.2s;
-
-        }
-
-
-        .read-button:hover {
-
-            background:
-                var(--accent-hover);
-
-            transform:
-                translateY(-1px);
-
-        }
-
-
-        /* =========================
-           NO CHAPTERS
-        ========================= */
-
-        .no-chapters {
-
-            padding:
-                50px 20px;
-
-            text-align:
-                center;
-
-            color:
-                var(--muted);
-
-        }
-
-
-        /* =========================
-           ERROR
-        ========================= */
 
         .error {
-
-            text-align:
-                center;
-
-            padding:
-                100px 20px;
-
+            color: #ff6b6b;
         }
 
+        @media (max-width: 600px) {
 
-        .error h1 {
+            .chapter {
+                flex-direction: column;
 
-            font-size:
-                35px;
-
-            margin-bottom:
-                15px;
-
-        }
-
-
-        .error p {
-
-            color:
-                var(--muted);
-
-            margin-bottom:
-                25px;
-
-        }
-
-
-        .home-button {
-
-            display:
-                inline-block;
-
-            background:
-                var(--accent);
-
-            padding:
-                11px 20px;
-
-            border-radius:
-                7px;
-
-            font-weight:
-                bold;
-
-        }
-
-
-        /* =========================
-           FOOTER
-        ========================= */
-
-        footer {
-
-            border-top:
-                1px solid var(--border);
-
-            background:
-                var(--surface);
-
-            text-align:
-                center;
-
-            padding:
-                35px 20px;
-
-            color:
-                var(--muted);
-
-        }
-
-
-        footer strong {
-
-            color:
-                white;
-
-        }
-
-
-        /* =========================
-           MOBILE
-        ========================= */
-
-        @media (max-width: 700px) {
-
-            .navbar {
-
-                padding:
-                    15px;
-
-            }
-
-
-            .logo {
-
-                font-size:
-                    23px;
-
-            }
-
-
-            .nav-links {
-
-                gap:
-                    15px;
-
-            }
-
-
-            .nav-links a {
-
-                font-size:
-                    13px;
-
-            }
-
-
-            main {
-
-                padding:
-                    35px 15px 60px;
-
-            }
-
-
-            .manga-header {
-
-                grid-template-columns:
-                    1fr;
-
-                padding:
-                    20px;
-
-                gap:
-                    25px;
-
-            }
-
-
-            .manga-cover {
-
-                width:
-                    100%;
-
-                max-width:
-                    280px;
-
-                height:
-                    390px;
-
-                margin:
-                    auto;
-
-            }
-
-
-            .manga-info h1 {
-
-                font-size:
-                    32px;
-
-            }
-
-
-            .chapters-header {
-
-                padding:
-                    20px;
-
-            }
-
-
-            .chapter-item {
-
-                padding:
-                    16px 20px;
-
-            }
-
-        }
-
-
-        @media (max-width: 450px) {
-
-            .chapter-item {
-
-                align-items:
-                    flex-start;
-
-            }
-
-
-            .read-button {
-
-                padding:
-                    8px 12px;
-
-                font-size:
-                    12px;
-
+                align-items: flex-start;
             }
 
         }
@@ -843,462 +198,118 @@
 <body>
 
 
-    <!-- =========================
-         HEADER
-    ========================= -->
+<header>
 
-    <header>
-
-        <nav class="navbar">
-
-            <a
-                href="./index.html"
-                class="logo"
-            >
-
-                Manga<span>JPRaw</span>
-
-            </a>
-
-
-            <div class="nav-links">
-
-                <a href="./index.html">
-                    Home
-                </a>
-
-                <a href="./index.html#manga">
-                    Manga
-                </a>
-
-                <a href="./index.html#latest">
-                    Latest
-                </a>
-
-            </div>
-
-        </nav>
-
-    </header>
-
-
-    <!-- =========================
-         MAIN
-    ========================= -->
-
-    <main id="pageContent">
+    <div class="header-inner">
 
         <a
             href="./index.html"
-            class="back-button"
+            class="logo"
         >
-
-            ← Back to Manga
-
+            Manga<span>JPRaw</span>
         </a>
 
+        <a href="./index.html">
+            Home
+        </a>
 
-        <!-- MANGA INFORMATION -->
+    </div>
 
-        <section
-            class="manga-header"
-            id="mangaHeader"
-        >
+</header>
 
-            <div class="manga-cover">
 
-                <div class="cover-placeholder">
+<div class="container">
 
-                    Loading...
+    <a
+        href="./index.html"
+        class="back"
+    >
+        ← Back to Manga
+    </a>
 
+
+    <div id="content">
+
+        <div class="loading">
+            Loading manga...
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    const mangaId =
+        params.get("id");
+
+
+    async function loadManga() {
+
+        const content =
+            document.getElementById(
+                "content"
+            );
+
+
+        if (!mangaId) {
+
+            content.innerHTML = `
+                <div class="error">
+                    Manga ID is missing.
                 </div>
-
-            </div>
-
-
-            <div class="manga-info">
-
-                <span class="status">
-                    Loading...
-                </span>
-
-
-                <h1>
-                    Loading...
-                </h1>
-
-
-                <div class="japanese-title">
-
-                    Loading...
-
-                </div>
-
-
-                <p class="description">
-
-                    Loading manga information...
-
-                </p>
-
-
-                <div class="genres">
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- CHAPTERS -->
-
-        <section
-            class="chapters-section"
-            id="chaptersSection"
-        >
-
-            <div class="chapters-header">
-
-                <h2>
-                    Chapters
-                </h2>
-
-
-                <span
-                    class="chapter-count"
-                    id="chapterCount"
-                >
-                    Loading...
-                </span>
-
-            </div>
-
-
-            <div
-                class="chapter-list"
-                id="chapterList"
-            >
-
-                <div class="no-chapters">
-
-                    Loading chapters...
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- =========================
-         FOOTER
-    ========================= -->
-
-    <footer>
-
-        <p>
-
-            © 2026
-            <strong>MangaJPRaw</strong>.
-
-        </p>
-
-
-        <p>
-
-            English Manga Reading Platform
-
-        </p>
-
-    </footer>
-
-
-    <!-- =========================
-         JAVASCRIPT
-    ========================= -->
-
-    <script>
-
-        const DATA_URL =
-            "./data/manga.json";
-
-
-        /* =========================
-           GET MANGA ID
-        ========================= */
-
-        function getMangaId() {
-
-            const params =
-                new URLSearchParams(
-                    window.location.search
-                );
-
-
-            return params.get("id");
-
-        }
-
-
-        /* =========================
-           LOAD MANGA
-        ========================= */
-
-        async function loadMangaPage() {
-
-            try {
-
-                const mangaId =
-                    getMangaId();
-
-
-                if (!mangaId) {
-
-                    showError(
-                        "Manga not specified."
-                    );
-
-                    return;
-
-                }
-
-
-                const response =
-                    await fetch(
-                        DATA_URL
-                    );
-
-
-                if (!response.ok) {
-
-                    throw new Error(
-                        "Could not load manga database."
-                    );
-
-                }
-
-
-                const mangaList =
-                    await response.json();
-
-
-                const manga =
-                    mangaList.find(
-                        item =>
-                            item.id === mangaId
-                    );
-
-
-                if (!manga) {
-
-                    showError(
-                        "Manga not found."
-                    );
-
-                    return;
-
-                }
-
-
-                console.log(
-                    "Manga found:",
-                    manga
-                );
-
-
-                displayManga(
-                    manga
-                );
-
-
-                displayChapters(
-                    manga
-                );
-
-
-                document.title =
-                    `${manga.title} - MangaJPRaw`;
-
-
-            } catch (error) {
-
-                console.error(
-                    error
-                );
-
-
-                showError(
-                    "Unable to load manga."
-                );
-
-            }
-
-        }
-
-
-        /* =========================
-           DISPLAY MANGA
-        ========================= */
-
-        function displayManga(manga) {
-
-            const header =
-                document.getElementById(
-                    "mangaHeader"
-                );
-
-
-            const cover =
-                manga.cover
-
-                    ? `
-                        <img
-                            src="${escapeHTML(
-                                manga.cover
-                            )}"
-                            alt="${escapeHTML(
-                                manga.title
-                            )}"
-                        >
-                    `
-
-                    : `
-                        <div class="cover-placeholder">
-                            No Cover
-                        </div>
-                    `;
-
-
-            const genres =
-                manga.genres || [];
-
-
-            const genreHTML =
-                genres.map(
-                    genre =>
-                        `
-                            <span class="genre">
-                                ${escapeHTML(
-                                    genre
-                                )}
-                            </span>
-                        `
-                ).join("");
-
-
-            header.innerHTML = `
-
-                <div class="manga-cover">
-
-                    ${cover}
-
-                </div>
-
-
-                <div class="manga-info">
-
-                    <span class="status">
-
-                        ${escapeHTML(
-                            manga.status ||
-                            "Ongoing"
-                        )}
-
-                    </span>
-
-
-                    <h1>
-
-                        ${escapeHTML(
-                            manga.title
-                        )}
-
-                    </h1>
-
-
-                    <div class="japanese-title">
-
-                        ${escapeHTML(
-                            manga.japaneseTitle ||
-                            ""
-                        )}
-
-                    </div>
-
-
-                    <p class="description">
-
-                        ${escapeHTML(
-                            manga.description ||
-                            "No description available."
-                        )}
-
-                    </p>
-
-
-                    <div class="genres">
-
-                        ${genreHTML}
-
-                    </div>
-
-                </div>
-
             `;
 
+            return;
+
         }
 
 
-        /* =========================
-           DISPLAY CHAPTERS
-        ========================= */
+        try {
 
-        function displayChapters(manga) {
-
-            const container =
-                document.getElementById(
-                    "chapterList"
+            const response =
+                await fetch(
+                    "./data/manga.json?v=" +
+                    Date.now()
                 );
 
 
-            const count =
-                document.getElementById(
-                    "chapterCount"
+            if (!response.ok) {
+
+                throw new Error(
+                    "Could not load manga data."
                 );
-
-
-            const chapters =
-                manga.chapters || [];
-
-
-            if (count) {
-
-                count.textContent =
-                    `${chapters.length} ${
-                        chapters.length === 1
-                            ? "Chapter"
-                            : "Chapters"
-                    }`;
 
             }
 
 
-            if (
-                !chapters ||
-                chapters.length === 0
-            ) {
+            const data =
+                await response.json();
 
-                container.innerHTML = `
 
-                    <div class="no-chapters">
+            const manga =
+                Array.isArray(data)
+                    ? data.find(
+                        function(item) {
+                            return item.id === mangaId;
+                        }
+                      )
+                    : null;
 
-                        No chapters available yet.
 
+            if (!manga) {
+
+                content.innerHTML = `
+                    <div class="error">
+                        Manga not found.
                     </div>
-
                 `;
 
                 return;
@@ -1306,181 +317,137 @@
             }
 
 
-            container.innerHTML = "";
+            const chapters =
+                Array.isArray(
+                    manga.chapters
+                )
+                    ? manga.chapters
+                    : [];
 
 
-            /*
-             * Display newest chapters first.
-             */
-
-            const sortedChapters =
-                [...chapters].sort(
-                    function(a, b) {
-
-                        return (
-                            Number(b.number) -
-                            Number(a.number)
-                        );
-
-                    }
-                );
+            const genres =
+                Array.isArray(
+                    manga.genres
+                )
+                    ? manga.genres
+                    : [];
 
 
-            sortedChapters.forEach(
-                function(chapter) {
+            content.innerHTML = `
 
-                    const item =
-                        document.createElement(
-                            "div"
-                        );
-
-
-                    item.className =
-                        "chapter-item";
-
-
-                    const date =
-                        chapter.date
-                            ? formatDate(
-                                chapter.date
-                            )
-                            : "";
-
-
-                    item.innerHTML = `
-
-                        <div
-                            class="chapter-details"
-                        >
-
-                            <h3>
-
-                                ${escapeHTML(
-                                    chapter.title ||
-                                    `Chapter ${chapter.number}`
-                                )}
-
-                            </h3>
-
-
-                            <div
-                                class="chapter-date"
-                            >
-
-                                ${escapeHTML(
-                                    date
-                                )}
-
-                            </div>
-
-                        </div>
-
-
-                        <a
-                            class="read-button"
-                            href="./chapter.html?id=${encodeURIComponent(
-                                manga.id
-                            )}&chapter=${encodeURIComponent(
-                                chapter.number
-                            )}"
-                        >
-
-                            Read
-
-                        </a>
-
-                    `;
-
-
-                    container.appendChild(
-                        item
-                    );
-
-                }
-            );
-
-        }
-
-
-        /* =========================
-           FORMAT DATE
-        ========================= */
-
-        function formatDate(dateString) {
-
-            try {
-
-                const date =
-                    new Date(
-                        dateString
-                    );
-
-
-                if (
-                    Number.isNaN(
-                        date.getTime()
-                    )
-                ) {
-
-                    return dateString;
-
-                }
-
-
-                return date.toLocaleDateString(
-                    "en-US",
-                    {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric"
-                    }
-                );
-
-            } catch {
-
-                return dateString;
-
-            }
-
-        }
-
-
-        /* =========================
-           ERROR
-        ========================= */
-
-        function showError(message) {
-
-            const page =
-                document.getElementById(
-                    "pageContent"
-                );
-
-
-            page.innerHTML = `
-
-                <div class="error">
+                <div class="manga-header">
 
                     <h1>
-                        Oops!
+                        ${escapeHTML(
+                            manga.title || "Untitled"
+                        )}
                     </h1>
 
+                    ${
+                        manga.japaneseTitle
+                            ? `
+                                <p>
+                                    ${escapeHTML(
+                                        manga.japaneseTitle
+                                    )}
+                                </p>
+                              `
+                            : ""
+                    }
 
-                    <p>
+                    <p class="description">
                         ${escapeHTML(
-                            message
+                            manga.description || ""
                         )}
                     </p>
 
+                    <div class="meta">
 
-                    <a
-                        href="./index.html"
-                        class="home-button"
-                    >
+                        ${
+                            manga.status
+                                ? `
+                                    <span class="tag">
+                                        ${escapeHTML(
+                                            manga.status
+                                        )}
+                                    </span>
+                                  `
+                                : ""
+                        }
 
-                        Back to Home
+                        ${
+                            genres
+                                .map(
+                                    function(genre) {
 
-                    </a>
+                                        return `
+                                            <span class="tag">
+                                                ${escapeHTML(
+                                                    genre
+                                                )}
+                                            </span>
+                                        `;
+
+                                    }
+                                )
+                                .join("")
+                        }
+
+                    </div>
+
+                </div>
+
+
+                <div class="chapters">
+
+                    <h2>
+                        Chapters
+                    </h2>
+
+                    ${
+                        chapters.length === 0
+                            ? `
+                                <div class="empty">
+                                    No chapters available.
+                                </div>
+                              `
+                            : chapters
+                                .slice()
+                                .reverse()
+                                .map(
+                                    function(chapter) {
+
+                                        return `
+
+                                            <div class="chapter">
+
+                                                <a
+                                                    href="./chapter.html?id=${encodeURIComponent(manga.id)}&chapter=${encodeURIComponent(chapter.number)}"
+                                                >
+                                                    ${escapeHTML(
+                                                        chapter.title ||
+                                                        "Chapter " +
+                                                        chapter.number
+                                                    )}
+                                                </a>
+
+                                                <span>
+                                                    ${escapeHTML(
+                                                        String(
+                                                            chapter.number
+                                                        )
+                                                    )}
+                                                </span>
+
+                                            </div>
+
+                                        `;
+
+                                    }
+                                )
+                                .join("")
+
+                    }
 
                 </div>
 
@@ -1488,53 +455,58 @@
 
         }
 
+        catch (error) {
 
-        /* =========================
-           HTML ESCAPE
-        ========================= */
+            console.error(error);
 
-        function escapeHTML(value) {
-
-            return String(value)
-
-                .replace(
-                    /&/g,
-                    "&amp;"
-                )
-
-                .replace(
-                    /</g,
-                    "&lt;"
-                )
-
-                .replace(
-                    />/g,
-                    "&gt;"
-                )
-
-                .replace(
-                    /"/g,
-                    "&quot;"
-                )
-
-                .replace(
-                    /'/g,
-                    "&#039;"
-                );
+            content.innerHTML = `
+                <div class="error">
+                    Failed to load manga.
+                </div>
+            `;
 
         }
 
+    }
 
-        /* =========================
-           START
-        ========================= */
 
-        document.addEventListener(
-            "DOMContentLoaded",
-            loadMangaPage
-        );
+    function escapeHTML(
+        value
+    ) {
 
-    </script>
+        return String(value)
+
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+
+            .replace(
+                /</g,
+                "&lt;"
+            )
+
+            .replace(
+                />/g,
+                "&gt;"
+            )
+
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+
+    }
+
+
+    loadManga();
+
+</script>
 
 
 </body>
