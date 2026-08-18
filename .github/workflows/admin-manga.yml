@@ -1,0 +1,135 @@
+name: Admin Manga Manager
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "Action to perform"
+        required: true
+        type: choice
+        options:
+          - add_manga
+
+      manga_data:
+        description: "Manga JSON data"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+
+  manage-manga:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure Git
+        run: |
+          git config user.name "MangaJPRaw Admin"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Add Manga
+        if: ${{ inputs.action == 'add_manga' }}
+        env:
+          MANGA_DATA: ${{ inputs.manga_data }}
+        run: |
+
+          python3 <<'PY'
+
+          import json
+          import os
+
+          file_path = "data/manga.json"
+
+          manga_data = os.environ["MANGA_DATA"]
+
+          new_manga = json.loads(manga_data)
+
+          if os.path.exists(file_path):
+
+              with open(
+                  file_path,
+                  "r",
+                  encoding="utf-8"
+              ) as file:
+
+                  try:
+                      manga_list = json.load(file)
+
+                  except json.JSONDecodeError:
+                      manga_list = []
+
+          else:
+
+              manga_list = []
+
+
+          if not isinstance(
+              manga_list,
+              list
+          ):
+
+              manga_list = []
+
+
+          manga_id = new_manga.get("id")
+
+
+          if not manga_id:
+
+              raise Exception(
+                  "Manga ID is required."
+              )
+
+
+          for manga in manga_list:
+
+              if manga.get("id") == manga_id:
+
+                  raise Exception(
+                      f"Manga '{manga_id}' already exists."
+                  )
+
+
+          manga_list.append(
+              new_manga
+          )
+
+
+          with open(
+              file_path,
+              "w",
+              encoding="utf-8"
+          ) as file:
+
+              json.dump(
+                  manga_list,
+                  file,
+                  ensure_ascii=False,
+                  indent=4
+              )
+
+              file.write("\n")
+
+          PY
+
+
+      - name: Commit changes
+        run: |
+
+          git add data/manga.json
+
+          git diff --cached --quiet && \
+            echo "No changes to commit." && \
+            exit 0
+
+          git commit \
+            -m "Admin: add manga"
+
+          git push
