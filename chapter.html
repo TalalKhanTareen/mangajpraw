@@ -10,7 +10,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Chapter - MangaJPRaw</title>
+    <title>MangaJPRaw - Chapter</title>
 
     <style>
 
@@ -18,176 +18,247 @@
             box-sizing: border-box;
         }
 
+
+        html,
         body {
+
             margin: 0;
+            padding: 0;
 
-            background: #080b12;
+            background: #111;
 
-            color: white;
+            color: #fff;
 
             font-family:
                 Arial,
                 Helvetica,
                 sans-serif;
+
         }
 
-        header {
-            background: #111827;
 
-            border-bottom:
-                1px solid #263247;
+        body {
+            min-height: 100vh;
         }
 
-        .header-inner {
-            max-width: 1000px;
 
-            margin: auto;
+        /* =========================================
+           HEADER
+           ========================================= */
 
-            padding: 15px 20px;
+        .reader-header {
 
-            display: flex;
+            position: sticky;
 
-            justify-content: space-between;
+            top: 0;
 
-            align-items: center;
-        }
-
-        header a {
-            color: white;
-
-            text-decoration: none;
-        }
-
-        .logo {
-            font-size: 24px;
-
-            font-weight: bold;
-        }
-
-        .logo span {
-            color: #ff4d6d;
-        }
-
-        .container {
-            max-width: 1000px;
-
-            margin: auto;
-
-            padding: 20px 10px 50px;
-        }
-
-        .top {
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: center;
-
-            gap: 10px;
-
-            margin-bottom: 20px;
-        }
-
-        .back,
-        button {
-            background: #111827;
-
-            color: white;
-
-            border:
-                1px solid #263247;
-
-            padding: 9px 14px;
-
-            border-radius: 6px;
-
-            text-decoration: none;
-
-            cursor: pointer;
-        }
-
-        .back:hover,
-        button:hover {
-            border-color: #ff4d6d;
-        }
-
-        h1 {
-            text-align: center;
-
-            margin: 15px 0 5px;
-        }
-
-        .subtitle {
-            text-align: center;
-
-            color: #9aa7bb;
-
-            margin-bottom: 25px;
-        }
-
-        #reader {
-            background: #000;
-
-            text-align: center;
-        }
-
-        .page {
-            margin: 0 auto;
-        }
-
-        .page img {
-            display: block;
+            z-index: 1000;
 
             width: 100%;
 
-            max-width: 900px;
+            background: #181818;
 
-            height: auto;
+            border-bottom:
+                1px solid #333;
 
-            margin: 0 auto;
-        }
-
-        .page-number {
-            padding: 10px;
-
-            background: #080808;
-
-            color: #9aa7bb;
-        }
-
-        .loading,
-        .error {
-            padding: 70px 20px;
+            padding:
+                15px 20px;
 
             text-align: center;
 
-            color: #9aa7bb;
         }
 
-        .error {
-            color: #ff6b6b;
+
+        .reader-header a {
+
+            color: #fff;
+
+            text-decoration: none;
+
         }
 
-        .navigation {
-            display: flex;
 
-            justify-content: space-between;
+        #mangaTitle {
 
-            margin-top: 20px;
+            margin:
+                0 0 6px;
 
-            gap: 10px;
+            font-size:
+                22px;
+
+            font-weight:
+                700;
+
         }
 
-        @media (max-width: 600px) {
 
-            .navigation {
-                flex-direction: column;
+        #chapterTitle {
+
+            margin: 0;
+
+            font-size:
+                16px;
+
+            font-weight:
+                400;
+
+            color: #bbb;
+
+        }
+
+
+        /* =========================================
+           LOADING
+           ========================================= */
+
+        #loading {
+
+            width: 100%;
+
+            padding:
+                60px 20px;
+
+            text-align: center;
+
+            color: #bbb;
+
+            font-size:
+                18px;
+
+        }
+
+
+        /* =========================================
+           ERROR
+           ========================================= */
+
+        #errorMessage {
+
+            display: none;
+
+            width: calc(100% - 40px);
+
+            max-width: 700px;
+
+            margin:
+                50px auto;
+
+            padding:
+                20px;
+
+            background:
+                #291818;
+
+            border:
+                1px solid #663333;
+
+            color:
+                #ffaaaa;
+
+            text-align:
+                center;
+
+            line-height:
+                1.6;
+
+        }
+
+
+        /* =========================================
+           CHAPTER PAGES
+           ========================================= */
+
+        #chapterPages {
+
+            width: 100%;
+
+            max-width:
+                1000px;
+
+            margin:
+                0 auto;
+
+            padding: 0;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            align-items:
+                center;
+
+        }
+
+
+        .chapter-page {
+
+            display:
+                block;
+
+            width:
+                100%;
+
+            max-width:
+                1000px;
+
+            height:
+                auto;
+
+            margin:
+                0;
+
+            padding: 0;
+
+        }
+
+
+        /* =========================================
+           MOBILE
+           ========================================= */
+
+        @media (
+            max-width: 600px
+        ) {
+
+            .reader-header {
+
+                padding:
+                    12px 10px;
+
             }
 
-            .top {
-                flex-direction: column;
 
-                align-items: stretch;
+            #mangaTitle {
+
+                font-size:
+                    18px;
+
+            }
+
+
+            #chapterTitle {
+
+                font-size:
+                    14px;
+
+            }
+
+
+            #chapterPages {
+
+                width:
+                    100%;
+
+            }
+
+
+            .chapter-page {
+
+                width:
+                    100%;
+
             }
 
         }
@@ -200,517 +271,58 @@
 <body>
 
 
-<header>
+<!-- =============================================
+     HEADER
+     ============================================== -->
 
-    <div class="header-inner">
+<header class="reader-header">
 
-        <a
-            href="./index.html"
-            class="logo"
-        >
-            Manga<span>JPRaw</span>
-        </a>
+    <a href="./index.html">
 
-        <a href="./index.html">
-            Home
-        </a>
+        <h1 id="mangaTitle">
+            MangaJPRaw
+        </h1>
 
-    </div>
+    </a>
+
+
+    <h2 id="chapterTitle">
+        Loading chapter...
+    </h2>
 
 </header>
 
 
-<div class="container">
+<!-- =============================================
+     LOADING
+     ============================================== -->
 
+<div id="loading">
 
-    <div class="top">
-
-        <a
-            href="./index.html"
-            class="back"
-        >
-            ← Home
-        </a>
-
-        <a
-            id="chaptersLink"
-            href="./index.html"
-            class="back"
-        >
-            Chapters
-        </a>
-
-    </div>
-
-
-    <h1 id="chapterTitle">
-        Loading...
-    </h1>
-
-
-    <div
-        id="mangaTitle"
-        class="subtitle"
-    ></div>
-
-
-    <div id="reader">
-
-        <div class="loading">
-            Loading chapter...
-        </div>
-
-    </div>
-
-
-    <div class="navigation">
-
-        <button id="previous">
-            ← Previous
-        </button>
-
-        <button id="next">
-            Next →
-        </button>
-
-    </div>
-
+    Loading chapter pages...
 
 </div>
 
 
-<script>
+<!-- =============================================
+     ERROR
+     ============================================== -->
 
-    const params =
-        new URLSearchParams(
-            window.location.search
-        );
+<div id="errorMessage"></div>
 
 
-    const mangaId =
-        params.get("id");
+<!-- =============================================
+     CHAPTER PAGES
+     ============================================== -->
 
+<main id="chapterPages"></main>
 
-    const chapterNumber =
-        params.get("chapter");
 
+<!-- =============================================
+     JAVASCRIPT
+     ============================================== -->
 
-    let chapters = [];
-
-    let currentIndex = -1;
-
-
-    async function loadChapter() {
-
-        const reader =
-            document.getElementById(
-                "reader"
-            );
-
-
-        if (
-            !mangaId ||
-            !chapterNumber
-        ) {
-
-            reader.innerHTML = `
-                <div class="error">
-                    Manga or chapter information is missing.
-                </div>
-            `;
-
-            return;
-
-        }
-
-
-        try {
-
-            const response =
-                await fetch(
-                    "./data/manga.json?v=" +
-                    Date.now()
-                );
-
-
-            if (!response.ok) {
-
-                throw new Error(
-                    "Failed to load manga data."
-                );
-
-            }
-
-
-            const data =
-                await response.json();
-
-
-            const manga =
-                data.find(
-                    function(item) {
-
-                        return (
-                            item.id ===
-                            mangaId
-                        );
-
-                    }
-                );
-
-
-            if (!manga) {
-
-                throw new Error(
-                    "Manga not found."
-                );
-
-            }
-
-
-            chapters =
-                Array.isArray(
-                    manga.chapters
-                )
-                    ? manga.chapters
-                    : [];
-
-
-            currentIndex =
-                chapters.findIndex(
-                    function(chapter) {
-
-                        return String(
-                            chapter.number
-                        ) === String(
-                            chapterNumber
-                        );
-
-                    }
-                );
-
-
-            if (
-                currentIndex === -1
-            ) {
-
-                throw new Error(
-                    "Chapter not found."
-                );
-
-            }
-
-
-            const chapter =
-                chapters[
-                    currentIndex
-                ];
-
-
-            document.title =
-                manga.title +
-                " - " +
-                (
-                    chapter.title ||
-                    "Chapter " +
-                    chapter.number
-                );
-
-
-            document
-                .getElementById(
-                    "chapterTitle"
-                )
-                .textContent =
-                    chapter.title ||
-                    "Chapter " +
-                    chapter.number;
-
-
-            document
-                .getElementById(
-                    "mangaTitle"
-                )
-                .textContent =
-                    manga.title;
-
-
-            document
-                .getElementById(
-                    "chaptersLink"
-                )
-                .href =
-                    "./manga.html?id=" +
-                    encodeURIComponent(
-                        manga.id
-                    );
-
-
-            displayPages(
-                chapter.pages || []
-            );
-
-
-            updateNavigation();
-
-        }
-
-        catch (error) {
-
-            console.error(
-                error
-            );
-
-            reader.innerHTML = `
-                <div class="error">
-                    ${escapeHTML(
-                        error.message
-                    )}
-                </div>
-            `;
-
-        }
-
-    }
-
-
-    function displayPages(
-        pages
-    ) {
-
-        const reader =
-            document.getElementById(
-                "reader"
-            );
-
-
-        if (
-            !Array.isArray(pages) ||
-            pages.length === 0
-        ) {
-
-            reader.innerHTML = `
-                <div class="error">
-                    No pages found for this chapter.
-                </div>
-            `;
-
-            return;
-
-        }
-
-
-        reader.innerHTML = "";
-
-
-        pages.forEach(
-            function(path, index) {
-
-                const page =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                page.className =
-                    "page";
-
-
-                const image =
-                    document.createElement(
-                        "img"
-                    );
-
-
-                image.src =
-                    path;
-
-
-                image.alt =
-                    "Page " +
-                    (index + 1);
-
-
-                image.loading =
-                    "lazy";
-
-
-                image.onerror =
-                    function() {
-
-                        page.innerHTML = `
-                            <div class="error">
-                                Page ${
-                                    index + 1
-                                } could not be loaded.
-                            </div>
-                        `;
-
-                    };
-
-
-                page.appendChild(
-                    image
-                );
-
-
-                const number =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                number.className =
-                    "page-number";
-
-
-                number.textContent =
-                    "Page " +
-                    (index + 1) +
-                    " of " +
-                    pages.length;
-
-
-                page.appendChild(
-                    number
-                );
-
-
-                reader.appendChild(
-                    page
-                );
-
-            }
-        );
-
-    }
-
-
-    function updateNavigation() {
-
-        const previous =
-            document.getElementById(
-                "previous"
-            );
-
-
-        const next =
-            document.getElementById(
-                "next"
-            );
-
-
-        previous.disabled =
-            currentIndex <= 0;
-
-
-        next.disabled =
-            currentIndex >=
-            chapters.length - 1;
-
-    }
-
-
-    document
-        .getElementById("previous")
-        .addEventListener(
-            "click",
-            function() {
-
-                if (
-                    currentIndex > 0
-                ) {
-
-                    const chapter =
-                        chapters[
-                            currentIndex - 1
-                        ];
-
-                    window.location.href =
-                        "./chapter.html?id=" +
-                        encodeURIComponent(
-                            mangaId
-                        ) +
-                        "&chapter=" +
-                        encodeURIComponent(
-                            chapter.number
-                        );
-
-                }
-
-            }
-        );
-
-
-    document
-        .getElementById("next")
-        .addEventListener(
-            "click",
-            function() {
-
-                if (
-                    currentIndex <
-                    chapters.length - 1
-                ) {
-
-                    const chapter =
-                        chapters[
-                            currentIndex + 1
-                        ];
-
-                    window.location.href =
-                        "./chapter.html?id=" +
-                        encodeURIComponent(
-                            mangaId
-                        ) +
-                        "&chapter=" +
-                        encodeURIComponent(
-                            chapter.number
-                        );
-
-                }
-
-            }
-        );
-
-
-    function escapeHTML(
-        value
-    ) {
-
-        return String(value)
-
-            .replace(
-                /&/g,
-                "&amp;"
-            )
-
-            .replace(
-                /</g,
-                "&lt;"
-            )
-
-            .replace(
-                />/g,
-                "&gt;"
-            )
-
-            .replace(
-                /"/g,
-                "&quot;"
-            )
-
-            .replace(
-                /'/g,
-                "&#039;"
-            );
-
-    }
-
-
-    loadChapter();
-
-</script>
+<script src="./js/chapter.js?v=20"></script>
 
 
 </body>
