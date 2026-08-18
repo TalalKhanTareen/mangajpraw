@@ -40,7 +40,9 @@
         "title": "Chapter 1",
         "description": "",
         "releaseDate": "2026-08-18",
-        "pages": []
+        "pages": [
+          "001.jpg"
+        ]
       }
     ]
   }
